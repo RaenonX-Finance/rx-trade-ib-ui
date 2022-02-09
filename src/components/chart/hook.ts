@@ -1,20 +1,16 @@
 import React from 'react';
 
-import {createChart, IChartApi, UTCTimestamp} from 'lightweight-charts';
+import {createChart, IChartApi} from 'lightweight-charts';
 
 import {useLayout} from '../../hooks/layout/main';
-import {PxData} from '../../types/pxData';
 import {chartOptions} from './options';
+import {ChartDefaultSeries, ChartInitializationHandler, UseChartsReturn} from './type';
 
 
-type UseChartsReturn = {
-  makeChart: (element: HTMLElement, data: PxData) => void,
-  chart?: IChartApi,
-};
-
-export const useCharts = (): UseChartsReturn => {
+export const useChart = (initChart: ChartInitializationHandler): UseChartsReturn => {
   const chartRef = React.useRef<{chart: IChartApi, element: HTMLElement}>();
   const {dimension} = useLayout();
+  let series: ChartDefaultSeries | undefined = undefined;
 
   const makeChart: UseChartsReturn['makeChart'] = (element, data) => {
     const chart = createChart(element, {
@@ -23,9 +19,7 @@ export const useCharts = (): UseChartsReturn => {
       height: element.clientHeight,
     });
 
-    const candlestickSeries = chart.addCandlestickSeries();
-
-    candlestickSeries.setData(data.data.map((item) => ({time: item.epochSec as UTCTimestamp, ...item})));
+    series = initChart({chart, data});
 
     chartRef.current = {chart, element};
   };
@@ -43,5 +37,9 @@ export const useCharts = (): UseChartsReturn => {
     });
   }, [dimension]);
 
-  return {makeChart, chart: chartRef.current?.chart};
+  if (chartRef.current && series) {
+    return {makeChart, chart: chartRef.current.chart, series};
+  } else {
+    return {makeChart, chart: undefined, series: undefined};
+  }
 };

@@ -3,18 +3,25 @@ import React from 'react';
 import {IChartApi} from 'lightweight-charts';
 
 import {PxData} from '../../types/pxData';
-import {useCharts} from './hook';
 import styles from './main.module.scss';
+import {ChartDefaultSeries, UseChartsReturn} from './type';
 
 
-type Props = {
-  data: PxData,
-  onDataUpdated: (chart: IChartApi, data: PxData) => void,
+type OnDataUpdatedEvent = {
+  chart: IChartApi,
+  series: ChartDefaultSeries,
+  data: PxData
 };
 
-export const TradingViewChart = ({data, onDataUpdated}: Props) => {
+type Props = {
+  chartHook: UseChartsReturn,
+  data: PxData,
+  onDataUpdated: (e: OnDataUpdatedEvent) => void,
+};
+
+export const TradingViewChart = ({chartHook, data, onDataUpdated}: Props) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
-  const {makeChart, chart} = useCharts();
+  const {makeChart, chart, series} = chartHook;
 
   React.useEffect(() => {
     if (!chartContainerRef.current) {
@@ -25,11 +32,11 @@ export const TradingViewChart = ({data, onDataUpdated}: Props) => {
   }, []);
 
   React.useEffect(() => {
-    if (!chart) {
+    if (!chart || !series) {
       return;
     }
 
-    onDataUpdated(chart, data);
+    onDataUpdated({chart, series, data});
   }, [data]);
 
   return <div className={styles['chart-container']} ref={chartContainerRef}/>;

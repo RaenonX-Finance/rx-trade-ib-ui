@@ -38,7 +38,7 @@ export const PriceDataMain = () => {
   return (
     <>
       {Object.values(pxData).map((data) => (
-        <Row key={data.symbol} className="mb-3 g-0">
+        <Row key={data.uniqueIdentifier} className="mb-3 g-0">
           <Col>
             <PriceDataIndividual data={data}/>
           </Col>

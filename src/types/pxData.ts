@@ -7,7 +7,12 @@ export type PxDataBar = {
   close: number,
 };
 
-export type SupportResistance = {
+export type PxDataContract = {
+  symbol: string,
+  minTick: number,
+};
+
+export type PxDataSupportResistance = {
   level: number,
   diffCurrent: number,
   type: {
@@ -17,11 +22,12 @@ export type SupportResistance = {
 };
 
 export type PxData = {
-  symbol: string,
+  uniqueIdentifier: number,
+  contract: PxDataContract,
   data: PxDataBar[],
-  supportResistance: SupportResistance[],
+  supportResistance: PxDataSupportResistance[],
 };
 
 export type PxDataCollection = {
-  [symbol: string]: PxData,
+  [identifier: number]: PxData,
 };

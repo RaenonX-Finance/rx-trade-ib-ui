@@ -15,7 +15,7 @@ const slice = createSlice({
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
       (state: PxDataState, {payload}: {payload: PxData}) => {
-        state[payload.symbol] = payload;
+        state[payload.uniqueIdentifier] = payload;
       },
     );
   },
