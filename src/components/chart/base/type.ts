@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {IChartApi} from 'lightweight-charts';
 
 
@@ -7,23 +9,41 @@ export type ChartRef<T> = {
   initData: T,
 };
 
-export type UseChartReturn<T, R> = {
-  makeChart: (element: HTMLElement, chartData: T) => void,
+export type InitChartPayload<T, L> = {
+  element: HTMLElement,
+  chartDataRef: React.MutableRefObject<T>,
+  setLegend: ChartSetLegend<L>,
+};
+
+export type UseChartPayload<T, R, L> = {
+  initChart: ChartInitEventHandler<T, R, L>,
+  calculateLegend: ChartInitCalculateLegend<T, L>,
+  setLegend: ChartSetLegend<L>,
+};
+
+export type UseChartReturn<T, R, L> = {
+  makeChart: (payload: InitChartPayload<T, L>) => void,
   chart?: IChartApi,
   initData?: R,
 };
 
-export type OnChartInitEvent<D> = {
+export type ChartSetLegend<L> = (updateFunc: (prevLegend: L) => L) => void;
+
+export type OnChartInitEvent<T, L> = {
   chart: IChartApi,
-  chartData: D,
+  chartDataRef: React.MutableRefObject<T>,
+  setLegend: ChartSetLegend<L>,
 };
 
-export type ChartInitEventHandler<T, R> = (e: OnChartInitEvent<T>) => R;
+export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, L>) => R;
 
-export type OnChartDataUpdatedEvent<T, R> = {
+export type ChartInitCalculateLegend<T, L> = (data: T) => L;
+
+export type OnChartDataUpdatedEvent<T, R, L> = {
   chart: IChartApi,
-  chartData: T,
+  chartDataRef: React.MutableRefObject<T>,
   initData: R,
+  setLegend: ChartSetLegend<L>,
 };
 
-export type ChartDataUpdatedEventHandler<T, R> = (e: OnChartDataUpdatedEvent<T, R>) => void;
+export type ChartDataUpdatedEventHandler<T, R, L> = (e: OnChartDataUpdatedEvent<T, R, L>) => void;

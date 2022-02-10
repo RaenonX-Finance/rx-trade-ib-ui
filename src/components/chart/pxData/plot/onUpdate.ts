@@ -5,36 +5,40 @@ import {OnPxChartUpdatedEvent, PxChartUpdatedEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
 
 
-const handlePrice = ({chartData, initData}: OnPxChartUpdatedEvent) => {
+const handlePrice = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) => {
   const {price} = initData.series;
 
-  const lastPrice = chartData.data.at(-1);
+  const lastPrice = chartDataRef.current.data.at(-1);
 
   if (!lastPrice) {
     return;
   }
 
   price.update(toBarData(lastPrice));
+  setLegend((legend) => ({...legend, close: lastPrice.close}));
 };
 
-const handleVwap = ({chartData, initData}: OnPxChartUpdatedEvent) => {
+const handleVwap = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) => {
   const {vwap} = initData.series;
 
-  const lastPrice = chartData.data.at(-1);
+  const lastPrice = chartDataRef.current.data.at(-1);
 
   if (!lastPrice) {
     return;
   }
 
-  vwap.update(toLineData('vwap')(lastPrice));
+  const pxLine = toLineData('vwap')(lastPrice);
+
+  vwap.update(pxLine);
+  setLegend((legend) => ({...legend, vwap: pxLine.value}));
 };
 
-const handleSR = ({chartData, initData}: OnPxChartUpdatedEvent) => {
+const handleSR = ({chartDataRef, initData}: OnPxChartUpdatedEvent) => {
   const {price} = initData.series;
 
-  const decimalPlaces = getDecimalPlaces(chartData.contract.minTick);
+  const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
 
-  chartData.supportResistance.forEach(({level, diffCurrent}) => {
+  chartDataRef.current.supportResistance.forEach(({level, diffCurrent}) => {
     const priceLine: IPriceLine = initData.lines.srLevelLines[level];
     const title = `${diffCurrent > 0 ? '+' : ''}${diffCurrent.toFixed(decimalPlaces)}`;
 

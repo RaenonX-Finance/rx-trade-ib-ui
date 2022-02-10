@@ -11,11 +11,16 @@ import {
 
 export type PxChartSeries = {
   price: ISeriesApi<'Candlestick'>,
-  vwap: ISeriesApi<'Baseline'>,
+  vwap: ISeriesApi<'Line'>,
 };
 
 export type PxChartLines = {
   srLevelLines: Record<number, IPriceLine>,
+};
+
+export type PxChartLegendData = {
+  vwap: number,
+  close: number,
 };
 
 export type PxChartReturnData = {
@@ -23,10 +28,10 @@ export type PxChartReturnData = {
   lines: PxChartLines,
 };
 
-export type OnPxChartInitEvent = OnChartInitEvent<PxData>;
+export type OnPxChartInitEvent = OnChartInitEvent<PxData, PxChartLegendData>;
 
-export type PxChartInitEventHandler = ChartInitEventHandler<PxData, PxChartReturnData>;
+export type PxChartInitEventHandler = ChartInitEventHandler<PxData, PxChartReturnData, PxChartLegendData>;
 
-export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<PxData, PxChartReturnData>;
+export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<PxData, PxChartReturnData, PxChartLegendData>;
 
-export type PxChartUpdatedEventHandler = ChartDataUpdatedEventHandler<PxData, PxChartReturnData>;
+export type PxChartUpdatedEventHandler = ChartDataUpdatedEventHandler<PxData, PxChartReturnData, PxChartLegendData>;

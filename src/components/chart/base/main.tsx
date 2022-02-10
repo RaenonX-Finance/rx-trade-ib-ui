@@ -5,26 +5,42 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useTradingViewChart} from './hook';
-import {ChartDataUpdatedEventHandler, ChartInitEventHandler} from './type';
+import styles from './main.module.scss';
+import {ChartDataUpdatedEventHandler, ChartInitCalculateLegend, ChartInitEventHandler} from './type';
 
 
-export type TradingViewChartProps<T, R> = {
+export type TradingViewChartProps<T, R, L> = {
   height: number,
-  initChart: ChartInitEventHandler<T, R>,
+  initChart: ChartInitEventHandler<T, R, L>,
   chartData: T,
-  onDataUpdated: ChartDataUpdatedEventHandler<T, R>,
+  onDataUpdated: ChartDataUpdatedEventHandler<T, R, L>,
+  calculateLegend: ChartInitCalculateLegend<T, L>,
+  renderLegendData: (legendData: L) => React.ReactNode,
 };
 
-export const TradingViewChart = <T, R>({height, initChart, chartData, onDataUpdated}: TradingViewChartProps<T, R>) => {
+export const TradingViewChart = <T, R, L>({
+  height,
+  initChart,
+  calculateLegend,
+  chartData,
+  onDataUpdated,
+  renderLegendData,
+}: TradingViewChartProps<T, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
-  const {makeChart, chart, initData} = useTradingViewChart(initChart);
+  const chartDataRef = React.useRef<T>(chartData);
+  const [legend, setLegend] = React.useState<L>(calculateLegend(chartData));
+
+  const {makeChart, chart, initData} = useTradingViewChart({
+    initChart, calculateLegend, setLegend,
+  });
 
   React.useEffect(() => {
     if (!chartContainerRef.current) {
       return;
     }
 
-    makeChart(chartContainerRef.current, chartData);
+    chartDataRef.current = chartData;
+    makeChart({chartDataRef, setLegend, element: chartContainerRef.current});
   }, []);
 
   React.useEffect(() => {
@@ -32,12 +48,17 @@ export const TradingViewChart = <T, R>({height, initChart, chartData, onDataUpda
       return;
     }
 
-    onDataUpdated({chart, chartData, initData});
+    chartDataRef.current = chartData;
+    onDataUpdated({chart, chartDataRef, initData, setLegend});
   }, [initData, chartData]);
 
   return (
     <>
-      <div className="mb-2" style={{height}} ref={chartContainerRef}/>
+      <div className="mb-2" style={{height}} ref={chartContainerRef}>
+        <div className={styles['legend']}>
+          {renderLegendData(legend)}
+        </div>
+      </div>
       <Row className="g-0 text-end">
         <Col>
           <Button size="sm" variant="outline-warning" onClick={() => {

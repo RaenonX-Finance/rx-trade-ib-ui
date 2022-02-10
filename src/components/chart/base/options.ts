@@ -1,4 +1,4 @@
-import {ChartOptions, ColorType, DeepPartial} from 'lightweight-charts';
+import {ChartOptions, ColorType, CrosshairMode, DeepPartial} from 'lightweight-charts';
 
 
 export const chartOptions: DeepPartial<ChartOptions> = {
@@ -10,6 +10,9 @@ export const chartOptions: DeepPartial<ChartOptions> = {
     },
     fontSize: 12,
     textColor: '#d5d5d5',
+  },
+  crosshair: {
+    mode: CrosshairMode.Normal,
   },
   grid: {
     vertLines: {color: 'rgba(77, 77, 77, 0.5)'},

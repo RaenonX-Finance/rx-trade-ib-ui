@@ -1,12 +1,13 @@
 span.update-animation {
-  animation: 0.25s update-light;
+  border-radius: 0.1rem;
+  animation: 1s update-light;
 }
 @keyframes update-light {
   from {
-    background-color: #6d28b4;
+    background: #325bc2;
   }
   to {
-    background-color: unset;
+    background: unset;
   }
 }
 

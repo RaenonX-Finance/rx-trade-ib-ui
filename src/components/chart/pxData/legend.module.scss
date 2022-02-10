@@ -1,0 +1,23 @@
+div {
+  &.legend {
+    @mixin vwap-styling($name, $color) {
+      &.vwap-#{$name} {
+        border: 1px solid $color;
+
+        & > span.vwap > span.vwap-text {
+          color: $color;
+        }
+      }
+    }
+
+    padding: 0.4rem;
+    margin: 0.3rem;
+    border-radius: 0.5rem;
+    background-color: rgba(17 17 17 / 0.65);
+
+    @include vwap-styling(neutral, #fafafa);
+    @include vwap-styling(buy, #26a69a);
+    @include vwap-styling(sell, #ef5350);
+    @include vwap-styling(unavailable, #757575);
+  }
+}

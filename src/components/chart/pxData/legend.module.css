@@ -1,0 +1,32 @@
+div.legend {
+  padding: 0.4rem;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+  background-color: rgba(17, 17, 17, 0.65);
+}
+div.legend.vwap-neutral {
+  border: 1px solid #fafafa;
+}
+div.legend.vwap-neutral > span.vwap > span.vwap-text {
+  color: #fafafa;
+}
+div.legend.vwap-buy {
+  border: 1px solid #26a69a;
+}
+div.legend.vwap-buy > span.vwap > span.vwap-text {
+  color: #26a69a;
+}
+div.legend.vwap-sell {
+  border: 1px solid #ef5350;
+}
+div.legend.vwap-sell > span.vwap > span.vwap-text {
+  color: #ef5350;
+}
+div.legend.vwap-unavailable {
+  border: 1px solid #757575;
+}
+div.legend.vwap-unavailable > span.vwap > span.vwap-text {
+  color: #757575;
+}
+
+/*# sourceMappingURL=legend.module.css.map */

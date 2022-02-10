@@ -31,7 +31,11 @@ export const PriceDataIndividual = ({data}: Props) => {
       <h4>{data.contract.symbol}</h4>
       <Row className="g-0 mb-2">
         <Col>
-          <PxDataChart chartData={data} height={700} onDataUpdated={() => setLastUpdated(Date.now())}/>
+          <PxDataChart
+            chartData={data}
+            height={700}
+            onDataUpdated={() => setLastUpdated(Date.now())}
+          />
         </Col>
       </Row>
       <Row className="g-0 text-end">
