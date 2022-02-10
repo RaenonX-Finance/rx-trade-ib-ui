@@ -36,7 +36,7 @@ export const PriceDataMain = () => {
   }, []);
 
   return (
-    <Row className="mb-3 g-2">
+    <Row className="mb-3 g-3">
       {Object.values(pxData).map((data) => (
         <Col key={data.uniqueIdentifier} xs={6}>
           <PriceDataIndividual data={data}/>

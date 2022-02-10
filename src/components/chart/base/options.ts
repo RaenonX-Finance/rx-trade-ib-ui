@@ -23,5 +23,6 @@ export const chartOptions: DeepPartial<ChartOptions> = {
   },
   timeScale: {
     timeVisible: true,
+    rightOffset: 12,
   },
 };

@@ -3,6 +3,7 @@ import {IPriceLine, LineStyle} from 'lightweight-charts';
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartUpdatedEvent, PxChartUpdatedEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
+import {srLevelColor} from './const';
 
 
 const handlePrice = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) => {
@@ -49,7 +50,7 @@ const handleSR = ({chartDataRef, initData}: OnPxChartUpdatedEvent) => {
         price: level,
         axisLabelVisible: true,
         title,
-        color: 'rgba(255, 255, 0, 0.4)',
+        color: srLevelColor,
         lineWidth: 2,
         lineStyle: LineStyle.Dotted,
       });

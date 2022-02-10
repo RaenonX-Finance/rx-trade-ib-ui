@@ -3,6 +3,7 @@ import {BarPrice, BarPrices, IPriceLine, ISeriesApi, LastPriceAnimationMode, Lin
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
+import {srLevelColor} from './const';
 
 
 const handlePrice = ({chart, chartDataRef, setLegend}: OnPxChartInitEvent): ISeriesApi<'Candlestick'> => {
@@ -60,7 +61,7 @@ const handleSR = (
       price: level,
       axisLabelVisible: true,
       title,
-      color: '#ffdc1e',
+      color: srLevelColor,
       lineWidth: 2,
       lineStyle: LineStyle.Dotted,
     });
