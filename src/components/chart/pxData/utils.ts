@@ -1,6 +1,6 @@
 import {BarData, UTCTimestamp} from 'lightweight-charts';
 
-import {PxDataBar} from '../../types/pxData';
+import {PxDataBar} from '../../../types/pxData';
 
 
 export const toBarData = (bar: PxDataBar): BarData => ({

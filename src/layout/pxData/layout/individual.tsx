@@ -3,8 +3,8 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {TradingViewChart} from '../../../components/chart/main';
-import {toBarData} from '../../../components/chart/utils';
+import {PxDataChart} from '../../../components/chart/pxData/main';
+import {toBarData} from '../../../components/chart/pxData/utils';
 import {TimeAgo} from '../../../components/timeAgo/main';
 import {PxData} from '../../../types/pxData';
 import styles from './individual.module.scss';
@@ -32,12 +32,12 @@ export const PriceDataIndividual = ({data}: Props) => {
       <h4>{data.contract.symbol}</h4>
       <Row className="g-0 mb-2">
         <Col>
-          <TradingViewChart
-            data={data}
-            height={500}
-            onDataUpdated={({series, data}) => {
-              const {price} = series;
-              const lastPrice = data.data.at(-1);
+          <PxDataChart
+            chartData={data}
+            height={700}
+            onDataUpdated={({chartData, initData}) => {
+              const {price} = initData.series;
+              const lastPrice = chartData.data.at(-1);
 
               if (!lastPrice) {
                 return;
