@@ -2,7 +2,7 @@ import {IPriceLine, LineStyle} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartUpdatedEvent, PxChartUpdatedEventHandler} from '../type';
-import {toBarData} from '../utils';
+import {toBarData, toLineData} from '../utils';
 
 
 const handlePrice = ({chartData, initData}: OnPxChartUpdatedEvent) => {
@@ -15,6 +15,18 @@ const handlePrice = ({chartData, initData}: OnPxChartUpdatedEvent) => {
   }
 
   price.update(toBarData(lastPrice));
+};
+
+const handleVwap = ({chartData, initData}: OnPxChartUpdatedEvent) => {
+  const {vwap} = initData.series;
+
+  const lastPrice = chartData.data.at(-1);
+
+  if (!lastPrice) {
+    return;
+  }
+
+  vwap.update(toLineData('vwap')(lastPrice));
 };
 
 const handleSR = ({chartData, initData}: OnPxChartUpdatedEvent) => {
@@ -43,5 +55,6 @@ const handleSR = ({chartData, initData}: OnPxChartUpdatedEvent) => {
 
 export const onPxChartUpdated: PxChartUpdatedEventHandler = (e) => {
   handlePrice(e);
+  handleVwap(e);
   handleSR(e);
 };

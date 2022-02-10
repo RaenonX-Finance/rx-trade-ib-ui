@@ -11,6 +11,7 @@ import {
 
 export type PxChartSeries = {
   price: ISeriesApi<'Candlestick'>,
+  vwap: ISeriesApi<'Baseline'>,
 };
 
 export type PxChartLines = {

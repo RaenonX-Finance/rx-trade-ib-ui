@@ -2,7 +2,7 @@ import {IPriceLine, ISeriesApi, LineStyle} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
-import {toBarData} from '../utils';
+import {toBarData, toLineData} from '../utils';
 
 
 const handlePrice = ({chart, chartData}: OnPxChartInitEvent): ISeriesApi<'Candlestick'> => {
@@ -17,6 +17,12 @@ const handlePrice = ({chart, chartData}: OnPxChartInitEvent): ISeriesApi<'Candle
   return price;
 };
 
+const handleVwap = ({chart, chartData}: OnPxChartInitEvent): ISeriesApi<'Baseline'> => {
+  const vwap = chart.addBaselineSeries();
+  vwap.setData(chartData.data.map(toLineData('vwap')));
+
+  return vwap;
+};
 
 const handleSR = ({chartData}: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Record<number, IPriceLine> => {
   const srLevelLines: Record<number, IPriceLine> = {};
@@ -41,7 +47,8 @@ const handleSR = ({chartData}: OnPxChartInitEvent, price: ISeriesApi<'Candlestic
 
 export const onPxChartInit: PxChartInitEventHandler = (e) => {
   const price = handlePrice(e);
+  const vwap = handleVwap(e);
   const srLevelLines = handleSR(e, price);
 
-  return {series: {price}, lines: {srLevelLines}};
+  return {series: {price, vwap}, lines: {srLevelLines}};
 };
