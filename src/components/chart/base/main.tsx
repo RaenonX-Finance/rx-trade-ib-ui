@@ -61,6 +61,11 @@ export const TradingViewChart = <T, R, L>({
       </div>
       <Row className="g-0 text-end">
         <Col>
+          <Button size="sm" variant="outline-success" className="me-2" onClick={() => {
+            chart?.timeScale().scrollToRealTime();
+          }}>
+            To Realtime
+          </Button>
           <Button size="sm" variant="outline-warning" onClick={() => {
             chart?.timeScale().resetTimeScale();
             chart?.priceScale().applyOptions({autoScale: true});

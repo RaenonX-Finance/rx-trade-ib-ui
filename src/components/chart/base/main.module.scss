@@ -1,4 +1,10 @@
-div.legend {
+@mixin overlay {
   position: absolute;
   z-index: 1000;
+}
+
+div {
+  &.legend {
+    @include overlay;
+  }
 }

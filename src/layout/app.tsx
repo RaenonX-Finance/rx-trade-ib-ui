@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Container from 'react-bootstrap/Container';
 import {io} from 'socket.io-client';
 
 import {PriceDataMain} from './pxData/main';
@@ -27,13 +26,11 @@ export const App = () => {
 
   return (
     <SocketContext.Provider value={socket}>
-      <Container>
-        {
-          socket ?
-            <PriceDataMain/> :
-            <>Not Connected</>
-        }
-      </Container>
+      {
+        socket ?
+          <PriceDataMain/> :
+          <>Not Connected</>
+      }
     </SocketContext.Provider>
   );
 };
