@@ -1,12 +1,11 @@
 import React from 'react';
 
-import {LineStyle} from 'lightweight-charts';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {useChart} from '../../../components/chart/hook';
 import {TradingViewChart} from '../../../components/chart/main';
 import {toBarData} from '../../../components/chart/utils';
+import {TimeAgo} from '../../../components/timeAgo/main';
 import {PxData} from '../../../types/pxData';
 import styles from './individual.module.scss';
 
@@ -16,45 +15,49 @@ type Props = {
 };
 
 export const PriceDataIndividual = ({data}: Props) => {
-  const chartHook = useChart(({chart, data}) => {
-    const price = chart.addCandlestickSeries({
-      title: data.contract.symbol,
-      priceFormat: {
-        minMove: data.contract.minTick,
-      },
-    });
-    price.setData(data.data.map(toBarData));
+  const [lastUpdated, setLastUpdated] = React.useState(Date.now());
+  const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
 
-    price.createPriceLine({
-      price: 75,
-      axisLabelVisible: true,
-      title: 'S/R',
-      color: 'rgba(229, 37, 69, 1)',
-      lineWidth: 2,
-      lineStyle: LineStyle.Dotted,
-    });
-
-    return {price};
-  });
+  React.useEffect(() => {
+    if (updateIndicatorRef.current) {
+      // Trigger animation
+      updateIndicatorRef.current.style.animation = 'none';
+      updateIndicatorRef.current.offsetHeight;
+      updateIndicatorRef.current.style.animation = '';
+    }
+  }, [lastUpdated]);
 
   return (
     <div>
       <h4>{data.contract.symbol}</h4>
-      <Row className={`g-0 mb-2 ${styles['data-section']}`}>
+      <Row className="g-0 mb-2">
         <Col>
           <TradingViewChart
-            chartHook={chartHook}
             data={data}
+            height={500}
             onDataUpdated={({series, data}) => {
               const {price} = series;
               const lastPrice = data.data.at(-1);
 
-              if (lastPrice) {
-                price.update(toBarData(lastPrice));
+              if (!lastPrice) {
+                return;
               }
 
-              console.log('updated', data.contract.symbol);
+              price.update(toBarData(lastPrice));
+
+              setLastUpdated(Date.now());
             }}
+          />
+        </Col>
+      </Row>
+      <Row className="g-0 text-end">
+        <Col>
+          <TimeAgo
+            ref={updateIndicatorRef}
+            epochSec={lastUpdated}
+            format={(secDiffMs) => `Last updated ${secDiffMs.toFixed(2)} secs ago`}
+            updateMs={100}
+            className={styles['update-animation']}
           />
         </Col>
       </Row>

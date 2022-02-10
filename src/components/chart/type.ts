@@ -7,6 +7,12 @@ export type ChartDefaultSeries = {
   price: ISeriesApi<'Candlestick'>,
 };
 
+export type ChartRef = {
+  chart: IChartApi,
+  element: HTMLElement,
+  series: ChartDefaultSeries,
+};
+
 export type UseChartsReturn = {
   makeChart: (element: HTMLElement, data: PxData) => void,
 } & ({

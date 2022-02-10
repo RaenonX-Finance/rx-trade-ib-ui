@@ -1,16 +1,15 @@
 import React from 'react';
 
-import {createChart, IChartApi} from 'lightweight-charts';
+import {createChart} from 'lightweight-charts';
 
 import {useLayout} from '../../hooks/layout/main';
 import {chartOptions} from './options';
-import {ChartDefaultSeries, ChartInitializationHandler, UseChartsReturn} from './type';
+import {ChartInitializationHandler, ChartRef, UseChartsReturn} from './type';
 
 
 export const useChart = (initChart: ChartInitializationHandler): UseChartsReturn => {
-  const chartRef = React.useRef<{chart: IChartApi, element: HTMLElement}>();
+  const chartRef = React.useRef<ChartRef>();
   const {dimension} = useLayout();
-  let series: ChartDefaultSeries | undefined = undefined;
 
   const makeChart: UseChartsReturn['makeChart'] = (element, data) => {
     const chart = createChart(element, {
@@ -19,9 +18,9 @@ export const useChart = (initChart: ChartInitializationHandler): UseChartsReturn
       height: element.clientHeight,
     });
 
-    series = initChart({chart, data});
+    const series = initChart({chart, data});
 
-    chartRef.current = {chart, element};
+    chartRef.current = {chart, series, element};
   };
 
   React.useEffect(() => {
@@ -37,8 +36,8 @@ export const useChart = (initChart: ChartInitializationHandler): UseChartsReturn
     });
   }, [dimension]);
 
-  if (chartRef.current && series) {
-    return {makeChart, chart: chartRef.current.chart, series};
+  if (chartRef.current) {
+    return {makeChart, ...chartRef.current};
   } else {
     return {makeChart, chart: undefined, series: undefined};
   }

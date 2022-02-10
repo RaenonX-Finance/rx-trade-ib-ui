@@ -1,10 +1,14 @@
 import React from 'react';
 
-import {IChartApi} from 'lightweight-charts';
+import {IChartApi, LineStyle} from 'lightweight-charts';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import {PxData} from '../../types/pxData';
-import styles from './main.module.scss';
-import {ChartDefaultSeries, UseChartsReturn} from './type';
+import {useChart} from './hook';
+import {ChartDefaultSeries} from './type';
+import {toBarData} from './utils';
 
 
 type OnDataUpdatedEvent = {
@@ -14,14 +18,35 @@ type OnDataUpdatedEvent = {
 };
 
 type Props = {
-  chartHook: UseChartsReturn,
   data: PxData,
+  height: number,
   onDataUpdated: (e: OnDataUpdatedEvent) => void,
 };
 
-export const TradingViewChart = ({chartHook, data, onDataUpdated}: Props) => {
+export const TradingViewChart = ({data, height, onDataUpdated}: Props) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
-  const {makeChart, chart, series} = chartHook;
+  const {makeChart, chart, series} = useChart(({chart, data}) => {
+    const price = chart.addCandlestickSeries({
+      title: data.contract.symbol,
+      priceFormat: {
+        minMove: data.contract.minTick,
+      },
+    });
+    price.setData(data.data.map(toBarData));
+
+    data.supportResistance.forEach(({level}) => {
+      price.createPriceLine({
+        price: level,
+        axisLabelVisible: true,
+        title: '',
+        color: 'rgba(229, 37, 69, 1)',
+        lineWidth: 2,
+        lineStyle: LineStyle.Dotted,
+      });
+    });
+
+    return {price};
+  });
 
   React.useEffect(() => {
     if (!chartContainerRef.current) {
@@ -39,5 +64,19 @@ export const TradingViewChart = ({chartHook, data, onDataUpdated}: Props) => {
     onDataUpdated({chart, series, data});
   }, [data]);
 
-  return <div className={styles['chart-container']} ref={chartContainerRef}/>;
+  return (
+    <>
+      <div className="mb-2" style={{height}} ref={chartContainerRef}/>
+      <Row className="g-0 text-end">
+        <Col>
+          <Button size="sm" variant="outline-warning" onClick={() => {
+            chart?.timeScale().resetTimeScale();
+            chart?.priceScale().applyOptions({autoScale: true});
+          }}>
+            Reset Scales
+          </Button>
+        </Col>
+      </Row>
+    </>
+  );
 };

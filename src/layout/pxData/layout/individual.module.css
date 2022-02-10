@@ -1,5 +1,13 @@
-div.data-section {
-  height: 500px;
+span.update-animation {
+  animation: 0.25s update-light;
+}
+@keyframes update-light {
+  from {
+    background-color: #6d28b4;
+  }
+  to {
+    background-color: unset;
+  }
 }
 
 /*# sourceMappingURL=individual.module.css.map */

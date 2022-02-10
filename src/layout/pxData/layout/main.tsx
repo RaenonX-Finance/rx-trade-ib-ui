@@ -36,14 +36,12 @@ export const PriceDataMain = () => {
   }, []);
 
   return (
-    <>
+    <Row className="mb-3 g-2">
       {Object.values(pxData).map((data) => (
-        <Row key={data.uniqueIdentifier} className="mb-3 g-0">
-          <Col>
-            <PriceDataIndividual data={data}/>
-          </Col>
-        </Row>
+        <Col key={data.uniqueIdentifier} xs={6}>
+          <PriceDataIndividual data={data}/>
+        </Col>
       ))}
-    </>
+    </Row>
   );
 };
