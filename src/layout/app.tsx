@@ -3,7 +3,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import {io} from 'socket.io-client';
 
-import {PriceDataMain} from './pxData/layout/main';
+import {PriceDataMain} from './pxData/main';
 import {SocketContext} from './socket/socket';
 import {DataSocket} from './socket/type';
 

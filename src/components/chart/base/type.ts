@@ -20,7 +20,7 @@ export type OnChartInitEvent<D> = {
 
 export type ChartInitEventHandler<T, R> = (e: OnChartInitEvent<T>) => R;
 
-type OnChartDataUpdatedEvent<T, R> = {
+export type OnChartDataUpdatedEvent<T, R> = {
   chart: IChartApi,
   chartData: T,
   initData: R,

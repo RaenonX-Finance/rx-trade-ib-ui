@@ -1,39 +1,25 @@
 import React from 'react';
 
-import {LineStyle} from 'lightweight-charts';
-
 import {PxData} from '../../../types/pxData';
 import {TradingViewChart, TradingViewChartProps} from '../base/main';
+import {OnChartDataUpdatedEvent} from '../base/type';
+import {onPxChartInit} from './plot/onInit';
+import {onPxChartUpdated} from './plot/onUpdate';
 import {PxChartReturnData} from './type';
-import {toBarData} from './utils';
 
 
-type Props = Omit<TradingViewChartProps<PxData, PxChartReturnData>, 'initChart'>;
+type Props = Omit<TradingViewChartProps<PxData, PxChartReturnData>, 'initChart'> & {
+  onDataUpdated: (e: OnChartDataUpdatedEvent<PxData, PxChartReturnData>) => void,
+};
 
-export const PxDataChart = ({...props}: Props) => {
+
+export const PxDataChart = ({onDataUpdated, ...props}: Props) => {
   return (
     <TradingViewChart
-      initChart={({chart, chartData}) => {
-        const price = chart.addCandlestickSeries({
-          title: chartData.contract.symbol,
-          priceFormat: {
-            minMove: chartData.contract.minTick,
-          },
-        });
-        price.setData(chartData.data.map(toBarData));
-
-        chartData.supportResistance.forEach(({level}) => {
-          price.createPriceLine({
-            price: level,
-            axisLabelVisible: true,
-            title: '',
-            color: 'rgba(229, 37, 69, 1)',
-            lineWidth: 2,
-            lineStyle: LineStyle.Dotted,
-          });
-        });
-
-        return {series: {price}};
+      initChart={onPxChartInit}
+      onDataUpdated={(e) => {
+        onPxChartUpdated(e);
+        onDataUpdated(e);
       }}
       {...props}
     />
