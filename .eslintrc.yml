@@ -55,7 +55,7 @@ rules:
 
   linebreak-style:
     - error
-    - unix
+    - windows
 
   max-len:
     - error
@@ -81,11 +81,6 @@ rules:
   import/newline-after-import:
     - error
     - count: 2
-
-  import/no-unresolved:
-    - error
-    - ignore:
-        - csstype
 
   object-curly-spacing: off
 

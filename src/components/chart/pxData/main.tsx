@@ -10,8 +10,8 @@ import {OnPxChartUpdatedEvent, PxChartLegendData, PxChartReturnData} from './typ
 
 type Props = Omit<
   TradingViewChartProps<PxData, PxChartReturnData, PxChartLegendData>,
-  'initChart' | 'calculateLegend' | 'getInitLegend' | 'renderLegendData'
-  > & {
+  'initChart' | 'calcObjects' | 'renderObjects'
+> & {
   onDataUpdated: (e: OnPxChartUpdatedEvent) => void,
 };
 
@@ -24,15 +24,16 @@ export const PxDataChart = ({onDataUpdated, ...props}: Props) => {
         onPxChartUpdated(e);
         onDataUpdated(e);
       }}
-      calculateLegend={(data) => {
-        const lastPrice = data.data.at(-1);
-
-        return {
-          vwap: lastPrice?.vwap || NaN,
-          close: lastPrice?.close || NaN,
-        };
+      calcObjects={{
+        legend: (data) => ({
+          vwap: NaN,
+          close: NaN,
+          ...data.data.at(-1),
+        }),
       }}
-      renderLegendData={(legendData) => <PxChartLegend legendData={legendData}/>}
+      renderObjects={{
+        legend: (_, legend) => <PxChartLegend data={legend}/>,
+      }}
       {...props}
     />
   );

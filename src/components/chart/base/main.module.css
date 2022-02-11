@@ -2,5 +2,9 @@ div.legend {
   position: absolute;
   z-index: 1000;
 }
+div.tooltip {
+  position: absolute;
+  z-index: 1000;
+}
 
 /*# sourceMappingURL=main.module.css.map */

@@ -7,4 +7,8 @@ div {
   &.legend {
     @include overlay;
   }
+
+  &.tooltip {
+    @include overlay;
+  }
 }

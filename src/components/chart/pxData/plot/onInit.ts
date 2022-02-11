@@ -1,13 +1,18 @@
-import {BarPrice, BarPrices, IPriceLine, ISeriesApi, LastPriceAnimationMode, LineStyle} from 'lightweight-charts';
+import {IPriceLine, ISeriesApi, LastPriceAnimationMode, LineStyle} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
 import {srLevelColor} from './const';
+import {handleLegendUpdate} from './eventHandler';
 
 
-const handlePrice = ({chart, chartDataRef, setLegend}: OnPxChartInitEvent): ISeriesApi<'Candlestick'> => {
-  const price = chart.addCandlestickSeries({
+const handlePrice = ({chartRef, chartDataRef, setObject}: OnPxChartInitEvent): ISeriesApi<'Candlestick'> => {
+  if (!chartRef.current) {
+    throw new Error('Adding price while the chart is not ready');
+  }
+
+  const price = chartRef.current.addCandlestickSeries({
     title: chartDataRef.current.contract.symbol,
     priceFormat: {
       minMove: chartDataRef.current.contract.minTick,
@@ -15,7 +20,7 @@ const handlePrice = ({chart, chartDataRef, setLegend}: OnPxChartInitEvent): ISer
   });
   price.setData(chartDataRef.current.data.map(toBarData));
 
-  setLegend((legend) => ({
+  setObject.legend((legend) => ({
     ...legend,
     close: chartDataRef.current.data.at(-1)?.close || legend.close,
   }));
@@ -23,34 +28,24 @@ const handlePrice = ({chart, chartDataRef, setLegend}: OnPxChartInitEvent): ISer
   return price;
 };
 
-const handleVwap = (
-  {chart, chartDataRef, setLegend}: OnPxChartInitEvent,
-  price: ISeriesApi<'Candlestick'>,
-): ISeriesApi<'Line'> => {
-  const vwap = chart.addLineSeries({
+const handleVwap = ({chartRef, chartDataRef}: OnPxChartInitEvent): ISeriesApi<'Line'> => {
+  if (!chartRef.current) {
+    throw new Error('Adding VWAP while the chart is not ready');
+  }
+
+  const vwap = chartRef.current.addLineSeries({
     color: '#5fa9ff',
     lineWidth: 3,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
   });
   vwap.setData(chartDataRef.current.data.map(toLineData('vwap')));
 
-  const lastPrice = chartDataRef.current.data.at(-1);
-
-  chart.subscribeCrosshairMove(({seriesPrices}) => {
-    setLegend((legend) => ({
-      ...legend,
-      vwap: seriesPrices.get(vwap) as BarPrice || lastPrice?.vwap || legend.vwap,
-      close: (seriesPrices.get(price) as BarPrices)?.close || lastPrice?.close || legend.close,
-    }));
-  });
-
   return vwap;
 };
 
-const handleSR = (
-  {chartDataRef}: OnPxChartInitEvent,
-  price: ISeriesApi<'Candlestick'>,
-): Record<number, IPriceLine> => {
+const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Record<number, IPriceLine> => {
+  const {chartDataRef} = e;
+
   const srLevelLines: Record<number, IPriceLine> = {};
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
 
@@ -72,8 +67,9 @@ const handleSR = (
 
 export const onPxChartInit: PxChartInitEventHandler = (e) => {
   const price = handlePrice(e);
-  const vwap = handleVwap(e, price);
+  const vwap = handleVwap(e);
   const srLevelLines = handleSR(e, price);
+  handleLegendUpdate(e, vwap, price);
 
   return {series: {price, vwap}, lines: {srLevelLines}};
 };

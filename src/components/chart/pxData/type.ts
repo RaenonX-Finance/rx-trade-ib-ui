@@ -28,10 +28,25 @@ export type PxChartReturnData = {
   lines: PxChartLines,
 };
 
-export type OnPxChartInitEvent = OnChartInitEvent<PxData, PxChartLegendData>;
+export type OnPxChartInitEvent = OnChartInitEvent<
+  PxData,
+  PxChartLegendData
+>;
 
-export type PxChartInitEventHandler = ChartInitEventHandler<PxData, PxChartReturnData, PxChartLegendData>;
+export type PxChartInitEventHandler = ChartInitEventHandler<
+  PxData,
+  PxChartReturnData,
+  PxChartLegendData
+>;
 
-export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<PxData, PxChartReturnData, PxChartLegendData>;
+export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<
+  PxData,
+  PxChartReturnData,
+  PxChartLegendData
+>;
 
-export type PxChartUpdatedEventHandler = ChartDataUpdatedEventHandler<PxData, PxChartReturnData, PxChartLegendData>;
+export type PxChartUpdatedEventHandler = ChartDataUpdatedEventHandler<
+  PxData,
+  PxChartReturnData,
+  PxChartLegendData
+>;

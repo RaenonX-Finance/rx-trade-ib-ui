@@ -1,44 +1,49 @@
 import React from 'react';
 
-import {createChart} from 'lightweight-charts';
+import {createChart, IChartApi} from 'lightweight-charts';
 
 import {useLayout} from '../../../hooks/layout/main';
 import {chartOptions} from './options';
-import {ChartRef, UseChartPayload, UseChartReturn} from './type';
+import {ChartObjectRef, UseChartPayload, UseChartReturn} from './type';
 
 
 export const useTradingViewChart = <T, R, L>({
   initChart,
-  calculateLegend,
-  setLegend,
+  onDataUpdated,
 }: UseChartPayload<T, R, L>): UseChartReturn<T, R, L> => {
-  const chartRef = React.useRef<ChartRef<R>>();
+  const chartRef = React.useRef<IChartApi>();
+  const chartObjectRef = React.useRef<ChartObjectRef<R>>();
   const {dimension} = useLayout();
 
-  const makeChart: UseChartReturn<T, R, L>['makeChart'] = ({element, chartDataRef}) => {
-    const chart = createChart(element, {
+  const makeChart: UseChartReturn<T, R, L>['makeChart'] = (payload) => {
+    const {chartContainer} = payload;
+
+    chartRef.current = createChart(chartContainer, {
       ...chartOptions,
-      width: element.clientWidth,
-      height: element.clientHeight,
+      width: chartContainer.clientWidth,
+      height: chartContainer.clientHeight,
     });
 
-    chartRef.current = {chart, element, initData: initChart({chart, chartDataRef, setLegend})};
-
-    return calculateLegend(chartDataRef.current);
+    chartObjectRef.current = {
+      chartContainer,
+      initData: initChart({chartRef, ...payload}),
+    };
   };
 
   React.useEffect(() => {
-    if (!chartRef.current) {
+    if (!chartObjectRef.current || !chartRef.current) {
       return;
     }
 
-    const {chart, element} = chartRef.current;
+    const {chartContainer} = chartObjectRef.current;
 
-    chart.applyOptions({
-      width: element.clientWidth,
-      height: element.clientHeight,
+    chartRef.current.applyOptions({
+      width: chartContainer.clientWidth,
+      height: chartContainer.clientHeight,
     });
+
+    onDataUpdated();
   }, [dimension]);
 
-  return {makeChart, ...chartRef.current};
+  return {makeChart, chartRef, chartObjectRef};
 };

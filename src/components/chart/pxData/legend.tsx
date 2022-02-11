@@ -5,11 +5,11 @@ import {PxChartLegendData} from './type';
 
 
 type Props = {
-  legendData: PxChartLegendData,
+  data: PxChartLegendData,
 };
 
-export const PxChartLegend = ({legendData}: Props) => {
-  const {vwap, close} = legendData;
+export const PxChartLegend = ({data}: Props) => {
+  const {vwap, close} = data;
 
   let vwapClassName: string;
   const vwapDiff = close - vwap;

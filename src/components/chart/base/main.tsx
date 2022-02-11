@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
-import {ChartDataUpdatedEventHandler, ChartInitCalculateLegend, ChartInitEventHandler} from './type';
+import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
 
 
 export type TradingViewChartProps<T, R, L> = {
@@ -14,61 +14,73 @@ export type TradingViewChartProps<T, R, L> = {
   initChart: ChartInitEventHandler<T, R, L>,
   chartData: T,
   onDataUpdated: ChartDataUpdatedEventHandler<T, R, L>,
-  calculateLegend: ChartInitCalculateLegend<T, L>,
-  renderLegendData: (legendData: L) => React.ReactNode,
+  calcObjects: ChartCalcObjects<T, L>,
+  renderObjects: ChartRenderObjects<T, L>,
 };
 
 export const TradingViewChart = <T, R, L>({
   height,
   initChart,
-  calculateLegend,
+  calcObjects,
   chartData,
   onDataUpdated,
-  renderLegendData,
+  renderObjects,
 }: TradingViewChartProps<T, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
-  const [legend, setLegend] = React.useState<L>(calculateLegend(chartData));
+  const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
 
-  const {makeChart, chart, initData} = useTradingViewChart({
-    initChart, calculateLegend, setLegend,
-  });
+  const setObject = {
+    legend: setLegend,
+  };
 
-  React.useEffect(() => {
+  const onDataUpdatedInternal = () => {
+    if (!chartObjectRef.current) {
+      return;
+    }
+
+    chartDataRef.current = chartData;
+    onDataUpdated({chartDataRef, setObject, ...chartObjectRef.current});
+  };
+
+  const onLoad = () => {
     if (!chartContainerRef.current) {
       return;
     }
 
     chartDataRef.current = chartData;
-    makeChart({chartDataRef, setLegend, element: chartContainerRef.current});
-  }, []);
+    makeChart({
+      chartDataRef,
+      setObject,
+      chartContainer: chartContainerRef.current,
+    });
+  };
 
-  React.useEffect(() => {
-    if (!chart || !initData) {
-      return;
-    }
+  const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
+    initChart,
+    onDataUpdated: onDataUpdatedInternal,
+  });
 
-    chartDataRef.current = chartData;
-    onDataUpdated({chart, chartDataRef, initData, setLegend});
-  }, [initData, chartData]);
+  React.useEffect(onLoad, []);
+  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData]);
 
   return (
     <>
       <div className="mb-2" style={{height}} ref={chartContainerRef}>
         <div className={styles['legend']}>
-          {renderLegendData(legend)}
+          {renderObjects.legend(chartData, legend)}
         </div>
       </div>
       <Row className="g-0 text-end">
         <Col>
           <Button size="sm" variant="outline-success" className="me-2" onClick={() => {
-            chart?.timeScale().scrollToRealTime();
+            chartRef.current?.timeScale().scrollToRealTime();
           }}>
             To Realtime
           </Button>
           <Button size="sm" variant="outline-warning" onClick={() => {
-            chart?.timeScale().resetTimeScale();
-            chart?.priceScale().applyOptions({autoScale: true});
+            chartRef.current?.timeScale().resetTimeScale();
+            chartRef.current?.priceScale().applyOptions({autoScale: true});
           }}>
             Reset Scales
           </Button>

@@ -6,7 +6,7 @@ import {toBarData, toLineData} from '../utils';
 import {srLevelColor} from './const';
 
 
-const handlePrice = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) => {
+const handlePrice = ({chartDataRef, initData, setObject}: OnPxChartUpdatedEvent) => {
   const {price} = initData.series;
 
   const lastPrice = chartDataRef.current.data.at(-1);
@@ -16,10 +16,10 @@ const handlePrice = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent)
   }
 
   price.update(toBarData(lastPrice));
-  setLegend((legend) => ({...legend, close: lastPrice.close}));
+  setObject.legend((legend) => ({...legend, close: lastPrice.close}));
 };
 
-const handleVwap = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) => {
+const handleVwap = ({chartDataRef, initData, setObject}: OnPxChartUpdatedEvent) => {
   const {vwap} = initData.series;
 
   const lastPrice = chartDataRef.current.data.at(-1);
@@ -31,7 +31,7 @@ const handleVwap = ({chartDataRef, initData, setLegend}: OnPxChartUpdatedEvent) 
   const pxLine = toLineData('vwap')(lastPrice);
 
   vwap.update(pxLine);
-  setLegend((legend) => ({...legend, vwap: pxLine.value}));
+  setObject.legend((legend) => ({...legend, vwap: pxLine.value}));
 };
 
 const handleSR = ({chartDataRef, initData}: OnPxChartUpdatedEvent) => {
