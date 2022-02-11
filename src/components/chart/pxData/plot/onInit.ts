@@ -3,7 +3,7 @@ import {IPriceLine, ISeriesApi, LastPriceAnimationMode, LineStyle} from 'lightwe
 import {getDecimalPlaces} from '../../../../utils/calc';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
-import {srLevelColor} from './const';
+import {srLevelColor, srLevelColorEnhanced} from './const';
 import {handleLegendUpdate} from './eventHandler';
 
 
@@ -35,7 +35,7 @@ const handleVwap = ({chartRef, chartDataRef}: OnPxChartInitEvent): ISeriesApi<'L
 
   const vwap = chartRef.current.addLineSeries({
     color: '#5fa9ff',
-    lineWidth: 3,
+    lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
   });
   vwap.setData(chartDataRef.current.data.map(toLineData('vwap')));
@@ -49,14 +49,14 @@ const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Reco
   const srLevelLines: Record<number, IPriceLine> = {};
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
 
-  chartDataRef.current.supportResistance.forEach(({level, diffCurrent}) => {
+  chartDataRef.current.supportResistance.forEach(({level, diffCurrent, type}) => {
     const title = `${diffCurrent > 0 ? '+' : ''}${diffCurrent.toFixed(decimalPlaces)}`;
 
     srLevelLines[level] = price.createPriceLine({
       price: level,
       axisLabelVisible: true,
       title,
-      color: srLevelColor,
+      color: (type.fractal && type.window) ? srLevelColorEnhanced : srLevelColor,
       lineWidth: 2,
       lineStyle: LineStyle.Dotted,
     });
