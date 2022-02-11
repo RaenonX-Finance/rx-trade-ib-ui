@@ -27,10 +27,10 @@ export const PxChartLegend = ({data}: Props) => {
   const diff = close - open;
   const diffUp = diff > 0;
 
-  const DataCell = ({title, value}: {title: string, value: number}) => (
+  const DataCell = ({title, value, large}: {title: string, value: number, large?: boolean}) => (
     <Row>
       <Col>{title}</Col>
-      <Col className="float-end">{value.toFixed(decimals)}</Col>
+      <Col className={`float-end ${large ? styles['price-lg'] : ''}`}>{value.toFixed(decimals)}</Col>
     </Row>
   );
 
@@ -43,7 +43,7 @@ export const PxChartLegend = ({data}: Props) => {
       <DataCell title="O" value={open}/>
       <DataCell title="H" value={high}/>
       <DataCell title="L" value={low}/>
-      <DataCell title="C" value={close}/>
+      <DataCell title="C" value={close} large/>
       <Row>
         <Col className={`${diffUp ? styles['diff-up'] : styles['diff-down']} text-end`}>
           {diffUp ? '+' : ''}{diff.toFixed(decimals)}

@@ -1,0 +1,12 @@
+div.period-timer {
+  border-radius: 0.5rem;
+  border: 1px solid #ff3737;
+  padding: 0 0.5rem;
+  width: 7rem;
+  text-align: end;
+
+  & > span {
+    font-family: monospace;
+    font-size: 1.7rem;
+  }
+}

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {PxDataChart} from '../../components/chart/pxData/main';
+import {PeriodTimer} from '../../components/periodTimer/main';
 import {TimeAgo} from '../../components/timeAgo/main';
 import {PxData} from '../../types/pxData';
 import styles from './individual.module.scss';
@@ -28,7 +29,14 @@ export const PriceDataIndividual = ({data}: Props) => {
 
   return (
     <div>
-      <h4>{data.contract.symbol}</h4>
+      <Row className="g-0 mb-2">
+        <Col>
+          <h3>{data.contract.symbol}</h3>
+        </Col>
+        <Col xs="auto">
+          <PeriodTimer periodMs={60000}/>
+        </Col>
+      </Row>
       <Row className="g-0 mb-2">
         <Col>
           <PxDataChart

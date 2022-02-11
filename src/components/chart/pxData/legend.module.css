@@ -34,5 +34,8 @@ div.legend > div > div.diff-up {
 div.legend > div > div.diff-down {
   color: #ef5350;
 }
+div.price-lg {
+  font-size: 1.3rem;
+}
 
 /*# sourceMappingURL=legend.module.css.map */
