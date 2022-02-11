@@ -23,6 +23,9 @@ export const handleLegendUpdate = (
     setObject.legend((legend) => ({
       ...legend,
       vwap: vwapPrice || last?.vwap || NaN,
+      open: lastPrice?.open || last?.open || NaN,
+      high: lastPrice?.high || last?.high || NaN,
+      low: lastPrice?.low || last?.low || NaN,
       close: lastPrice?.close || last?.close || NaN,
     }));
   });

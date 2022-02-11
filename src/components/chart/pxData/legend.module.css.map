@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["legend.module.scss"],"names":[],"mappings":"AACE;EAWE;EACA;EACA;EACA;;AAZE;EACE;;AAEA;EACE,OAUyB;;AAd7B;EACE;;AAEA;EACE,OAWqB;;AAfzB;EACE;;AAEA;EACE,OAYsB;;AAhB1B;EACE;;AAEA;EACE,OAa6B","file":"legend.module.css"}
+{"version":3,"sourceRoot":"","sources":["legend.module.scss"],"names":[],"mappings":"AAAA;EAcE;EACA;EACA;EACA;;AAZE;EACE;;AAEA;EACE,OAUyB;;AAd7B;EACE;;AAEA;EACE,OARK;;AAIT;EACE;;AAEA;EACE,OAPO;;AAGX;EACE;;AAEA;EACE,OAa6B;;AAGjC;EACE,OAzBO;;AA4BT;EACE,OA5BS","file":"legend.module.css"}

@@ -1,23 +1,34 @@
-div {
-  &.legend {
-    @mixin vwap-styling($name, $color) {
-      &.vwap-#{$name} {
-        border: 1px solid $color;
+div.legend {
+  $color-up: #26a69a;
+  $color-down: #ef5350;
 
-        & > span.vwap > span.vwap-text {
-          color: $color;
-        }
+  @mixin vwap-styling($name, $color) {
+    &.vwap-#{$name} {
+      border: 1px solid $color;
+
+      & > span.vwap > span.vwap-text {
+        color: $color;
       }
     }
+  }
 
-    padding: 0.4rem;
-    margin: 0.3rem;
-    border-radius: 0.5rem;
-    background-color: rgba(17 17 17 / 0.65);
+  padding: 0.4rem;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+  background-color: rgba(17 17 17 / 0.65);
 
-    @include vwap-styling(neutral, #fafafa);
-    @include vwap-styling(buy, #26a69a);
-    @include vwap-styling(sell, #ef5350);
-    @include vwap-styling(unavailable, #757575);
+  @include vwap-styling(neutral, #fafafa);
+  @include vwap-styling(buy, $color-up);
+  @include vwap-styling(sell, $color-down);
+  @include vwap-styling(unavailable, #757575);
+
+  & > div > div {
+    &.diff-up {
+      color: $color-up;
+    }
+
+    &.diff-down {
+      color: $color-down;
+    }
   }
 }

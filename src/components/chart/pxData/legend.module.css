@@ -28,5 +28,11 @@ div.legend.vwap-unavailable {
 div.legend.vwap-unavailable > span.vwap > span.vwap-text {
   color: #757575;
 }
+div.legend > div > div.diff-up {
+  color: #26a69a;
+}
+div.legend > div > div.diff-down {
+  color: #ef5350;
+}
 
 /*# sourceMappingURL=legend.module.css.map */

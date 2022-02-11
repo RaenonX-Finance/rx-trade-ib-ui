@@ -19,8 +19,12 @@ export type PxChartLines = {
 };
 
 export type PxChartLegendData = {
-  vwap: number,
+  decimals: number,
+  open: number,
+  high: number,
+  low: number,
   close: number,
+  vwap: number,
 };
 
 export type PxChartReturnData = {

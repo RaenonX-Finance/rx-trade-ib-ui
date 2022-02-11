@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import styles from './legend.module.scss';
 import {PxChartLegendData} from './type';
 
@@ -9,7 +12,7 @@ type Props = {
 };
 
 export const PxChartLegend = ({data}: Props) => {
-  const {vwap, close} = data;
+  const {vwap, open, high, low, close, decimals} = data;
 
   let vwapClassName: string;
   const vwapDiff = close - vwap;
@@ -21,12 +24,31 @@ export const PxChartLegend = ({data}: Props) => {
     vwapClassName = styles['vwap-neutral'];
   }
 
+  const diff = close - open;
+  const diffUp = diff > 0;
+
+  const DataCell = ({title, value}: {title: string, value: number}) => (
+    <Row>
+      <Col>{title}</Col>
+      <Col className="float-end">{value.toFixed(decimals)}</Col>
+    </Row>
+  );
+
   return (
     <div className={`${styles['legend']} ${vwapClassName}`}>
       <span className={styles['vwap']}>
-        VWAP:&nbsp;
+        VWAP&nbsp;
         <span className={styles['vwap-text']}>{vwap.toFixed(2)}</span>
-      </span>
+      </span><br/>
+      <DataCell title="O" value={open}/>
+      <DataCell title="H" value={high}/>
+      <DataCell title="L" value={low}/>
+      <DataCell title="C" value={close}/>
+      <Row>
+        <Col className={`${diffUp ? styles['diff-up'] : styles['diff-down']} text-end`}>
+          {diffUp ? '+' : ''}{diff.toFixed(decimals)}
+        </Col>
+      </Row>
     </div>
   );
 };
