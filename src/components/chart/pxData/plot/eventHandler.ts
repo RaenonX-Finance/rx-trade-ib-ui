@@ -14,9 +14,9 @@ export const handleLegendUpdate = (
     throw new Error('Legend to be handled while the chart is not ready');
   }
 
-  const last = chartDataRef.current.data.at(-1);
-
   chartRef.current.subscribeCrosshairMove(({seriesPrices}) => {
+    const last = chartDataRef.current.data.at(-1);
+
     const vwapPrice = seriesPrices.get(vwap) as BarPrice | undefined;
     const lastPrice = seriesPrices.get(price) as BarPrices | undefined;
 
