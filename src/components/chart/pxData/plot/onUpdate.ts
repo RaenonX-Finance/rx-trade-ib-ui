@@ -39,6 +39,8 @@ const handleSR = ({chartDataRef, initData}: OnPxChartUpdatedEvent) => {
 
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
 
+  const existingLevels = new Set(Object.keys(initData.lines.srLevelLines));
+
   chartDataRef.current.supportResistance.forEach(({level, diffCurrent}) => {
     const priceLine: IPriceLine = initData.lines.srLevelLines[level];
     const title = `${diffCurrent > 0 ? '+' : ''}${diffCurrent.toFixed(decimalPlaces)}`;
@@ -55,6 +57,12 @@ const handleSR = ({chartDataRef, initData}: OnPxChartUpdatedEvent) => {
         lineStyle: LineStyle.Dotted,
       });
     }
+
+    existingLevels.delete(level.toString());
+  });
+
+  existingLevels.forEach((leftOverLevels) => {
+    price.removePriceLine(initData.lines.srLevelLines[parseInt(leftOverLevels)]);
   });
 };
 
