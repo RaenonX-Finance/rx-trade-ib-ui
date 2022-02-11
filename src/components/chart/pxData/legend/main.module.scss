@@ -1,0 +1,38 @@
+$color-neutral: #fafafa;
+$color-up: #26a69a;
+$color-down: #ef5350;
+
+div {
+  &.legend {
+    @mixin vwap-styling($name, $color) {
+      &.vwap-#{$name} {
+        border: 1px solid $color;
+      }
+    }
+
+    padding: 0.4rem;
+    margin: 0.3rem;
+    border-radius: 0.5rem;
+    background-color: rgba(17 17 17 / 0.65);
+
+    @include vwap-styling(neutral, $color-neutral);
+    @include vwap-styling(up, $color-up);
+    @include vwap-styling(down, $color-down);
+  }
+
+  &.val-neutral {
+    color: $color-neutral;
+  }
+
+  &.val-up {
+    color: $color-up;
+  }
+
+  &.val-down {
+    color: $color-down;
+  }
+
+  &.price-lg {
+    font-size: 1.3rem;
+  }
+}

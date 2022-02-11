@@ -19,6 +19,7 @@ export type PxChartLines = {
 };
 
 export type PxChartLegendData = {
+  epochSec: number,
   decimals: number,
   open: number,
   high: number,

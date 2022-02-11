@@ -1,5 +1,6 @@
-import {BarPrice, BarPrices, ISeriesApi} from 'lightweight-charts';
+import {BarPrice, BarPrices, isBusinessDay, ISeriesApi} from 'lightweight-charts';
 
+import {businessDayToEpochSec} from '../../../../utils/chart';
 import {OnPxChartInitEvent} from '../type';
 
 
@@ -14,7 +15,7 @@ export const handleLegendUpdate = (
     throw new Error('Legend to be handled while the chart is not ready');
   }
 
-  chartRef.current.subscribeCrosshairMove(({seriesPrices}) => {
+  chartRef.current.subscribeCrosshairMove(({seriesPrices, time}) => {
     const last = chartDataRef.current.data.at(-1);
 
     const vwapPrice = seriesPrices.get(vwap) as BarPrice | undefined;
@@ -27,6 +28,11 @@ export const handleLegendUpdate = (
       high: lastPrice?.high || last?.high || NaN,
       low: lastPrice?.low || last?.low || NaN,
       close: lastPrice?.close || last?.close || NaN,
+      epochSec: (
+        time ?
+          (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
+          (last ? last.epochSec - (new Date()).getTimezoneOffset() * 60 : NaN)
+      ),
     }));
   });
 };

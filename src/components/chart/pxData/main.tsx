@@ -3,7 +3,7 @@ import React from 'react';
 import {PxData} from '../../../types/pxData';
 import {getDecimalPlaces} from '../../../utils/calc';
 import {TradingViewChart, TradingViewChartProps} from '../base/main';
-import {PxChartLegend} from './legend';
+import {PxChartLegend} from './legend/main';
 import {onPxChartInit} from './plot/onInit';
 import {onPxChartUpdated} from './plot/onUpdate';
 import {OnPxChartUpdatedEvent, PxChartLegendData, PxChartReturnData} from './type';
@@ -27,6 +27,7 @@ export const PxDataChart = ({onDataUpdated, ...props}: Props) => {
       }}
       calcObjects={{
         legend: (data) => ({
+          epochSec: NaN,
           decimals: getDecimalPlaces(data.contract.minTick),
           open: NaN,
           high: NaN,

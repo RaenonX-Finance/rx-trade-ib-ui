@@ -1,0 +1,29 @@
+div.legend {
+  padding: 0.4rem;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+  background-color: rgba(17, 17, 17, 0.65);
+}
+div.legend.vwap-neutral {
+  border: 1px solid #fafafa;
+}
+div.legend.vwap-up {
+  border: 1px solid #26a69a;
+}
+div.legend.vwap-down {
+  border: 1px solid #ef5350;
+}
+div.val-neutral {
+  color: #fafafa;
+}
+div.val-up {
+  color: #26a69a;
+}
+div.val-down {
+  color: #ef5350;
+}
+div.price-lg {
+  font-size: 1.3rem;
+}
+
+/*# sourceMappingURL=main.module.css.map */
