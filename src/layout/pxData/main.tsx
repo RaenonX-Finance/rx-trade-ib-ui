@@ -34,9 +34,18 @@ export const PriceDataMain = () => {
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET](data));
   };
 
+  const onPxInit = (message: string) => {
+    const data: PxData[] = JSON.parse(message);
+
+    dispatch(pxDataDispatchers[PxDataDispatcherName.INIT](data));
+  };
+
   React.useEffect(() => {
     socket.on('pxUpdated', onPxUpdated);
     socket.on('pxUpdatedMarket', onPxUpdatedMarket);
+    socket.on('pxInit', onPxInit);
+
+    socket.emit('pxInit', '');
 
     return () => {
       socket.off('pxUpdated', onPxUpdated);

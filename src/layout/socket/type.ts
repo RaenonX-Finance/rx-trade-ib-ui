@@ -1,9 +1,12 @@
 import {Socket} from 'socket.io-client';
 
 
+type SocketMessageHandler = (message: string) => void;
+
 export type SocketEvent = {
-  pxUpdated: (message: string) => void,
-  pxUpdatedMarket: (message: string) => void,
+  pxUpdated: SocketMessageHandler,
+  pxUpdatedMarket: SocketMessageHandler,
+  pxInit: SocketMessageHandler
 };
 
 export type DataSocket = Socket<SocketEvent>;

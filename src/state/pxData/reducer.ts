@@ -15,6 +15,12 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
+      pxDataDispatchers[PxDataDispatcherName.INIT],
+      (state: PxDataState, {payload}: {payload: PxData[]}) => {
+        payload.forEach((pxData) => state[pxData.uniqueIdentifier] = pxData);
+      },
+    );
+    builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
       (state: PxDataState, {payload}: {payload: PxData}) => {
         state[payload.uniqueIdentifier] = payload;
