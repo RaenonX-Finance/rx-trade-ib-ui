@@ -21,7 +21,12 @@ export const PeriodTimer = ({periodMs}: Props) => {
   const secToNextPeriod = msToNextPeriod / 1000;
 
   return (
-    <div className={styles['period-timer']}>
+    <div
+      className={
+        `${styles['period-timer']} ` +
+        `${secToNextPeriod < 10 ? styles['period-timer-closing'] : styles['period-timer-running']}`
+      }
+    >
       <span>{
         secToNextPeriod < 10 ?
           secToNextPeriod.toFixed(1) :

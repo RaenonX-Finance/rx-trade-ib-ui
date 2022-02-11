@@ -11,15 +11,21 @@ export type LegendDataCellProps = {
   value: number,
   decimals: number,
   large?: boolean,
-  useValueClass?: 'neutral' | 'up' | 'down',
+  useValueClass?: 'neutral' | 'up' | 'down' | boolean,
 };
 
-export const LegendDataCell = ({title, value, decimals, large, useValueClass}: LegendDataCellProps) => {
+export const LegendDataCell = ({title, value, decimals, large, useValueClass = false}: LegendDataCellProps) => {
   let valueClass = '';
-  if (useValueClass) {
-    if (value > 0 || useValueClass === 'up') {
+  if (typeof useValueClass === 'string') {
+    if (useValueClass === 'up') {
       valueClass = styles['val-up'];
-    } else if (value < 0 || useValueClass === 'down') {
+    } else if (useValueClass === 'down') {
+      valueClass = styles['val-down'];
+    }
+  } else if (useValueClass) {
+    if (value > 0) {
+      valueClass = styles['val-up'];
+    } else if (value < 0) {
       valueClass = styles['val-down'];
     }
   }

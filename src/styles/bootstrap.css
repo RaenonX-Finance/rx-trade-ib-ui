@@ -63,7 +63,7 @@ td {
   --bs-dark-info: #1172a7;
   --bs-dark-success: #0f7c49;
   --bs-dark-warning: #8a6a0b;
-  --bs-dark-orange: #b35a11;
+  --bs-dark-orange: #a6530f;
   --bs-dark-danger: #c91d2e;
   --bs-primary-rgb: 185, 119, 255;
   --bs-secondary-rgb: 108, 117, 125;
@@ -3456,37 +3456,37 @@ textarea.form-control-lg {
 
 .btn-dark-orange {
   color: #fff;
-  background-color: #b35a11;
+  background-color: #a6530f;
   background-image: var(--bs-gradient);
-  border-color: #b35a11;
+  border-color: #a6530f;
 }
 .btn-dark-orange:hover {
   color: #fff;
-  background-color: #984d0e;
+  background-color: #8d470d;
   background-image: var(--bs-gradient);
-  border-color: #8f480e;
+  border-color: #85420c;
 }
 .btn-check:focus + .btn-dark-orange, .btn-dark-orange:focus {
   color: #fff;
-  background-color: #984d0e;
+  background-color: #8d470d;
   background-image: var(--bs-gradient);
-  border-color: #8f480e;
-  box-shadow: 0 0 0 0.25rem rgba(190, 115, 53, 0.5);
+  border-color: #85420c;
+  box-shadow: 0 0 0 0.25rem rgba(179, 109, 51, 0.5);
 }
 .btn-check:checked + .btn-dark-orange, .btn-check:active + .btn-dark-orange, .btn-dark-orange:active, .btn-dark-orange.active, .show > .btn-dark-orange.dropdown-toggle {
   color: #fff;
-  background-color: #8f480e;
+  background-color: #85420c;
   background-image: none;
-  border-color: #86440d;
+  border-color: #7d3e0b;
 }
 .btn-check:checked + .btn-dark-orange:focus, .btn-check:active + .btn-dark-orange:focus, .btn-dark-orange:active:focus, .btn-dark-orange.active:focus, .show > .btn-dark-orange.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.25rem rgba(190, 115, 53, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(179, 109, 51, 0.5);
 }
 .btn-dark-orange:disabled, .btn-dark-orange.disabled {
   color: #fff;
-  background-color: #b35a11;
+  background-color: #a6530f;
   background-image: none;
-  border-color: #b35a11;
+  border-color: #a6530f;
 }
 
 .btn-dark-danger {
@@ -3875,27 +3875,27 @@ textarea.form-control-lg {
 }
 
 .btn-outline-dark-orange {
-  color: #b35a11;
-  border-color: #b35a11;
+  color: #a6530f;
+  border-color: #a6530f;
 }
 .btn-outline-dark-orange:hover {
   color: #fff;
-  background-color: #b35a11;
-  border-color: #b35a11;
+  background-color: #a6530f;
+  border-color: #a6530f;
 }
 .btn-check:focus + .btn-outline-dark-orange, .btn-outline-dark-orange:focus {
-  box-shadow: 0 0 0 0.25rem rgba(179, 90, 17, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(166, 83, 15, 0.5);
 }
 .btn-check:checked + .btn-outline-dark-orange, .btn-check:active + .btn-outline-dark-orange, .btn-outline-dark-orange:active, .btn-outline-dark-orange.active, .btn-outline-dark-orange.dropdown-toggle.show {
   color: #fff;
-  background-color: #b35a11;
-  border-color: #b35a11;
+  background-color: #a6530f;
+  border-color: #a6530f;
 }
 .btn-check:checked + .btn-outline-dark-orange:focus, .btn-check:active + .btn-outline-dark-orange:focus, .btn-outline-dark-orange:active:focus, .btn-outline-dark-orange.active:focus, .btn-outline-dark-orange.dropdown-toggle.show:focus {
-  box-shadow: 0 0 0 0.25rem rgba(179, 90, 17, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(166, 83, 15, 0.5);
 }
 .btn-outline-dark-orange:disabled, .btn-outline-dark-orange.disabled {
-  color: #b35a11;
+  color: #a6530f;
   background-color: transparent;
 }
 
@@ -5542,9 +5542,9 @@ textarea.form-control-lg {
 
 .alert-dark-orange {
   color: white;
-  background-color: #1b0e03;
+  background-color: #190c02;
   background-image: var(--bs-gradient);
-  border-color: #984d0e;
+  border-color: #8d470d;
 }
 .alert-dark-orange .alert-link {
   color: #cccccc;
@@ -6023,17 +6023,17 @@ textarea.form-control-lg {
 }
 
 .list-group-item-dark-orange {
-  color: #6b360a;
-  background-color: #f0decf;
+  color: #643209;
+  background-color: #edddcf;
 }
 .list-group-item-dark-orange.list-group-item-action:hover, .list-group-item-dark-orange.list-group-item-action:focus {
-  color: #6b360a;
-  background-color: #d8c8ba;
+  color: #643209;
+  background-color: #d5c7ba;
 }
 .list-group-item-dark-orange.list-group-item-action.active {
   color: #fff;
-  background-color: #6b360a;
-  border-color: #6b360a;
+  background-color: #643209;
+  border-color: #643209;
 }
 
 .list-group-item-dark-danger {
@@ -7151,10 +7151,10 @@ textarea.form-control-lg {
 }
 
 .link-dark-orange {
-  color: #b35a11;
+  color: #a6530f;
 }
 .link-dark-orange:hover, .link-dark-orange:focus {
-  color: #8f480e;
+  color: #85420c;
 }
 
 .link-dark-danger {
@@ -8531,7 +8531,7 @@ textarea.form-control-lg {
 }
 
 .bg-dark-orange {
-  background-color: #b35a11 !important;
+  background-color: #a6530f !important;
 }
 
 .bg-dark-danger {
