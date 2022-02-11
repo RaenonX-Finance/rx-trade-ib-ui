@@ -1,6 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import {PxData} from '../../types/pxData';
+import {PxDataMarket} from '../../types/pxDataMarket';
+import {updatePxDataBar} from '../../utils/calc';
 import {pxDataDispatchers} from './dispatchers';
 import {PX_DATA_STATE_NAME, PxDataDispatcherName, PxDataState} from './types';
 
@@ -16,6 +18,20 @@ const slice = createSlice({
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
       (state: PxDataState, {payload}: {payload: PxData}) => {
         state[payload.uniqueIdentifier] = payload;
+      },
+    );
+    builder.addCase(
+      pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET],
+      (state: PxDataState, {payload}: {payload: PxDataMarket}) => {
+        const {contractId, px} = payload;
+        const pxData = state[contractId];
+        const lastBar = pxData?.data.at(-1);
+
+        if (!lastBar) {
+          return;
+        }
+
+        pxData.data[pxData.data.length - 1] = updatePxDataBar(lastBar, px);
       },
     );
   },

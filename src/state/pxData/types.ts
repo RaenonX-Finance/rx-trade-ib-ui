@@ -6,6 +6,7 @@ export const PX_DATA_STATE_NAME = 'PxData';
 
 export enum PxDataDispatcherName {
   UPDATE = 'update',
+  UPDATE_MARKET = 'updateMarket'
 }
 
 export type PxDataState = StateBase & PxDataCollection;

@@ -8,6 +8,7 @@ import {usePxDataSelector} from '../../state/pxData/selector';
 import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
 import {PxData} from '../../types/pxData';
+import {PxDataMarket} from '../../types/pxDataMarket';
 import {SocketContext} from '../socket/socket';
 import {PriceDataIndividual} from './individual';
 
@@ -27,11 +28,19 @@ export const PriceDataMain = () => {
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE](pxData));
   };
 
+  const onPxUpdatedMarket = (message: string) => {
+    const data: PxDataMarket = JSON.parse(message);
+
+    dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET](data));
+  };
+
   React.useEffect(() => {
     socket.on('pxUpdated', onPxUpdated);
+    socket.on('pxUpdatedMarket', onPxUpdatedMarket);
 
     return () => {
       socket.off('pxUpdated', onPxUpdated);
+      socket.off('pxUpdatedMarket', onPxUpdatedMarket);
     };
   }, []);
 
