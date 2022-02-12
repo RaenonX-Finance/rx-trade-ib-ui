@@ -31,7 +31,7 @@ export const handleLegendUpdate = (
       epochSec: (
         time ?
           (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
-          (last ? last.epochSec - (new Date()).getTimezoneOffset() * 60 : NaN)
+          (last ? last.epochSec : NaN)
       ),
     }));
   });

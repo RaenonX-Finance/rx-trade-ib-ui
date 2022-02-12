@@ -9,6 +9,15 @@ import {PX_DATA_STATE_NAME, PxDataDispatcherName, PxDataState} from './types';
 
 const initialState: PxDataState = {};
 
+const fixPxDataEpochSec = (pxData: PxData): PxData => {
+  pxData.data = pxData.data.map((item) => ({
+    ...item,
+    epochSec: item.epochSec - (new Date()).getTimezoneOffset() * 60,
+  }));
+
+  return pxData;
+};
+
 const slice = createSlice({
   name: PX_DATA_STATE_NAME,
   initialState,
@@ -17,13 +26,13 @@ const slice = createSlice({
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.INIT],
       (state: PxDataState, {payload}: {payload: PxData[]}) => {
-        payload.forEach((pxData) => state[pxData.uniqueIdentifier] = pxData);
+        payload.forEach((pxData) => state[pxData.uniqueIdentifier] = fixPxDataEpochSec(pxData));
       },
     );
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
       (state: PxDataState, {payload}: {payload: PxData}) => {
-        state[payload.uniqueIdentifier] = payload;
+        state[payload.uniqueIdentifier] = fixPxDataEpochSec(payload);
       },
     );
     builder.addCase(

@@ -26,16 +26,20 @@ export const PxDataChart = ({onDataUpdated, ...props}: Props) => {
         onDataUpdated(e);
       }}
       calcObjects={{
-        legend: (data) => ({
-          epochSec: NaN,
-          decimals: getDecimalPlaces(data.contract.minTick),
-          open: NaN,
-          high: NaN,
-          low: NaN,
-          close: NaN,
-          vwap: NaN,
-          ...data.data.at(-1),
-        }),
+        legend: (data) => {
+          const last = data.data.at(-1);
+
+          return {
+            decimals: getDecimalPlaces(data.contract.minTick),
+            epochSec: NaN,
+            open: NaN,
+            high: NaN,
+            low: NaN,
+            close: NaN,
+            vwap: NaN,
+            ...last,
+          };
+        },
       }}
       renderObjects={{
         legend: (_, legend) => <PxChartLegend data={legend}/>,
