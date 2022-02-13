@@ -21,7 +21,11 @@ const handlePrice = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdated
   }
 
   price.update(toBarData(lastPrice));
-  setObject.legend((legend) => ({...legend, close: lastPrice.close}));
+  setObject.legend((legend) => ({
+    ...legend,
+    ...lastPrice,
+    latestBar: lastPrice,
+  }));
 };
 
 const handleVwap = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdatedEvent) => {
