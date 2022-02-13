@@ -26,7 +26,7 @@ export const useTradingViewChart = <T, R, L>({
 
     chartObjectRef.current = {
       chartContainer,
-      initData: initChart({chartRef, ...payload}),
+      initData: initChart({chartRef, chartObjectRef, ...payload}),
     };
   };
 

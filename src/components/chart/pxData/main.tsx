@@ -6,11 +6,11 @@ import {TradingViewChart, TradingViewChartProps} from '../base/main';
 import {PxChartLegend} from './legend/main';
 import {onPxChartInit} from './plot/onInit';
 import {onPxChartUpdated} from './plot/onUpdate';
-import {OnPxChartUpdatedEvent, PxChartLegendData, PxChartReturnData} from './type';
+import {OnPxChartUpdatedEvent, PxChartLegendData, PxChartInitData} from './type';
 
 
 type Props = Omit<
-  TradingViewChartProps<PxData, PxChartReturnData, PxChartLegendData>,
+  TradingViewChartProps<PxData, PxChartInitData, PxChartLegendData>,
   'initChart' | 'calcObjects' | 'renderObjects'
 > & {
   onDataUpdated: (e: OnPxChartUpdatedEvent) => void,

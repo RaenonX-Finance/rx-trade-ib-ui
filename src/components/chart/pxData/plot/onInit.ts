@@ -1,6 +1,7 @@
 import {IPriceLine, ISeriesApi, LastPriceAnimationMode, LineStyle} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../utils/calc';
+import {formatSignedNumber} from '../../../../utils/string';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
 import {srLevelColor, srLevelColorEnhanced} from './const';
@@ -50,7 +51,7 @@ const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Reco
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
 
   chartDataRef.current.supportResistance.forEach(({level, diffCurrent, type}) => {
-    const title = `${diffCurrent > 0 ? '+' : ''}${diffCurrent.toFixed(decimalPlaces)}`;
+    const title = formatSignedNumber(diffCurrent, decimalPlaces);
 
     srLevelLines[level] = price.createPriceLine({
       price: level,
@@ -71,5 +72,5 @@ export const onPxChartInit: PxChartInitEventHandler = (e) => {
   const srLevelLines = handleSR(e, price);
   handleLegendUpdate(e, vwap, price);
 
-  return {series: {price, vwap}, lines: {srLevelLines}};
+  return {series: {price, vwap, avgCost: null}, lines: {srLevelLines}};
 };

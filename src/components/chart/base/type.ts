@@ -2,6 +2,8 @@ import React from 'react';
 
 import {IChartApi} from 'lightweight-charts';
 
+import {PositionData} from '../../../types/position';
+
 
 export type ChartSetState<T> = (updateFunc: (prevLegend: T) => T) => void;
 
@@ -41,19 +43,20 @@ export type UseChartReturn<T, R, L> = {
   chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
 };
 
-export type OnChartChangedEventCommon<T, L> = {
+export type OnChartChangedEventCommon<T, R, L> = {
   chartDataRef: React.MutableRefObject<T>,
+  chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
   setObject: ChartSetStateObjects<L>,
 };
 
-export type OnChartInitEvent<T, L> = InitChartPayload<T, L> & OnChartChangedEventCommon<T, L> & {
+export type OnChartInitEvent<T, R, L> = InitChartPayload<T, L> & OnChartChangedEventCommon<T, R, L> & {
   chartRef: React.MutableRefObject<IChartApi | undefined>,
 };
 
-export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, L>) => R;
+export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R;
 
-export type OnChartDataUpdatedEvent<T, R, L> = OnChartChangedEventCommon<T, L> & {
-  initData: R,
+export type OnChartDataUpdatedEvent<T, R, L> = OnChartChangedEventCommon<T, R, L> & {
+  position: PositionData | undefined,
 };
 
 export type ChartDataUpdatedEventHandler<T, R, L> = (e: OnChartDataUpdatedEvent<T, R, L>) => void;

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {epochSecToFormattedString} from '../../../../utils/chart';
+import {formatSignedNumber} from '../../../../utils/string';
 import {PxChartLegendData} from '../type';
 import {LegendDataCell, LegendDataCellProps} from './cell';
 import styles from './main.module.scss';
@@ -38,7 +39,7 @@ export const PxChartLegend = ({data}: Props) => {
       <LegendDataCell title="C" value={close} decimals={decimals} large/>
       <Row>
         <Col className={`${diffUp ? styles['val-up'] : styles['val-down']} text-end`}>
-          {diffUp ? '+' : ''}{diff.toFixed(decimals)}
+          {formatSignedNumber(diff, decimals)}
         </Col>
       </Row>
       <Row className="text-center">
