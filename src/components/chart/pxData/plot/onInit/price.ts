@@ -1,4 +1,4 @@
-import {ISeriesApi} from 'lightweight-charts';
+import {ISeriesApi, LineStyle} from 'lightweight-charts';
 
 import {OnPxChartInitEvent} from '../../type';
 import {toBarData} from '../../utils';
@@ -14,6 +14,8 @@ export const handlePrice = ({chartRef, chartDataRef, setObject}: OnPxChartInitEv
     priceFormat: {
       minMove: chartDataRef.current.contract.minTick,
     },
+    priceLineWidth: 1,
+    priceLineStyle: LineStyle.Solid,
   });
   price.setData(chartDataRef.current.data.map(toBarData));
 
