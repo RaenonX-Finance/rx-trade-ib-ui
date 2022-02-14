@@ -4,8 +4,8 @@ import {getDecimalPlaces} from '../../../../utils/calc';
 import {formatSignedNumber} from '../../../../utils/string';
 import {OnPxChartInitEvent, PxChartInitEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
-import {srLevelColor, srLevelColorEnhanced} from './const';
 import {handleLegendUpdate} from './eventHandler';
+import {getSrLevelColor} from './utils';
 
 
 const handlePrice = ({chartRef, chartDataRef, setObject}: OnPxChartInitEvent): ISeriesApi<'Candlestick'> => {
@@ -57,7 +57,7 @@ const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Reco
       price: level,
       axisLabelVisible: true,
       title,
-      color: (type.fractal && type.window) ? srLevelColorEnhanced : srLevelColor,
+      color: getSrLevelColor(type),
       lineWidth: 2,
       lineStyle: LineStyle.Dotted,
     });

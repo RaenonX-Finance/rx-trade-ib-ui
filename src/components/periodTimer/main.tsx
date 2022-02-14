@@ -11,11 +11,11 @@ export const PeriodTimer = ({periodMs}: Props) => {
   const [msToNextPeriod, setMsToNextPeriod] = React.useState(periodMs - Date.now() % periodMs);
 
   React.useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const intervalId = setInterval(() => {
       setMsToNextPeriod(periodMs - Date.now() % periodMs);
     }, 100);
 
-    return () => clearTimeout(timeoutId);
+    return () => clearInterval(intervalId);
   });
 
   const secToNextPeriod = msToNextPeriod / 1000;

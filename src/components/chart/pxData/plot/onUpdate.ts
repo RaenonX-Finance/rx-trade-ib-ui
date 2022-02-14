@@ -4,7 +4,8 @@ import {getDecimalPlaces} from '../../../../utils/calc';
 import {formatSignedNumber} from '../../../../utils/string';
 import {OnPxChartUpdatedEvent, PxChartUpdatedEventHandler} from '../type';
 import {toBarData, toLineData} from '../utils';
-import {avgCostColor, srLevelColor} from './const';
+import {avgCostColor} from './const';
+import {getSrLevelColor} from './utils';
 
 
 const handlePrice = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdatedEvent) => {
@@ -58,7 +59,7 @@ const handleSR = ({chartDataRef, chartObjectRef}: OnPxChartUpdatedEvent) => {
 
   const existingLevels = new Set(Object.keys(chartObjectRef.current.initData.lines.srLevelLines));
 
-  for (const {level, diffCurrent} of chartDataRef.current.supportResistance) {
+  for (const {level, type, diffCurrent} of chartDataRef.current.supportResistance) {
     const priceLine: IPriceLine = chartObjectRef.current.initData.lines.srLevelLines[level];
     const title = formatSignedNumber(diffCurrent, decimalPlaces);
 
@@ -69,7 +70,7 @@ const handleSR = ({chartDataRef, chartObjectRef}: OnPxChartUpdatedEvent) => {
         price: level,
         axisLabelVisible: true,
         title,
-        color: srLevelColor,
+        color: getSrLevelColor(type),
         lineWidth: 2,
         lineStyle: LineStyle.Dotted,
       });
@@ -79,12 +80,15 @@ const handleSR = ({chartDataRef, chartObjectRef}: OnPxChartUpdatedEvent) => {
   }
 
   for (const leftOverLevel of Array.from(existingLevels)) {
-    price.removePriceLine(chartObjectRef.current.initData.lines.srLevelLines[parseInt(leftOverLevel)]);
+    const level = parseInt(leftOverLevel);
+
+    price.removePriceLine(chartObjectRef.current.initData.lines.srLevelLines[level]);
+    delete chartObjectRef.current.initData.lines.srLevelLines[level];
   }
 };
 
 const handleAvgCost = ({chartDataRef, chartObjectRef, position}: OnPxChartUpdatedEvent) => {
-  if (!chartObjectRef.current || !position) {
+  if (!chartObjectRef.current || !position || !position.avgPx) {
     return;
   }
 

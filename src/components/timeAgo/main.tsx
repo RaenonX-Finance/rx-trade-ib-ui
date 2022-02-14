@@ -15,13 +15,13 @@ export const TimeAgo = React.forwardRef<HTMLSpanElement, Props>((
   const [secAgo, setSecAgo] = React.useState((Date.now() - epochSec) / 1000);
 
   React.useEffect(() => {
-    const timeoutId = setTimeout(
+    const intervalId = setInterval(
       () => setSecAgo((Date.now() - epochSec) / 1000),
       updateMs,
     );
 
-    return () => clearTimeout(timeoutId);
-  });
+    return () => clearInterval(intervalId);
+  }, []);
 
   return <span ref={ref} className={className}>{format(secAgo)}</span>;
 });
