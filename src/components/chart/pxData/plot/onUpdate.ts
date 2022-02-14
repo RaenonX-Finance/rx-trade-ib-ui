@@ -20,7 +20,7 @@ const handlePrice = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdated
     return;
   }
 
-  price.update(toBarData(lastPrice));
+  price.setData(chartDataRef.current.data.map(toBarData));
   setObject.legend((legend) => ({
     ...legend,
     ...lastPrice,
