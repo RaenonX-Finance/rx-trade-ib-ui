@@ -49,8 +49,6 @@ export const PriceDataMain = () => {
   const onPositionRequested = (message: string) => {
     const data: Position = JSON.parse(message);
 
-    console.log('posRequested', data);
-
     dispatch(positionDispatchers[PositionDispatcherName.UPDATE](data));
   };
 
@@ -69,6 +67,14 @@ export const PriceDataMain = () => {
       socket.off('position', onPositionRequested);
     };
   }, []);
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      socket.emit('position', '');
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  });
 
   return (
     <Row className="mb-3 g-3">
