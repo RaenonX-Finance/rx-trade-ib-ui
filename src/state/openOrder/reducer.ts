@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {OpenOrder} from '../../types/openOrder';
+import {wholeStateUpdateReducer} from '../common';
 import {openOrderDispatchers} from './dispatchers';
 import {OPEN_ORDER_STATE_NAME, OpenOrderDispatcherName, OpenOrderState} from './types';
 
@@ -12,14 +12,7 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      openOrderDispatchers[OpenOrderDispatcherName.UPDATE],
-      (state: OpenOrderState, {payload}: {payload: OpenOrder}) => {
-        // Remove all open orders then add it back
-        Object.keys(state).forEach((key) => delete state[parseInt(key)]);
-        Object.entries(payload).forEach(([key, value]) => state[parseInt(key)] = value);
-      },
-    );
+    builder.addCase(openOrderDispatchers[OpenOrderDispatcherName.UPDATE], wholeStateUpdateReducer());
   },
 });
 

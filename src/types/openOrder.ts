@@ -1,6 +1,5 @@
-export type OrderSide = 'BUY' | 'SELL';
+import {OrderSide, OrderType, SecurityIdentifier} from './common';
 
-export type OrderType = 'LMT' | 'STP';
 
 export type OpenOrderData = {
   identifier: number,
@@ -10,4 +9,4 @@ export type OpenOrderData = {
   price: number,
 };
 
-export type OpenOrder = Record<number, OpenOrderData[]>;
+export type OpenOrder = Record<SecurityIdentifier, OpenOrderData[]>;

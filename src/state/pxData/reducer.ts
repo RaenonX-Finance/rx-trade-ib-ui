@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {PxData} from '../../types/pxData';
 import {PxDataMarket} from '../../types/pxDataMarket';
 import {updatePxDataBar} from '../../utils/calc';
+import {updateEpochSecToLocal} from '../../utils/time';
 import {pxDataDispatchers} from './dispatchers';
 import {PX_DATA_STATE_NAME, PxDataDispatcherName, PxDataState} from './types';
 
@@ -12,7 +13,7 @@ const initialState: PxDataState = {};
 const fixPxDataEpochSec = (pxData: PxData): PxData => {
   pxData.data = pxData.data.map((item) => ({
     ...item,
-    epochSec: item.epochSec - (new Date()).getTimezoneOffset() * 60,
+    epochSec: updateEpochSecToLocal(item.epochSec),
   }));
 
   return pxData;

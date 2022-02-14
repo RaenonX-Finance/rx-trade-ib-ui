@@ -1,3 +1,6 @@
+import {SecurityIdentifier} from './common';
+
+
 export type PxDataBar = {
   epochSec: number,
   amplitude: number,
@@ -30,5 +33,5 @@ export type PxData = {
 };
 
 export type PxDataCollection = {
-  [identifier: number]: PxData,
+  [identifier: SecurityIdentifier]: PxData,
 };

@@ -3,6 +3,9 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {executionDispatchers} from '../../state/execution/dispatchers';
+import {useExecutionSelector} from '../../state/execution/selector';
+import {ExecutionDispatcherName} from '../../state/execution/types';
 import {openOrderDispatchers} from '../../state/openOrder/dispatchers';
 import {useOpenOrderSelector} from '../../state/openOrder/selector';
 import {OpenOrderDispatcherName} from '../../state/openOrder/types';
@@ -13,6 +16,7 @@ import {pxDataDispatchers} from '../../state/pxData/dispatchers';
 import {usePxDataSelector} from '../../state/pxData/selector';
 import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
+import {Execution} from '../../types/execution';
 import {OpenOrder} from '../../types/openOrder';
 import {Position} from '../../types/position';
 import {PxData} from '../../types/pxData';
@@ -27,6 +31,7 @@ export const PriceDataMain = () => {
   const pxData = usePxDataSelector();
   const position = usePositionSelector();
   const openOrder = useOpenOrderSelector();
+  const execution = useExecutionSelector();
 
   if (!socket) {
     return <>Not Connected</>;
@@ -36,6 +41,9 @@ export const PriceDataMain = () => {
     const pxData: PxData = JSON.parse(message);
 
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE](pxData));
+    socket.emit('position', '');
+    socket.emit('openOrder', '');
+    socket.emit('execution', '');
   };
 
   const onPxUpdatedMarket = (message: string) => {
@@ -44,32 +52,37 @@ export const PriceDataMain = () => {
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET](data));
   };
 
-  const onPositionRequested = (message: string) => {
+  const onPosition = (message: string) => {
     const data: Position = JSON.parse(message);
 
     dispatch(positionDispatchers[PositionDispatcherName.UPDATE](data));
   };
 
-  const onOpenOrderRequested = (message: string) => {
+  const onOpenOrder = (message: string) => {
     const data: OpenOrder = JSON.parse(message);
 
     dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE](data));
+  };
+
+  const onExecution = (message: string) => {
+    const data: Execution = JSON.parse(message);
+
+    dispatch(executionDispatchers[ExecutionDispatcherName.UPDATE](data));
   };
 
   const onPxInit = (message: string) => {
     const data: PxData[] = JSON.parse(message);
 
     dispatch(pxDataDispatchers[PxDataDispatcherName.INIT](data));
-    socket.emit('position', '');
-    socket.emit('openOrder', '');
   };
 
   React.useEffect(() => {
     socket.on('pxUpdated', onPxUpdated);
     socket.on('pxUpdatedMarket', onPxUpdatedMarket);
     socket.on('pxInit', onPxInit);
-    socket.on('position', onPositionRequested);
-    socket.on('openOrder', onOpenOrderRequested);
+    socket.on('position', onPosition);
+    socket.on('openOrder', onOpenOrder);
+    socket.on('execution', onExecution);
 
     socket.emit('pxInit', '');
 
@@ -77,20 +90,11 @@ export const PriceDataMain = () => {
       socket.off('pxUpdated', onPxUpdated);
       socket.off('pxUpdatedMarket', onPxUpdatedMarket);
       socket.off('pxInit', onPxInit);
-      socket.off('position', onPositionRequested);
-      socket.off('openOrder', onOpenOrderRequested);
+      socket.off('position', onPosition);
+      socket.off('openOrder', onOpenOrder);
+      socket.on('execution', onExecution);
     };
   }, []);
-
-  React.useEffect(() => {
-    // Poll position and open orders every 3 sec
-    const intervalId = setInterval(() => {
-      socket.emit('position', '');
-      socket.emit('openOrder', '');
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  });
 
   return (
     <Row className="mb-3 g-3">
@@ -101,6 +105,7 @@ export const PriceDataMain = () => {
             payload={{
               position: position[data.uniqueIdentifier],
               openOrder: openOrder[data.uniqueIdentifier],
+              execution: execution[data.uniqueIdentifier],
             }}
           />
         </Col>

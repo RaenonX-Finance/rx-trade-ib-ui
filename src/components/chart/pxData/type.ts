@@ -1,5 +1,6 @@
 import {IPriceLine, ISeriesApi} from 'lightweight-charts';
 
+import {ExecutionGroup} from '../../../types/execution';
 import {OpenOrderData} from '../../../types/openOrder';
 import {PositionData} from '../../../types/position';
 import {PxData} from '../../../types/pxData';
@@ -40,6 +41,7 @@ export type PxChartInitData = {
 export type PxChartPayload = {
   position: PositionData | undefined,
   openOrder: OpenOrderData[] | undefined,
+  execution: ExecutionGroup[] | undefined,
 };
 
 export type OnPxChartInitEvent = OnChartInitEvent<
