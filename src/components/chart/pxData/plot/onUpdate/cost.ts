@@ -9,7 +9,20 @@ import {avgCostColor} from '../const';
 export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChartUpdatedEvent) => {
   const {position} = payload;
 
-  if (!chartObjectRef.current || !position || !position.avgPx) {
+  if (!chartObjectRef.current) {
+    return;
+  }
+
+  const {price, avgCost} = chartObjectRef.current.initData.series;
+
+  if (!position || !position.avgPx) {
+    // No position, related line should be removed, if exists
+    chartObjectRef.current.initData.series.avgCost = null;
+
+    if (avgCost) {
+      price.removePriceLine(avgCost);
+    }
+
     return;
   }
 
@@ -20,7 +33,6 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
   }
 
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
-  const avgCost = chartObjectRef.current.initData.series.avgCost;
   const title = `Avg Px (${formatSignedNumber(lastPrice.close - position.avgPx, decimalPlaces)})`;
 
   if (avgCost) {
@@ -29,8 +41,6 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
       title,
     });
   } else {
-    const {price} = chartObjectRef.current.initData.series;
-
     chartObjectRef.current.initData.series.avgCost = price.createPriceLine({
       price: position.avgPx,
       axisLabelVisible: true,

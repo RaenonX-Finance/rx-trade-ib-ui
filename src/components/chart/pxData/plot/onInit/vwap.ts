@@ -11,6 +11,7 @@ export const handleVwap = ({chartRef, chartDataRef}: OnPxChartInitEvent): ISerie
 
   const vwap = chartRef.current.addLineSeries({
     color: '#5fa9ff',
+    title: 'VWAP',
     lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
   });
