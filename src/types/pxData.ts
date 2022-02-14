@@ -14,6 +14,7 @@ export type PxDataBar = {
 export type PxDataContract = {
   symbol: string,
   minTick: number,
+  multiplier: number,
 };
 
 export type PxDataSupportResistance = {

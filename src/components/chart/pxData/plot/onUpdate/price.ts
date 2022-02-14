@@ -1,8 +1,9 @@
+import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
 import {toBarData} from '../../utils';
 
 
-export const handlePrice = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdatedEvent) => {
+export const handlePrice = ({chartDataRef, chartObjectRef, setObject, payload}: OnPxChartUpdatedEvent) => {
   if (!chartObjectRef.current) {
     return;
   }
@@ -15,7 +16,19 @@ export const handlePrice = ({chartDataRef, chartObjectRef, setObject}: OnPxChart
     return;
   }
 
+  const {position} = payload;
+
+  const {symbol, multiplier} = chartDataRef.current.contract;
+  let title = symbol;
+  if (position) {
+    const {close} = lastPrice;
+    const {avgPx, position: quantity} = position;
+
+    title += ` (${formatSignedNumber((close - avgPx) * quantity * multiplier, 2)})`;
+  }
+
   price.setData(chartDataRef.current.data.map(toBarData));
+  price.applyOptions({title});
   setObject.legend((legend) => ({
     ...legend,
     ...lastPrice,

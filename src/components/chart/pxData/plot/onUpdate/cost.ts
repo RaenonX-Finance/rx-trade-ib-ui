@@ -34,7 +34,7 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
   }
 
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
-  const title = `Avg Px / ${position} (${formatSignedNumber(lastPrice.close - avgPx, decimalPlaces)})`;
+  const title = `Avg Px / ${position} (${formatSignedNumber(avgPx - lastPrice.close, decimalPlaces)})`;
 
   if (avgCost) {
     avgCost.applyOptions({
