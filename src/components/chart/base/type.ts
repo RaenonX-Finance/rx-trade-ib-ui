@@ -2,8 +2,6 @@ import React from 'react';
 
 import {IChartApi} from 'lightweight-charts';
 
-import {PositionData} from '../../../types/position';
-
 
 export type ChartSetState<T> = (updateFunc: (prevLegend: T) => T) => void;
 
@@ -55,8 +53,8 @@ export type OnChartInitEvent<T, R, L> = InitChartPayload<T, L> & OnChartChangedE
 
 export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R;
 
-export type OnChartDataUpdatedEvent<T, R, L> = OnChartChangedEventCommon<T, R, L> & {
-  position: PositionData | undefined,
+export type OnChartDataUpdatedEvent<T, P, R, L> = OnChartChangedEventCommon<T, R, L> & {
+  payload: P,
 };
 
-export type ChartDataUpdatedEventHandler<T, R, L> = (e: OnChartDataUpdatedEvent<T, R, L>) => void;
+export type ChartDataUpdatedEventHandler<T, P, R, L> = (e: OnChartDataUpdatedEvent<T, P, R, L>) => void;

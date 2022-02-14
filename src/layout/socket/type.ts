@@ -8,6 +8,7 @@ export type SocketEvent = {
   pxUpdatedMarket: SocketMessageHandler,
   pxInit: SocketMessageHandler,
   position: SocketMessageHandler,
+  openOrder: SocketMessageHandler,
 };
 
 export type DataSocket = Socket<SocketEvent>;

@@ -4,19 +4,19 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {PxDataChart} from '../../components/chart/pxData/main';
+import {PxChartPayload} from '../../components/chart/pxData/type';
 import {PeriodTimer} from '../../components/periodTimer/main';
 import {TimeAgo} from '../../components/timeAgo/main';
-import {PositionData} from '../../types/position';
 import {PxData} from '../../types/pxData';
 import styles from './individual.module.scss';
 
 
 type Props = {
   pxData: PxData,
-  position: PositionData | undefined,
+  payload: PxChartPayload,
 };
 
-export const PriceDataIndividual = ({pxData, position}: Props) => {
+export const PriceDataIndividual = ({pxData, payload}: Props) => {
   const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
 
@@ -47,7 +47,7 @@ export const PriceDataIndividual = ({pxData, position}: Props) => {
         <Col>
           <PxDataChart
             chartData={pxData}
-            position={position}
+            payload={payload}
             height={700}
           />
         </Col>

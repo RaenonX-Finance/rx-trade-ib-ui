@@ -4,9 +4,9 @@ import {PxData} from '../../../types/pxData';
 import {getDecimalPlaces} from '../../../utils/calc';
 import {TradingViewChart, TradingViewChartProps} from '../base/main';
 import {PxChartLegend} from './legend/main';
-import {onPxChartInit} from './plot/onInit';
-import {onPxChartUpdated} from './plot/onUpdate';
-import {OnPxChartUpdatedEvent, PxChartLegendData, PxChartInitData} from './type';
+import {onPxChartInit} from './plot/onInit/main';
+import {onPxChartUpdated} from './plot/onUpdate/main';
+import {PxChartLegendData, PxChartInitData, PxChartPayload} from './type';
 
 
 type Props = Omit<

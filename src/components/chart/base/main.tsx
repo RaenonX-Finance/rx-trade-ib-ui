@@ -4,31 +4,30 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {PositionData} from '../../../types/position';
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
 import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
 
 
-export type TradingViewChartProps<T, R, L> = {
+export type TradingViewChartProps<T, P, R, L> = {
   height: number,
   initChart: ChartInitEventHandler<T, R, L>,
   chartData: T,
-  position: PositionData | undefined,
-  onDataUpdated: ChartDataUpdatedEventHandler<T, R, L>,
+  payload: P,
+  onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L>,
   calcObjects: ChartCalcObjects<T, L>,
   renderObjects: ChartRenderObjects<T, L>,
 };
 
-export const TradingViewChart = <T, R, L>({
+export const TradingViewChart = <T, P, R, L>({
   height,
   initChart,
   calcObjects,
   chartData,
-  position,
+  payload,
   onDataUpdated,
   renderObjects,
-}: TradingViewChartProps<T, R, L>) => {
+}: TradingViewChartProps<T, P, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
@@ -39,7 +38,7 @@ export const TradingViewChart = <T, R, L>({
 
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
-    onDataUpdated({chartDataRef, chartObjectRef, setObject, position});
+    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload});
   };
 
   const onLoad = () => {
@@ -61,7 +60,7 @@ export const TradingViewChart = <T, R, L>({
   });
 
   React.useEffect(onLoad, []);
-  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData, position]);
+  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData, payload]);
 
   return (
     <>

@@ -3,6 +3,9 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {openOrderDispatchers} from '../../state/openOrder/dispatchers';
+import {useOpenOrderSelector} from '../../state/openOrder/selector';
+import {OpenOrderDispatcherName} from '../../state/openOrder/types';
 import {positionDispatchers} from '../../state/position/dispatchers';
 import {usePositionSelector} from '../../state/position/selector';
 import {PositionDispatcherName} from '../../state/position/types';
@@ -10,6 +13,7 @@ import {pxDataDispatchers} from '../../state/pxData/dispatchers';
 import {usePxDataSelector} from '../../state/pxData/selector';
 import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
+import {OpenOrder} from '../../types/openOrder';
 import {Position} from '../../types/position';
 import {PxData} from '../../types/pxData';
 import {PxDataMarket} from '../../types/pxDataMarket';
@@ -22,6 +26,7 @@ export const PriceDataMain = () => {
   const dispatch = useDispatch();
   const pxData = usePxDataSelector();
   const position = usePositionSelector();
+  const openOrder = useOpenOrderSelector();
 
   if (!socket) {
     return <>Not Connected</>;
@@ -39,17 +44,24 @@ export const PriceDataMain = () => {
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET](data));
   };
 
+  const onPositionRequested = (message: string) => {
+    const data: Position = JSON.parse(message);
+
+    dispatch(positionDispatchers[PositionDispatcherName.UPDATE](data));
+  };
+
+  const onOpenOrderRequested = (message: string) => {
+    const data: OpenOrder = JSON.parse(message);
+
+    dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE](data));
+  };
+
   const onPxInit = (message: string) => {
     const data: PxData[] = JSON.parse(message);
 
     dispatch(pxDataDispatchers[PxDataDispatcherName.INIT](data));
     socket.emit('position', '');
-  };
-
-  const onPositionRequested = (message: string) => {
-    const data: Position = JSON.parse(message);
-
-    dispatch(positionDispatchers[PositionDispatcherName.UPDATE](data));
+    socket.emit('openOrder', '');
   };
 
   React.useEffect(() => {
@@ -57,6 +69,7 @@ export const PriceDataMain = () => {
     socket.on('pxUpdatedMarket', onPxUpdatedMarket);
     socket.on('pxInit', onPxInit);
     socket.on('position', onPositionRequested);
+    socket.on('openOrder', onOpenOrderRequested);
 
     socket.emit('pxInit', '');
 
@@ -65,6 +78,7 @@ export const PriceDataMain = () => {
       socket.off('pxUpdatedMarket', onPxUpdatedMarket);
       socket.off('pxInit', onPxInit);
       socket.off('position', onPositionRequested);
+      socket.off('openOrder', onOpenOrderRequested);
     };
   }, []);
 
@@ -73,7 +87,7 @@ export const PriceDataMain = () => {
     const intervalId = setInterval(() => {
       socket.emit('position', '');
       socket.emit('openOrder', '');
-    }, 3000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   });
@@ -82,7 +96,13 @@ export const PriceDataMain = () => {
     <Row className="mb-3 g-3">
       {Object.values(pxData).map((data) => (
         <Col key={data.uniqueIdentifier} xs={6}>
-          <PriceDataIndividual pxData={data} position={position[data.uniqueIdentifier]}/>
+          <PriceDataIndividual
+            pxData={data}
+            payload={{
+              position: position[data.uniqueIdentifier],
+              openOrder: openOrder[data.uniqueIdentifier],
+            }}
+          />
         </Col>
       ))}
     </Row>
