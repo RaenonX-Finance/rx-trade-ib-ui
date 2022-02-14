@@ -13,6 +13,7 @@ export type ExecutionGroup = {
   avgTotalProfit: number | null,
   avgTotalLoss: number | null,
   avgTotalRrRatio: number | null,
+  totalPnL: number | null,
 };
 
 export type Execution = Record<SecurityIdentifier, ExecutionGroup[]>;

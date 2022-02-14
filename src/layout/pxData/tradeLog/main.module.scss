@@ -1,0 +1,12 @@
+$color-up: #26a69a;
+$color-down: #ef5350;
+
+td {
+  &.up {
+    color: $color-up;
+  }
+
+  &.down {
+    color: $color-down;
+  }
+}

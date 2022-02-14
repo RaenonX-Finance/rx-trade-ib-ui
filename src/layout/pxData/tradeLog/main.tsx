@@ -5,10 +5,25 @@ import Table from 'react-bootstrap/Table';
 import {execSideColor} from '../../../components/chart/pxData/plot/const';
 import {ExecutionGroup} from '../../../types/execution';
 import {epochSecToFormattedString} from '../../../utils/chart';
+import {formatSignedNumber} from '../../../utils/string';
+import styles from './main.module.scss';
 
 
 type Props = {
   executions: ExecutionGroup[],
+};
+
+const getClassName = (val: number | null): string => {
+  if (!val) {
+    return '';
+  }
+  if (val > 0) {
+    return styles['up'];
+  }
+  if (val < 0) {
+    return styles['down'];
+  }
+  return '';
 };
 
 export const TradeLog = ({executions}: Props) => {
@@ -19,6 +34,7 @@ export const TradeLog = ({executions}: Props) => {
           <th>Date</th>
           <th>Avg Px</th>
           <th>P&L</th>
+          <th>P&L Sum</th>
           <th>Side</th>
           <th>Profit</th>
           <th>Loss</th>
@@ -36,13 +52,18 @@ export const TradeLog = ({executions}: Props) => {
               <tr key={idx}>
                 <td>{epochSecToFormattedString(execution.epochSec)}</td>
                 <td>{execution.avgPx}</td>
-                <td>{execution.realizedPnL?.toFixed(2)}</td>
+                <td className={getClassName(execution.realizedPnL)}>
+                  {execution.realizedPnL && formatSignedNumber(execution.realizedPnL, 2)}
+                </td>
+                <td className={getClassName(execution.totalPnL)}>
+                  {execution.totalPnL && formatSignedNumber(execution.totalPnL, 2)}
+                </td>
                 <td style={{color: execSideColor[execution.side]}}>{execution.side}</td>
-                <td>{execution.realizedPnL && execution.profit}</td>
-                <td>{execution.realizedPnL && execution.loss}</td>
+                <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
+                <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
                 <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
-                <td>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
-                <td>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
+                <td className={styles['up']}>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
+                <td className={styles['down']}>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
                 <td>{execution.realizedPnL && execution.avgTotalRrRatio?.toFixed(3)}</td>
               </tr>
             ))
