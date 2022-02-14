@@ -18,7 +18,6 @@ export type PxDataContract = {
 
 export type PxDataSupportResistance = {
   level: number,
-  diffCurrent: number,
   type: {
     window: boolean,
     fractal: boolean,
