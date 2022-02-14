@@ -29,6 +29,10 @@ export const PriceDataIndividual = ({pxData, position}: Props) => {
     }
   }, [lastUpdated]);
 
+  React.useEffect(() => {
+    setLastUpdated(Date.now());
+  }, [pxData]);
+
   return (
     <div>
       <Row className="g-0 mb-2">
@@ -45,7 +49,6 @@ export const PriceDataIndividual = ({pxData, position}: Props) => {
             chartData={pxData}
             position={position}
             height={700}
-            onDataUpdated={() => setLastUpdated(Date.now())}
           />
         </Col>
       </Row>

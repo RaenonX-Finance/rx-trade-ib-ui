@@ -69,8 +69,10 @@ export const PriceDataMain = () => {
   }, []);
 
   React.useEffect(() => {
+    // Poll position and open orders every 3 sec
     const intervalId = setInterval(() => {
       socket.emit('position', '');
+      socket.emit('openOrder', '');
     }, 3000);
 
     return () => clearInterval(intervalId);

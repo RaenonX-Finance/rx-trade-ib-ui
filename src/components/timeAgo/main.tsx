@@ -21,7 +21,7 @@ export const TimeAgo = React.forwardRef<HTMLSpanElement, Props>((
     );
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [epochSec]);
 
   return <span ref={ref} className={className}>{format(secAgo)}</span>;
 });
