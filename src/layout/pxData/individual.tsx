@@ -9,6 +9,7 @@ import {PeriodTimer} from '../../components/periodTimer/main';
 import {TimeAgo} from '../../components/timeAgo/main';
 import {PxData} from '../../types/pxData';
 import styles from './individual.module.scss';
+import {TradeLog} from './tradeLog/main';
 
 
 type Props = {
@@ -19,6 +20,8 @@ type Props = {
 export const PriceDataIndividual = ({pxData, payload}: Props) => {
   const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
+
+  const {execution} = payload;
 
   React.useEffect(() => {
     if (updateIndicatorRef.current) {
@@ -48,7 +51,7 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
           <PxDataChart
             chartData={pxData}
             payload={payload}
-            height={700}
+            height={500}
           />
         </Col>
       </Row>
@@ -63,6 +66,14 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
           />
         </Col>
       </Row>
+      {
+        execution &&
+        <Row>
+          <Col>
+            <TradeLog executions={execution}/>
+          </Col>
+        </Row>
+      }
     </div>
   );
 };

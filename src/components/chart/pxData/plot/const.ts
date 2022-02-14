@@ -1,4 +1,4 @@
-import {OrderSide} from '../../../../types/common';
+import {ExecutionSide, OrderSide} from '../../../../types/common';
 
 
 export const srLevelColor = 'rgba(199, 56, 255, 0.6)';
@@ -18,4 +18,9 @@ export const tradeExitColor = 'rgba(255, 119, 92, 0.8)';
 export const openOrderColor: {[side in OrderSide]: string} = {
   BUY: buyThemeColor,
   SELL: sellThemeColor,
+};
+
+export const execSideColor: {[side in ExecutionSide]: string} = {
+  BOT: tradeEntryColor,
+  SLD: tradeExitColor,
 };
