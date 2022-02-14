@@ -55,7 +55,7 @@ rules:
 
   linebreak-style:
     - error
-    - windows
+    - unix
 
   max-len:
     - error
