@@ -20,7 +20,7 @@ export const handlePrice = ({chartDataRef, chartObjectRef, setObject, payload}: 
 
   const {symbol, multiplier} = chartDataRef.current.contract;
   let title = symbol;
-  if (position) {
+  if (position?.position) {
     const {close} = lastPrice;
     const {avgPx, position: quantity} = position;
 
