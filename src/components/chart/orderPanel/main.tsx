@@ -24,13 +24,13 @@ export const OrderPanel = ({state, setState}: OrderPanelProps) => {
 
   return (
     <Offcanvas show={show} onHide={handleClose} placement="bottom" scroll style={{height: '40vh'}}>
-      <div className="mb-2"/>
+      <div className="mb-0"/>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           Order Entry
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <hr className="my-2"/>
+      <hr className="my-0"/>
       <Offcanvas.Body>
         <Row>
           <Col xs={8}/>

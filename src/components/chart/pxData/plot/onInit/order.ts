@@ -17,14 +17,22 @@ export const handlePxClick = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlest
     }
 
     let px = price.coordinateToPrice(point.y) as number;
-    if (!px) {
+    const currentPx = chartDataRef.current.data.at(-1);
+
+    if (!px || !currentPx) {
       return;
     }
 
     px = forceMinTick(px, chartDataRef.current.contract.minTick);
 
-    // FIXME: According to `px`, current avg post, current position,
-    //  position relative to current px to determine order type, side
-    setObject.order((state) => ({...state, show: true, order: {...state.order, px}}));
+    setObject.order((state) => ({
+      ...state,
+      show: true,
+      order: {
+        ...state.order,
+        side: px > currentPx.close ? 'SELL' : 'BUY',
+        px,
+      },
+    }));
   });
 };
