@@ -51,7 +51,7 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
           <PxDataChart
             chartData={pxData}
             payload={payload}
-            height={500}
+            height={700}
           />
         </Col>
       </Row>

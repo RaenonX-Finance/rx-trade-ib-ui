@@ -36,15 +36,15 @@ export const OrderPanel = ({state, setState}: OrderPanelProps) => {
           <Col xs={8}/>
           <Col xs={4}>
             <OrderPanelSide order={order} setOrder={setStateOrder}/>
+            <OrderPanelQuantity order={order} setOrder={setStateOrder}/>
             <Row>
-              <Col>
-                <OrderPanelQuantity order={order} setOrder={setStateOrder}/>
-              </Col>
               <Col>
                 <OrderPanelPx order={order} setOrder={setStateOrder} pxTick={pxTick}/>
               </Col>
+              <Col>
+                <OrderPanelControl state={state} setState={setState}/>
+              </Col>
             </Row>
-            <OrderPanelControl state={state} setState={setState}/>
           </Col>
         </Row>
       </Offcanvas.Body>

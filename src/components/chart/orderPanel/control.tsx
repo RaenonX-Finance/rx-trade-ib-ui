@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import {SocketContext} from '../../../layout/socket/socket';
 import {OrderSocketMessage} from '../../../types/order';
 import {forceMinTick} from '../../../utils/calc';
-import styles from './control.module.scss';
+import styles from './main.module.scss';
 import {OrderPanelProps} from './type';
 
 
