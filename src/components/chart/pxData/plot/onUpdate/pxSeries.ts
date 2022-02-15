@@ -27,7 +27,7 @@ const removePxLines = <T>(
   }
 
   for (const leftOverLevel of Array.from(pxLevelsToRemove)) {
-    const level = parseInt(leftOverLevel);
+    const level = parseFloat(leftOverLevel);
     const pxLine = chartObjectRef.current.initData.lines[objectKey][level];
 
     delete chartObjectRef.current.initData.lines[objectKey][level];
