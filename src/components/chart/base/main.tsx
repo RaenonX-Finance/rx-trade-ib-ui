@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {OrderPanel} from '../orderPanel/main';
+import {OrderPanelState} from '../orderPanel/type';
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
 import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
@@ -31,14 +33,16 @@ export const TradingViewChart = <T, P, R, L>({
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
+  const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
 
   const setObject = {
     legend: setLegend,
+    order: setOrder,
   };
 
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
-    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload});
+    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order});
   };
 
   const onLoad = () => {
@@ -60,10 +64,11 @@ export const TradingViewChart = <T, P, R, L>({
   });
 
   React.useEffect(onLoad, []);
-  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData, payload]);
+  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData, payload, order]);
 
   return (
     <>
+      {order.show && <OrderPanel state={order} setState={setOrder}/>}
       <div className="mb-2" style={{height}} ref={chartContainerRef}>
         <div className={styles['legend']}>
           {renderObjects.legend(chartData, legend)}

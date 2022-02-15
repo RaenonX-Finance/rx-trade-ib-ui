@@ -35,6 +35,16 @@ export const PxDataChart = (props: Props) => {
             ...last,
           };
         },
+        order: (data) => ({
+          show: false,
+          order: {
+            type: 'LMT',
+            side: 'BUY',
+            quantity: 1,
+            px: NaN,
+          },
+          pxTick: data.contract.minTick,
+        }),
       }}
       renderObjects={{
         legend: (_, legend) => <PxChartLegend data={legend}/>,

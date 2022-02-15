@@ -2,22 +2,30 @@ import React from 'react';
 
 import {IChartApi} from 'lightweight-charts';
 
+import {OrderPanelState} from '../orderPanel/type';
+
 
 export type ChartSetState<T> = (updateFunc: (prevLegend: T) => T) => void;
 
-export type ChartStatefulObjects<L> = {
+export type ChartStatefulObjects<L, O> = {
   legend: L,
+  order: O,
 };
 
-export type ChartSetStateObjects<L> = ChartStatefulObjects<ChartSetState<L>>;
+export type ChartSetStateObjects<L> = ChartStatefulObjects<ChartSetState<L>, ChartSetState<OrderPanelState>>;
 
 export type ChartInitCalcObject<T, D> = (data: T) => D;
 
-export type ChartCalcObjects<T, L> = ChartStatefulObjects<ChartInitCalcObject<T, L>>;
+export type ChartCalcObjects<T, L> = ChartStatefulObjects<
+  ChartInitCalcObject<T, L>,
+  ChartInitCalcObject<T, OrderPanelState>
+>;
 
 export type ChartRenderObject<T, D> = (chartData: T, object: D) => React.ReactNode;
 
-export type ChartRenderObjects<T, L> = ChartStatefulObjects<ChartRenderObject<T, L>>;
+export type ChartRenderObjects<T, L> = {
+  legend: ChartRenderObject<T, L>,
+};
 
 export type ChartObjectRef<T> = {
   chartContainer: HTMLDivElement,
@@ -55,6 +63,7 @@ export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R
 
 export type OnChartDataUpdatedEvent<T, P, R, L> = OnChartChangedEventCommon<T, R, L> & {
   payload: P,
+  order: OrderPanelState,
 };
 
 export type ChartDataUpdatedEventHandler<T, P, R, L> = (e: OnChartDataUpdatedEvent<T, P, R, L>) => void;

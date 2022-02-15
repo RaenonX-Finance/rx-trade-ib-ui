@@ -15,7 +15,6 @@ export const getDecimalPlaces = (val: number): number => {
   return parseInt(str.split('-')[1]) || 0;
 };
 
-
 export const updatePxDataBar = (bar: PxDataBar, nexPx: number): PxDataBar => {
   return {
     ...bar,
@@ -23,4 +22,8 @@ export const updatePxDataBar = (bar: PxDataBar, nexPx: number): PxDataBar => {
     low: Math.min(bar.low, nexPx),
     close: nexPx,
   };
+};
+
+export const forceMinTick = (val: number, tick: number): number => {
+  return val - val % tick;
 };
