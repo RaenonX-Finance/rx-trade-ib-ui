@@ -55,7 +55,7 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
           />
         </Col>
       </Row>
-      <Row className="g-0 text-end">
+      <Row className="g-0 mb-2 text-end">
         <Col>
           <TimeAgo
             ref={updateIndicatorRef}
@@ -66,14 +66,7 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
           />
         </Col>
       </Row>
-      {
-        execution &&
-        <Row>
-          <Col>
-            <TradeLog executions={execution}/>
-          </Col>
-        </Row>
-      }
+      {execution && <TradeLog executions={execution} symbol={pxData.contract.symbol}/>}
     </div>
   );
 };

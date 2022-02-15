@@ -1,74 +1,47 @@
 import React from 'react';
 
-import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Row from 'react-bootstrap/Row';
 
-import {execSideColor} from '../../../components/chart/pxData/plot/const';
 import {ExecutionGroup} from '../../../types/execution';
-import {epochSecToFormattedString} from '../../../utils/chart';
-import {formatSignedNumber} from '../../../utils/string';
-import styles from './main.module.scss';
+import {TradeLogOffcanvas} from './body';
 
 
 type Props = {
   executions: ExecutionGroup[],
+  symbol: string,
 };
 
-const getClassName = (val: number | null): string => {
-  if (!val) {
-    return '';
-  }
-  if (val > 0) {
-    return styles['up'];
-  }
-  if (val < 0) {
-    return styles['down'];
-  }
-  return '';
-};
+export const TradeLog = ({executions, symbol}: Props) => {
+  const [show, setShow] = React.useState(false);
 
-export const TradeLog = ({executions}: Props) => {
   return (
-    <Table responsive>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Avg Px</th>
-          <th>P&L</th>
-          <th>P&L Sum</th>
-          <th>Side</th>
-          <th>Profit</th>
-          <th>Loss</th>
-          <th>WR</th>
-          <th>Avg Profit</th>
-          <th>Avg Loss</th>
-          <th>R/R</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          [...executions]
-            .sort((a, b) => b.epochSec - a.epochSec)
-            .map((execution, idx) => (
-              <tr key={idx}>
-                <td>{epochSecToFormattedString(execution.epochSec)}</td>
-                <td>{execution.avgPx}</td>
-                <td className={getClassName(execution.realizedPnL)}>
-                  {execution.realizedPnL && formatSignedNumber(execution.realizedPnL, 2)}
-                </td>
-                <td className={getClassName(execution.totalPnL)}>
-                  {execution.totalPnL && formatSignedNumber(execution.totalPnL, 2)}
-                </td>
-                <td style={{color: execSideColor[execution.side]}}>{execution.side}</td>
-                <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
-                <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
-                <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
-                <td className={styles['up']}>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
-                <td className={styles['down']}>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
-                <td>{execution.realizedPnL && execution.avgTotalRrRatio?.toFixed(3)}</td>
-              </tr>
-            ))
-        }
-      </tbody>
-    </Table>
+    <>
+      <Row className="text-end">
+        <Col>
+          <Button variant="info" onClick={() => setShow(true)}>{`Show Trade Log (${symbol})`}</Button>
+        </Col>
+      </Row>
+      <Offcanvas
+        show={show}
+        onHide={() => setShow(false)}
+        placement="bottom"
+        scroll
+        style={{height: '65vh'}}
+      >
+        <div className="mb-2"/>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            {`Trade Log (${symbol})`}
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <hr/>
+        <Offcanvas.Body>
+          <TradeLogOffcanvas executions={executions}/>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
   );
 };
