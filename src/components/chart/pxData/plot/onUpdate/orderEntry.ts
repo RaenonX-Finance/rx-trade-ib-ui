@@ -28,11 +28,12 @@ export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChar
 
   const {side, px, quantity} = order.order;
 
+  const orderPx = forceMinTick(px, minTick);
   const diff = formatSignedNumber(px - currentPx.close, decimalPlaces);
-  const title = `${side} @ ${forceMinTick(px, minTick)} x ${quantity} (${diff})`;
+  const title = `${side} @ ${orderPx} x ${quantity} (${diff})`;
 
   const commonOptions = {
-    price: px,
+    price: orderPx,
     title,
     color: openOrderColor[side],
   };

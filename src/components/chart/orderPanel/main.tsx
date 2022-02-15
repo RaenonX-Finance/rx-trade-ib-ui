@@ -6,18 +6,14 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
 import {Order} from '../../../types/order';
-import {OrderEntryPx} from './px';
-import {OrderEntryQuantity} from './quantity';
-import {OrderEntrySide} from './side';
-import {OrderPanelState} from './type';
+import {OrderPanelControl} from './control';
+import {OrderPanelPx} from './px';
+import {OrderPanelQuantity} from './quantity';
+import {OrderPanelSide} from './side';
+import {OrderPanelProps} from './type';
 
 
-type Props = {
-  state: OrderPanelState,
-  setState: React.Dispatch<React.SetStateAction<OrderPanelState>>,
-};
-
-export const OrderPanel = ({state, setState}: Props) => {
+export const OrderPanel = ({state, setState}: OrderPanelProps) => {
   const {show, order, pxTick} = state;
 
   const setStateOrder = (order: DeepPartial<Order>) => {
@@ -27,7 +23,7 @@ export const OrderPanel = ({state, setState}: Props) => {
   const handleClose = () => setState({...state, show: false});
 
   return (
-    <Offcanvas show={show} onHide={handleClose} placement="bottom" scroll>
+    <Offcanvas show={show} onHide={handleClose} placement="bottom" scroll style={{height: '40vh'}}>
       <div className="mb-2"/>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
@@ -37,14 +33,18 @@ export const OrderPanel = ({state, setState}: Props) => {
       <hr className="my-2"/>
       <Offcanvas.Body>
         <Row>
-          <Col>
-            <OrderEntrySide order={order} setOrder={setStateOrder}/>
-          </Col>
-          <Col>
-            <OrderEntryQuantity order={order} setOrder={setStateOrder}/>
-          </Col>
-          <Col>
-            <OrderEntryPx order={order} setOrder={setStateOrder} pxTick={pxTick}/>
+          <Col xs={8}/>
+          <Col xs={4}>
+            <OrderPanelSide order={order} setOrder={setStateOrder}/>
+            <Row>
+              <Col>
+                <OrderPanelQuantity order={order} setOrder={setStateOrder}/>
+              </Col>
+              <Col>
+                <OrderPanelPx order={order} setOrder={setStateOrder} pxTick={pxTick}/>
+              </Col>
+            </Row>
+            <OrderPanelControl state={state} setState={setState}/>
           </Col>
         </Row>
       </Offcanvas.Body>

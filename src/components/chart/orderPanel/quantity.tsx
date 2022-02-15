@@ -6,9 +6,9 @@ import Form from 'react-bootstrap/Form';
 import {OrderPanelCommonProps} from './type';
 
 
-export const OrderEntryQuantity = ({order, setOrder}: OrderPanelCommonProps) => {
+export const OrderPanelQuantity = ({order, setOrder}: OrderPanelCommonProps) => {
   return (
-    <FloatingLabel label="Quantity">
+    <FloatingLabel label="Quantity" className="mb-3">
       <Form.Control
         size="lg"
         type="number"

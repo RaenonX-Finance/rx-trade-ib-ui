@@ -6,3 +6,7 @@ export type Order = {
   quantity: number,
   px: number,
 };
+
+export type OrderSocketMessage = Omit<Order, 'px'> & {
+  px: number | null,
+};

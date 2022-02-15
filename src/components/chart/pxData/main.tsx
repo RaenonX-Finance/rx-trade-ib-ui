@@ -38,7 +38,6 @@ export const PxDataChart = (props: Props) => {
         order: (data) => ({
           show: false,
           order: {
-            type: 'LMT',
             side: 'BUY',
             quantity: 1,
             px: NaN,

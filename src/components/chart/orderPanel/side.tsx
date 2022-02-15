@@ -13,9 +13,9 @@ const sideToVariant: {[side in OrderSide]: ButtonVariant} = {
   SELL: 'danger',
 };
 
-export const OrderEntrySide = ({order, setOrder}: OrderPanelCommonProps) => {
+export const OrderPanelSide = ({order, setOrder}: OrderPanelCommonProps) => {
   return (
-    <>
+    <div className="mb-3">
       <h4>Order Side</h4>
       <ButtonGroup className="w-100">
         {Object.entries(orderSideText).map(([side, text], idx) => (
@@ -38,6 +38,6 @@ export const OrderEntrySide = ({order, setOrder}: OrderPanelCommonProps) => {
           </ToggleButton>
         ))}
       </ButtonGroup>
-    </>
+    </div>
   );
 };

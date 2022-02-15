@@ -11,9 +11,9 @@ type Props = OrderPanelCommonProps & {
   pxTick: number,
 };
 
-export const OrderEntryPx = ({order, setOrder, pxTick}: Props) => {
+export const OrderPanelPx = ({order, setOrder, pxTick}: Props) => {
   return (
-    <FloatingLabel label="Px">
+    <FloatingLabel label="Px" className="mb-3">
       <Form.Control
         size="lg"
         type="number"
