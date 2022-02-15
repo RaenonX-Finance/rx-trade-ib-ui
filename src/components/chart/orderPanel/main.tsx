@@ -6,7 +6,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
 import {Order} from '../../../types/order';
-import {OrderEntryType} from './orderType';
 import {OrderEntryPx} from './px';
 import {OrderEntryQuantity} from './quantity';
 import {OrderEntrySide} from './side';
@@ -40,9 +39,6 @@ export const OrderPanel = ({state, setState}: Props) => {
         <Row>
           <Col>
             <OrderEntrySide order={order} setOrder={setStateOrder}/>
-          </Col>
-          <Col>
-            <OrderEntryType order={order} setOrder={setStateOrder}/>
           </Col>
           <Col>
             <OrderEntryQuantity order={order} setOrder={setStateOrder}/>

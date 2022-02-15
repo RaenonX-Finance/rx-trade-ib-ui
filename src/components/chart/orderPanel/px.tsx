@@ -23,7 +23,6 @@ export const OrderEntryPx = ({order, setOrder, pxTick}: Props) => {
           setOrder({px: forceMinTick(parseFloat(e.currentTarget.value), pxTick)})
         )}
         step={pxTick}
-        disabled={order.type === 'MKT'}
       />
     </FloatingLabel>
   );

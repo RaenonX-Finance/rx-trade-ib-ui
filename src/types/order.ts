@@ -1,8 +1,7 @@
-import {OrderSide, OrderType} from './common';
+import {OrderSide} from './common';
 
 
 export type Order = {
-  type: OrderType,
   side: OrderSide,
   quantity: number,
   px: number,
