@@ -41,6 +41,7 @@ export const PxDataChart = (props: Props) => {
             side: 'BUY',
             quantity: 1,
             px: NaN,
+            identifier: NaN,
           },
           pxTick: data.contract.minTick,
         }),

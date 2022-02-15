@@ -16,20 +16,23 @@ export const handlePxClick = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlest
       return;
     }
 
+    const pxData = chartDataRef.current;
+
     let px = price.coordinateToPrice(point.y) as number;
-    const currentPx = chartDataRef.current.data.at(-1);
+    const currentPx = pxData.data.at(-1);
 
     if (!px || !currentPx) {
       return;
     }
 
-    px = forceMinTick(px, chartDataRef.current.contract.minTick);
+    px = forceMinTick(px, pxData.contract.minTick);
 
     setObject.order((state) => ({
       ...state,
       show: true,
       order: {
         ...state.order,
+        identifier: pxData.uniqueIdentifier,
         side: px > currentPx.close ? 'SELL' : 'BUY',
         px,
       },

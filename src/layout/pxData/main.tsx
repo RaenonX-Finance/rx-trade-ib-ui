@@ -37,13 +37,24 @@ export const PriceDataMain = () => {
     return <>Not Connected</>;
   }
 
+  const refreshStatus = () => {
+    socket.emit('position', '');
+    socket.emit('openOrder', '');
+    socket.emit('execution', '');
+  };
+
+  const onPxInit = (message: string) => {
+    const data: PxData[] = JSON.parse(message);
+
+    dispatch(pxDataDispatchers[PxDataDispatcherName.INIT](data));
+    refreshStatus();
+  };
+
   const onPxUpdated = (message: string) => {
     const pxData: PxData = JSON.parse(message);
 
     dispatch(pxDataDispatchers[PxDataDispatcherName.UPDATE](pxData));
-    socket.emit('position', '');
-    socket.emit('openOrder', '');
-    socket.emit('execution', '');
+    refreshStatus();
   };
 
   const onPxUpdatedMarket = (message: string) => {
@@ -68,12 +79,6 @@ export const PriceDataMain = () => {
     const data: Execution = JSON.parse(message);
 
     dispatch(executionDispatchers[ExecutionDispatcherName.UPDATE](data));
-  };
-
-  const onPxInit = (message: string) => {
-    const data: PxData[] = JSON.parse(message);
-
-    dispatch(pxDataDispatchers[PxDataDispatcherName.INIT](data));
   };
 
   React.useEffect(() => {
