@@ -24,9 +24,10 @@ const getClassName = (val: number | null): string => {
 
 type Props = {
   executions: ExecutionGroup[],
+  showNoPnL: boolean
 };
 
-export const TradeLogOffcanvas = ({executions}: Props) => {
+export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
   return (
     <Table responsive>
       <thead>
@@ -45,29 +46,28 @@ export const TradeLogOffcanvas = ({executions}: Props) => {
         </tr>
       </thead>
       <tbody>
-        {
-          [...executions]
-            .sort((a, b) => b.epochSec - a.epochSec)
-            .map((execution, idx) => (
-              <tr key={idx}>
-                <td>{epochSecToFormattedString(execution.epochSec)}</td>
-                <td>{execution.avgPx}</td>
-                <td className={getClassName(execution.realizedPnL)}>
-                  {execution.realizedPnL && formatSignedNumber(execution.realizedPnL, 2)}
-                </td>
-                <td className={getClassName(execution.totalPnL)}>
-                  {execution.totalPnL && formatSignedNumber(execution.totalPnL, 2)}
-                </td>
-                <td style={{color: execSideColor[execution.side]}}>{execution.side}</td>
-                <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
-                <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
-                <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
-                <td className={styles['up']}>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
-                <td className={styles['down']}>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
-                <td>{execution.realizedPnL && execution.avgTotalRrRatio?.toFixed(3)}</td>
-              </tr>
-            ))
-        }
+        {[...executions]
+          .filter(({realizedPnL}) => showNoPnL ? true : !!realizedPnL)
+          .sort((a, b) => b.epochSec - a.epochSec)
+          .map((execution, idx) => (
+            <tr key={idx}>
+              <td>{epochSecToFormattedString(execution.epochSec)}</td>
+              <td>{execution.avgPx}</td>
+              <td className={getClassName(execution.realizedPnL)}>
+                {execution.realizedPnL && formatSignedNumber(execution.realizedPnL, 2)}
+              </td>
+              <td className={getClassName(execution.totalPnL)}>
+                {execution.totalPnL && formatSignedNumber(execution.totalPnL, 2)}
+              </td>
+              <td style={{color: execSideColor[execution.side]}}>{execution.side}</td>
+              <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
+              <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
+              <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
+              <td className={styles['up']}>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
+              <td className={styles['down']}>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
+              <td>{execution.realizedPnL && execution.avgTotalRrRatio?.toFixed(3)}</td>
+            </tr>
+          ))}
       </tbody>
     </Table>
   );

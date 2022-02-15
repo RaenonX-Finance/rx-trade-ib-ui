@@ -16,6 +16,7 @@ type Props = {
 
 export const TradeLog = ({executions, symbol}: Props) => {
   const [show, setShow] = React.useState(false);
+  const [showNoPnL, setShowNoPnL] = React.useState(true);
 
   return (
     <>
@@ -31,15 +32,21 @@ export const TradeLog = ({executions, symbol}: Props) => {
         scroll
         style={{height: '65vh'}}
       >
-        <div className="mb-2"/>
+        <div className="mb-1"/>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
             {`Trade Log (${symbol})`}
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <hr/>
+        <Row className="text-end mb-2 p-2">
+          <Col>
+            <Button variant="info" onClick={() => setShowNoPnL(!showNoPnL)}>
+              {`${showNoPnL ? 'Hide' : 'Show'} no PnL`}
+            </Button>
+          </Col>
+        </Row>
         <Offcanvas.Body>
-          <TradeLogOffcanvas executions={executions}/>
+          <TradeLogOffcanvas executions={executions} showNoPnL={showNoPnL}/>
         </Offcanvas.Body>
       </Offcanvas>
     </>
