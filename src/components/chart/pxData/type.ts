@@ -37,6 +37,7 @@ export type PxChartLegendData = {
 export type PxChartInitData = {
   series: PxChartSeries,
   lines: PxChartLines,
+  position: PositionData | null,
 };
 
 export type PxChartPayload = {

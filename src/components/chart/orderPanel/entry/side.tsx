@@ -4,9 +4,9 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import {ButtonVariant} from 'react-bootstrap/types';
 
-import {OrderSide, orderSideText} from '../../../types/common';
+import {OrderSide, orderSideText} from '../../../../types/common';
+import {OrderPanelCommonProps} from '../type';
 import styles from './main.module.scss';
-import {OrderPanelCommonProps} from './type';
 
 
 const sideToVariant: {[side in OrderSide]: ButtonVariant} = {
@@ -30,6 +30,7 @@ export const OrderPanelSide = ({order, setOrder}: OrderPanelCommonProps) => {
             side: e.currentTarget.value as OrderSide,
           })}
           className="bg-gradient"
+          size="sm"
         >
           <span className={styles['button-text']}>
             {text}

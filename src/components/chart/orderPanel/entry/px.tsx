@@ -3,8 +3,8 @@ import React from 'react';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 
-import {forceMinTick} from '../../../utils/calc';
-import {OrderPanelCommonProps} from './type';
+import {forceMinTick} from '../../../../utils/calc';
+import {OrderPanelCommonProps} from '../type';
 
 
 type Props = OrderPanelCommonProps & {
@@ -22,6 +22,7 @@ export const OrderPanelPx = ({order, setOrder, pxTick}: Props) => {
         onChange={(e) => (
           setOrder({px: forceMinTick(parseFloat(e.currentTarget.value), pxTick)})
         )}
+        onMouseOver={(e) => e.currentTarget.focus()}
         step={pxTick}
       />
     </FloatingLabel>

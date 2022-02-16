@@ -18,6 +18,7 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
   if (!positionData || !positionData.avgPx) {
     // No position, related line should be removed, if exists
     chartObjectRef.current.initData.series.avgCost = null;
+    chartObjectRef.current.initData.position = null;
 
     if (avgCost) {
       price.removePriceLine(avgCost);
@@ -27,6 +28,7 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
   }
 
   const lastPrice = chartDataRef.current.data.at(-1);
+  chartObjectRef.current.initData.position = positionData;
   const {avgPx, position} = positionData;
 
   if (!lastPrice) {

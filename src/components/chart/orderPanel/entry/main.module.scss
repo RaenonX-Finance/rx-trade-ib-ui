@@ -1,0 +1,14 @@
+button {
+  &.control {
+    width: 100%;
+    font-size: 1.5rem;
+    height: 3.6rem;
+    margin-bottom: 1rem;
+  }
+}
+
+span {
+  &.button-text {
+    font-size: 1.2rem;
+  }
+}

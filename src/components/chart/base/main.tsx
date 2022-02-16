@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {SecurityIdentifier} from '../../../types/common';
 import {OrderPanel} from '../orderPanel/main';
 import {OrderPanelState} from '../orderPanel/type';
 import {useTradingViewChart} from './hook';
@@ -19,6 +20,7 @@ export type TradingViewChartProps<T, P, R, L> = {
   onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L>,
   calcObjects: ChartCalcObjects<T, L>,
   renderObjects: ChartRenderObjects<T, L>,
+  getIdentifier: (data: T) => SecurityIdentifier,
 };
 
 export const TradingViewChart = <T, P, R, L>({
@@ -29,6 +31,7 @@ export const TradingViewChart = <T, P, R, L>({
   payload,
   onDataUpdated,
   renderObjects,
+  getIdentifier,
 }: TradingViewChartProps<T, P, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
@@ -72,7 +75,14 @@ export const TradingViewChart = <T, P, R, L>({
 
   return (
     <>
-      {order.show && <OrderPanel state={order} setState={setOrder}/>}
+      {
+        order.show &&
+        <OrderPanel
+          state={order}
+          setState={setOrder}
+          identifier={getIdentifier(chartData)}
+        />
+      }
       <div className="mb-2" style={{height}} ref={chartContainerRef}>
         <div className={styles['legend']}>
           {renderObjects.legend(chartData, legend)}

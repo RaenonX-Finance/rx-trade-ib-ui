@@ -16,5 +16,6 @@ export const onPxChartInit: PxChartInitEventHandler = (e) => {
   return {
     series: {price, vwap, avgCost: null, orderEntry: null},
     lines: {srLevelLines, openOrders: {}},
+    position: null,
   };
 };

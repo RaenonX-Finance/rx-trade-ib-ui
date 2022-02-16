@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {SocketContext} from '../../../layout/socket/socket';
-import {OrderSocketMessage} from '../../../types/order';
-import {forceMinTick} from '../../../utils/calc';
+import {SocketContext} from '../../../../layout/socket/socket';
+import {OrderSocketMessage} from '../../../../types/order';
+import {forceMinTick} from '../../../../utils/calc';
+import {OrderPanelProps} from '../type';
 import styles from './main.module.scss';
-import {OrderPanelProps} from './type';
 
 
 export const OrderPanelControl = ({state, setState}: OrderPanelProps) => {
@@ -32,17 +32,21 @@ export const OrderPanelControl = ({state, setState}: OrderPanelProps) => {
   };
 
   return (
-    <Row>
-      <Col>
-        <Button variant="danger" className={styles['control']} onClick={onClick(true)}>
-          Submit MKT
-        </Button>
-      </Col>
-      <Col>
-        <Button variant="success" className={styles['control']} onClick={onClick(false)}>
-          Submit
-        </Button>
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col>
+          <Button variant="danger" className={styles['control']} onClick={onClick(true)}>
+            Submit MKT
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button variant="success" className={styles['control']} onClick={onClick(false)}>
+            Submit
+          </Button>
+        </Col>
+      </Row>
+    </>
   );
 };

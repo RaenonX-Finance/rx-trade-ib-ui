@@ -6,12 +6,12 @@ import {TradingViewChart, TradingViewChartProps} from '../base/main';
 import {PxChartLegend} from './legend/main';
 import {onPxChartInit} from './plot/onInit/main';
 import {onPxChartUpdated} from './plot/onUpdate/main';
-import {PxChartLegendData, PxChartInitData, PxChartPayload} from './type';
+import {PxChartInitData, PxChartLegendData, PxChartPayload} from './type';
 
 
 type Props = Omit<
   TradingViewChartProps<PxData, PxChartPayload, PxChartInitData, PxChartLegendData>,
-  'initChart' | 'calcObjects' | 'renderObjects' | 'onDataUpdated'
+  'initChart' | 'calcObjects' | 'renderObjects' | 'onDataUpdated' | 'getIdentifier'
 >;
 
 
@@ -49,6 +49,7 @@ export const PxDataChart = (props: Props) => {
       renderObjects={{
         legend: (_, legend) => <PxChartLegend data={legend}/>,
       }}
+      getIdentifier={(data) => data.uniqueIdentifier}
       {...props}
     />
   );

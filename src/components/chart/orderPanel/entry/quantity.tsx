@@ -3,8 +3,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
+import {OrderPanelCommonProps} from '../type';
 import styles from './main.module.scss';
-import {OrderPanelCommonProps} from './type';
 
 
 export const OrderPanelQuantity = ({order, setOrder}: OrderPanelCommonProps) => {
@@ -23,6 +23,7 @@ export const OrderPanelQuantity = ({order, setOrder}: OrderPanelCommonProps) => 
                 onClick={() => setOrder({quantity})}
                 className="bg-gradient"
                 style={{width: '10%'}}
+                size="sm"
               >
                 <span className={styles['button-text']}>
                   {quantity}

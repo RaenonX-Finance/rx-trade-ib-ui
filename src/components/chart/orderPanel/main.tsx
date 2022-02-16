@@ -1,29 +1,22 @@
 import React from 'react';
 
-import {DeepPartial} from 'lightweight-charts';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
-import {Order} from '../../../types/order';
-import {OrderPanelControl} from './control';
-import {OrderPanelPx} from './px';
-import {OrderPanelQuantity} from './quantity';
-import {OrderPanelSide} from './side';
+import {OrderEntry} from './entry/main';
+import styles from './main.module.scss';
 import {OrderPanelProps} from './type';
 
 
-export const OrderPanel = ({state, setState}: OrderPanelProps) => {
-  const {show, order, pxTick} = state;
-
-  const setStateOrder = (order: DeepPartial<Order>) => {
-    setState({...state, order: {...state.order, ...order}});
-  };
+export const OrderPanel = (props: OrderPanelProps) => {
+  const {state, setState} = props;
+  const {show} = state;
 
   const handleClose = () => setState({...state, show: false});
 
   return (
-    <Offcanvas show={show} onHide={handleClose} placement="bottom" scroll style={{height: '40vh'}}>
+    <Offcanvas show={show} onHide={handleClose} placement="bottom">
       <div className="mb-0"/>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
@@ -33,18 +26,10 @@ export const OrderPanel = ({state, setState}: OrderPanelProps) => {
       <hr className="my-0"/>
       <Offcanvas.Body>
         <Row>
-          <Col xs={8}/>
-          <Col xs={4}>
-            <OrderPanelSide order={order} setOrder={setStateOrder}/>
-            <OrderPanelQuantity order={order} setOrder={setStateOrder}/>
-            <Row>
-              <Col>
-                <OrderPanelPx order={order} setOrder={setStateOrder} pxTick={pxTick}/>
-              </Col>
-              <Col>
-                <OrderPanelControl state={state} setState={setState}/>
-              </Col>
-            </Row>
+          <Col>
+          </Col>
+          <Col className={styles['order-entry']}>
+            <OrderEntry {...props}/>
           </Col>
         </Row>
       </Offcanvas.Body>

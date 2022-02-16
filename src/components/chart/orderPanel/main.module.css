@@ -1,11 +1,6 @@
-button.control {
-  width: 100%;
-  font-size: 1.5rem;
-  height: 5rem;
-}
-
-span.button-text {
-  font-size: 1.35rem;
+div.order-entry {
+  min-width: 800px;
+  max-width: 900px;
 }
 
 /*# sourceMappingURL=main.module.css.map */
