@@ -17,7 +17,7 @@ import {OrderPanelStats} from './stats';
 export const OrderEntry = (props: OrderPanelProps) => {
   const {state, setState, identifier} = props;
   const {order, pxTick} = state;
-  const position = usePositionSelector();
+  const position = usePositionSelector()[identifier];
 
   const setStateOrder = (order: DeepPartial<Order>) => {
     setState({...state, order: {...state.order, ...order}});
@@ -28,13 +28,13 @@ export const OrderEntry = (props: OrderPanelProps) => {
       <Row className="g-3">
         <Col>
           <OrderPanelSide order={order} setOrder={setStateOrder}/>
-          <OrderPanelQuantity order={order} setOrder={setStateOrder}/>
+          <OrderPanelQuantity order={order} setOrder={setStateOrder} position={position}/>
         </Col>
         <Col>
           <OrderPanelPx order={order} setOrder={setStateOrder} pxTick={pxTick}/>
           <OrderPanelStats
             order={order}
-            position={position[identifier]}
+            position={position}
             setOrder={setStateOrder}
             pxTick={pxTick}
           />

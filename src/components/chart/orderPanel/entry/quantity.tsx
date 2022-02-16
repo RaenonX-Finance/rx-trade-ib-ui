@@ -2,12 +2,25 @@ import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import {ButtonVariant} from 'react-bootstrap/types';
 
+import {PositionData} from '../../../../types/position';
 import {OrderPanelCommonProps} from '../type';
 import styles from './main.module.scss';
 
 
-export const OrderPanelQuantity = ({order, setOrder}: OrderPanelCommonProps) => {
+type Props = OrderPanelCommonProps & {
+  position: PositionData | undefined,
+};
+
+export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
+  const signedPosition = position ? position.position : 0;
+  const posQuantity = position ? Math.abs(signedPosition) : 0;
+
+  const getVariantByPositionSide = (position: number): ButtonVariant => {
+    return position > 0 ? 'info' : 'danger';
+  };
+
   return (
     <>
       {[1, 11].map((offset) => (
@@ -18,7 +31,11 @@ export const OrderPanelQuantity = ({order, setOrder}: OrderPanelCommonProps) => 
             return (
               <Button
                 key={quantity}
-                variant={quantity === order.quantity ? 'success' : 'secondary'}
+                variant={(
+                  quantity === order.quantity ?
+                    'light' :
+                    (quantity === posQuantity ? getVariantByPositionSide(signedPosition) : 'secondary')
+                )}
                 active={quantity === order.quantity}
                 onClick={() => setOrder({quantity})}
                 className="bg-gradient"
