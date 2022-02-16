@@ -64,6 +64,7 @@ export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R
 export type OnChartDataUpdatedEvent<T, P, R, L> = OnChartChangedEventCommon<T, R, L> & {
   payload: P,
   order: OrderPanelState,
+  showMarker: boolean,
 };
 
 export type ChartDataUpdatedEventHandler<T, P, R, L> = (e: OnChartDataUpdatedEvent<T, P, R, L>) => void;

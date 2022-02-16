@@ -34,6 +34,7 @@ export const TradingViewChart = <T, P, R, L>({
   const chartDataRef = React.useRef<T>(chartData);
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
+  const [showMarker, setShowMarker] = React.useState(true);
 
   const setObject = {
     legend: setLegend,
@@ -42,7 +43,7 @@ export const TradingViewChart = <T, P, R, L>({
 
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
-    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order});
+    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order, showMarker});
   };
 
   const onLoad = () => {
@@ -64,7 +65,10 @@ export const TradingViewChart = <T, P, R, L>({
   });
 
   React.useEffect(onLoad, []);
-  React.useEffect(onDataUpdatedInternal, [chartObjectRef.current?.initData, chartData, payload, order]);
+  React.useEffect(
+    onDataUpdatedInternal,
+    [chartObjectRef.current?.initData, chartData, payload, order, showMarker],
+  );
 
   return (
     <>
@@ -76,6 +80,9 @@ export const TradingViewChart = <T, P, R, L>({
       </div>
       <Row className="g-0 text-end">
         <Col>
+          <Button size="sm" variant="outline-info" className="me-2" onClick={() => setShowMarker(!showMarker)}>
+            {`${showMarker ? 'Hide' : 'Show'} Markers`}
+          </Button>
           <Button size="sm" variant="outline-success" className="me-2" onClick={() => {
             chartRef.current?.timeScale().scrollToRealTime();
           }}>
