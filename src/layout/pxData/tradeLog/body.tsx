@@ -43,6 +43,7 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>Avg Profit</th>
           <th>Avg Loss</th>
           <th>R/R</th>
+          <th>EWR</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +53,7 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           .map((execution, idx) => (
             <tr key={idx}>
               <td>{epochSecToFormattedString(execution.epochSec)}</td>
-              <td>{execution.avgPx}</td>
+              <td>{parseFloat(execution.avgPx.toFixed(2))}</td>
               <td className={getClassName(execution.realizedPnL)}>
                 {execution.realizedPnL && formatSignedNumber(execution.realizedPnL, 2)}
               </td>
@@ -66,6 +67,7 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
               <td className={styles['up']}>{execution.realizedPnL && execution.avgTotalProfit?.toFixed(2)}</td>
               <td className={styles['down']}>{execution.realizedPnL && execution.avgTotalLoss?.toFixed(2)}</td>
               <td>{execution.realizedPnL && execution.avgTotalRrRatio?.toFixed(3)}</td>
+              <td>{execution.realizedPnL && execution.thresholdWinRate?.toFixed(3)}</td>
             </tr>
           ))}
       </tbody>
