@@ -27,6 +27,7 @@ type Props = OrderPanelProps & {
 export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
   const dispatch = useDispatch();
   const socket = React.useContext(SocketContext);
+  const [allowUpdate, setAllowUpdate] = React.useState(false);
 
   if (!socket) {
     return <></>;
@@ -38,10 +39,12 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
 
   const onOrderCancel = (orderId: number) => () => {
     socket.emit('orderCancel', orderId.toString());
+    setAllowUpdate(false);
   };
 
   const onOrderUpdate = () => {
     socket.emit('orderPlace', JSON.stringify(order));
+    setAllowUpdate(false);
   };
 
   return (
@@ -54,12 +57,13 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
           type="number"
           value={forceMinTick(order.px, pxTick)}
           className="text-end"
-          onChange={(e) => (
+          onChange={(e) => {
             dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE]({
               ...order,
               px: forceMinTick(parseFloat(e.currentTarget.value), pxTick),
-            }))
-          )}
+            }));
+            setAllowUpdate(true);
+          }}
           onMouseOver={(e) => e.currentTarget.focus()}
           step={pxTick}
         />
@@ -69,12 +73,13 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
           type="number"
           value={order.quantity}
           className="text-end"
-          onChange={(e) => (
+          onChange={(e) => {
             dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE]({
               ...order,
               quantity: Math.max(1, parseInt(e.currentTarget.value)),
-            }))
-          )}
+            }));
+            setAllowUpdate(true);
+          }}
           onMouseOver={(e) => e.currentTarget.focus()}
         />
       </td>
@@ -86,10 +91,10 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
         {calculatePnL(avgPx, pos, order.px, signedQuantity, multiplier)?.toFixed(2) || ''}
       </td>
       <td>
-        <Button variant="outline-warning" onClick={onOrderUpdate} className="me-2">
+        <Button variant="outline-warning" onClick={onOrderUpdate} disabled={!allowUpdate} className="me-2">
           Update
         </Button>
-        <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)}>
+        <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)} disabled={!allowUpdate}>
           Cancel
         </Button>
       </td>
