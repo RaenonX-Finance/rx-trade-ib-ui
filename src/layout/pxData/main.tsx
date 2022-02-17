@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {useAlert} from 'react-alert';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -18,9 +19,11 @@ import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
 import {Execution} from '../../types/execution';
 import {OpenOrder} from '../../types/openOrder';
+import {OrderFilledResult} from '../../types/orderFilled';
 import {Position} from '../../types/position';
 import {PxData} from '../../types/pxData';
 import {PxDataMarket} from '../../types/pxDataMarket';
+import {OrderFilledAlert} from '../alert/orderFilled';
 import {SocketContext} from '../socket/socket';
 import {PriceDataIndividual} from './individual';
 
@@ -28,6 +31,7 @@ import {PriceDataIndividual} from './individual';
 export const PriceDataMain = () => {
   const socket = React.useContext(SocketContext);
   const dispatch = useDispatch();
+  const alert = useAlert();
   const pxData = usePxDataSelector();
   const position = usePositionSelector();
   const openOrderState = useOpenOrderSelector();
@@ -85,6 +89,14 @@ export const PriceDataMain = () => {
     dispatch(executionDispatchers[ExecutionDispatcherName.UPDATE](data));
   };
 
+  const onOrderFilled = (message: string) => {
+    const data: OrderFilledResult = JSON.parse(message);
+    const audio = new Audio('/audio/orderFilled.mp3');
+
+    alert.show(<OrderFilledAlert data={data}/>);
+    audio.play().then(() => void 0);
+  };
+
   React.useEffect(() => {
     socket.on('pxUpdated', onPxUpdated);
     socket.on('pxUpdatedMarket', onPxUpdatedMarket);
@@ -92,6 +104,7 @@ export const PriceDataMain = () => {
     socket.on('position', onPosition);
     socket.on('openOrder', onOpenOrder);
     socket.on('execution', onExecution);
+    socket.on('orderFilled', onOrderFilled);
 
     socket.emit('pxInit', '');
 
@@ -102,6 +115,7 @@ export const PriceDataMain = () => {
       socket.off('position', onPosition);
       socket.off('openOrder', onOpenOrder);
       socket.off('execution', onExecution);
+      socket.off('orderFilled', onOrderFilled);
     };
   }, [poll]); // if `poll` changes, the variable used for event listener should also be updated
 

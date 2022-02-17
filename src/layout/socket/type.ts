@@ -11,6 +11,7 @@ type SocketEventKeys =
   'openOrder' |
   'execution' |
   'orderPlace' |
+  'orderFilled' |
   'orderCancel';
 
 export type SocketEvent = {[key in SocketEventKeys]: SocketMessageHandler};

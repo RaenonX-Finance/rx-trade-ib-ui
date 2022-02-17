@@ -1,7 +1,9 @@
 import React from 'react';
 
+import {Provider} from 'react-alert';
 import {io} from 'socket.io-client';
 
+import {PopupAlert} from './alert/main';
 import {PriceDataMain} from './pxData/main';
 import {SocketContext} from './socket/socket';
 import {DataSocket} from './socket/type';
@@ -26,11 +28,13 @@ export const App = () => {
 
   return (
     <SocketContext.Provider value={socket}>
-      {
-        socket ?
-          <PriceDataMain/> :
-          <>Not Connected</>
-      }
+      <Provider template={PopupAlert} timeout={3000} position="bottom center">
+        {
+          socket ?
+            <PriceDataMain/> :
+            <>Not Connected</>
+        }
+      </Provider>
     </SocketContext.Provider>
   );
 };
