@@ -3,7 +3,7 @@ import {IPriceLine, ISeriesApi, LineStyle} from 'lightweight-charts';
 import {getDecimalPlaces} from '../../../../../utils/calc';
 import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartInitEvent} from '../../type';
-import {getSrLevelColor} from '../utils';
+import {srLevelColor} from '../const';
 
 
 export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Record<number, IPriceLine> => {
@@ -24,9 +24,9 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
       price: level,
       axisLabelVisible: true,
       title,
-      color: getSrLevelColor(type),
+      color: srLevelColor,
       lineWidth: 2,
-      lineStyle: LineStyle.SparseDotted,
+      lineStyle: (type.fractal && type.window) ? LineStyle.Dotted : LineStyle.SparseDotted,
     });
   });
 
