@@ -49,12 +49,12 @@ export const OrderPanelControl = ({state, identifier, position}: OrderPanelProps
     <>
       <Row className="g-3">
         <Col>
-          <Button variant="outline-info" className={styles['control']} onClick={onClick('BUY', false)}>
+          <Button variant="info" className={styles['control']} onClick={onClick('BUY', false)}>
             Buy
           </Button>
         </Col>
         <Col>
-          <Button variant="outline-danger" className={styles['control']} onClick={onClick('SELL', false)}>
+          <Button variant="danger" className={styles['control']} onClick={onClick('SELL', false)}>
             Sell
           </Button>
         </Col>
