@@ -6,7 +6,7 @@ export type OpenOrderData = {
   identifier: SecurityIdentifier,
   side: OrderSide,
   quantity: number,
-  price: number,
+  px: number,
 };
 
 export type OpenOrder = Record<SecurityIdentifier, OpenOrderData[]>;

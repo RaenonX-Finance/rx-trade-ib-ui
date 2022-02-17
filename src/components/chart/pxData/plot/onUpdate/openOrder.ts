@@ -13,10 +13,10 @@ export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
     {
       objectKey: 'openOrders',
       getData: (e) => e.payload.openOrder,
-      getPx: (data: OpenOrderData) => data.price,
-      getLabelTitle: ({side, price, quantity}, currentPx, decimalPlaces) => {
-        const diff = formatSignedNumber(price - currentPx, decimalPlaces);
-        return `${side} @ ${price} x ${quantity} (${diff})`;
+      getPx: (data: OpenOrderData) => data.px,
+      getLabelTitle: ({side, px, quantity}, currentPx, decimalPlaces) => {
+        const diff = formatSignedNumber(px - currentPx, decimalPlaces);
+        return `${side} @ ${px} x ${quantity} (${diff})`;
       },
       getPxLineColor: ({side}) => openOrderColor[side],
       getPxLineStyle: () => LineStyle.Dotted,

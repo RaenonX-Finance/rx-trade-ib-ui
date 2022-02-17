@@ -30,8 +30,10 @@ export const PriceDataMain = () => {
   const dispatch = useDispatch();
   const pxData = usePxDataSelector();
   const position = usePositionSelector();
-  const openOrder = useOpenOrderSelector();
+  const openOrderState = useOpenOrderSelector();
   const execution = useExecutionSelector();
+
+  const {openOrders, poll} = openOrderState;
 
   if (!socket) {
     return <>Not Connected</>;
@@ -39,8 +41,10 @@ export const PriceDataMain = () => {
 
   const refreshStatus = () => {
     socket.emit('position', '');
-    socket.emit('openOrder', '');
     socket.emit('execution', '');
+    if (poll) {
+      socket.emit('openOrder', '');
+    }
   };
 
   const onPxInit = (message: string) => {
@@ -97,9 +101,9 @@ export const PriceDataMain = () => {
       socket.off('pxInit', onPxInit);
       socket.off('position', onPosition);
       socket.off('openOrder', onOpenOrder);
-      socket.on('execution', onExecution);
+      socket.off('execution', onExecution);
     };
-  }, []);
+  }, [poll]); // if `poll` changes, the variable used for event listener should also be updated
 
   return (
     <Row className="mb-3 g-3">
@@ -109,7 +113,7 @@ export const PriceDataMain = () => {
             pxData={data}
             payload={{
               position: position[data.uniqueIdentifier],
-              openOrder: openOrder[data.uniqueIdentifier],
+              openOrder: openOrders[data.uniqueIdentifier],
               execution: execution[data.uniqueIdentifier],
             }}
           />

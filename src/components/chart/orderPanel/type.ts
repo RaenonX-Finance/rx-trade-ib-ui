@@ -18,6 +18,10 @@ export type OrderPanelProps = {
   identifier: SecurityIdentifier,
 };
 
+export type OrderPanelPartProps = OrderPanelProps & {
+  setOrder: (order: DeepPartial<Order>) => void,
+};
+
 export type OrderPanelCommonProps = {
   order: Order,
   setOrder: (order: DeepPartial<Order>) => void,

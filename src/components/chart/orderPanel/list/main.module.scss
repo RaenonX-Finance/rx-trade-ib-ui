@@ -1,0 +1,10 @@
+td {
+  // !important is needed to override default bootstrap style
+  &.buy {
+    background-color: rgba(25, 74, 179, 0.7) !important;
+  }
+
+  &.sell {
+    background-color: rgba(179, 53, 25, 0.7) !important;
+  }
+}

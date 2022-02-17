@@ -9,7 +9,7 @@ export const avgCostColor = 'rgba(240, 240, 240, 0.7)';
 
 export const longDarkerColor = 'rgb(0, 55, 158)';
 
-export const shortDarkerColor = 'rgb(158, 26, 0)';
+export const shortDarkerColor = 'rgb(171,28,0)';
 
 export const longColor = 'rgba(28, 107, 255, 0.7)';
 

@@ -4,6 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {SocketContext} from '../../../layout/socket/socket';
+import {openOrderDispatchers} from '../../../state/openOrder/dispatchers';
+import {OpenOrderDispatcherName} from '../../../state/openOrder/types';
+import {useDispatch} from '../../../state/store';
 import {SecurityIdentifier} from '../../../types/common';
 import {OrderPanel} from '../orderPanel/main';
 import {OrderPanelState} from '../orderPanel/type';
@@ -38,6 +42,8 @@ export const TradingViewChart = <T, P, R, L>({
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
   const [showMarker, setShowMarker] = React.useState(true);
+  const dispatch = useDispatch();
+  const socket = React.useContext(SocketContext);
 
   const setObject = {
     legend: setLegend,
@@ -62,6 +68,11 @@ export const TradingViewChart = <T, P, R, L>({
     });
   };
 
+  const onOrderPanelShowChanged = () => {
+    dispatch(openOrderDispatchers[OpenOrderDispatcherName.SET_POLL](!order.show));
+    socket?.emit('openOrder', ''); // Ensure the open order data is up-to-date
+  };
+
   const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
     initChart,
     onDataUpdated: onDataUpdatedInternal,
@@ -72,6 +83,7 @@ export const TradingViewChart = <T, P, R, L>({
     onDataUpdatedInternal,
     [chartObjectRef.current?.initData, chartData, payload, order, showMarker],
   );
+  React.useEffect(onOrderPanelShowChanged, [order.show]);
 
   return (
     <>

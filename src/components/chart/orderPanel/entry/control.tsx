@@ -35,7 +35,7 @@ export const OrderPanelControl = ({state, setState}: OrderPanelProps) => {
     <>
       <Row>
         <Col>
-          <Button variant="danger" className={styles['control']} onClick={onClick(true)}>
+          <Button variant="outline-danger" className={styles['control']} onClick={onClick(true)}>
             Submit MKT
           </Button>
         </Col>

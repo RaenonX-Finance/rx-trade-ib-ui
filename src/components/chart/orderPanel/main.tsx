@@ -1,9 +1,11 @@
 import React from 'react';
 
+import {DeepPartial} from 'lightweight-charts';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
+import {Order} from '../../../types/order';
 import {OrderEntry} from './entry/main';
 import {OrderList} from './list/main';
 import styles from './main.module.scss';
@@ -15,6 +17,10 @@ export const OrderPanel = (props: OrderPanelProps) => {
   const {show} = state;
 
   const handleClose = () => setState({...state, show: false});
+
+  const setOrder = (order: DeepPartial<Order>) => {
+    setState({...state, order: {...state.order, ...order}});
+  };
 
   return (
     <Offcanvas show={show} onHide={handleClose} placement="bottom">
@@ -31,7 +37,7 @@ export const OrderPanel = (props: OrderPanelProps) => {
             <OrderList {...props}/>
           </Col>
           <Col className={styles['order-entry']}>
-            <OrderEntry {...props}/>
+            <OrderEntry setOrder={setOrder} {...props}/>
           </Col>
         </Row>
       </Offcanvas.Body>

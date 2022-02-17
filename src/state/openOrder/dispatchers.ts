@@ -6,4 +6,5 @@ import {OpenOrderDispatcherName} from './types';
 
 export const openOrderDispatchers = {
   [OpenOrderDispatcherName.UPDATE]: createAction<OpenOrder>(OpenOrderDispatcherName.UPDATE),
+  [OpenOrderDispatcherName.SET_POLL]: createAction<boolean>(OpenOrderDispatcherName.SET_POLL),
 };
