@@ -5,6 +5,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
 import {OrderEntry} from './entry/main';
+import {OrderList} from './list/main';
 import styles from './main.module.scss';
 import {OrderPanelProps} from './type';
 
@@ -27,6 +28,7 @@ export const OrderPanel = (props: OrderPanelProps) => {
       <Offcanvas.Body>
         <Row>
           <Col>
+            <OrderList {...props}/>
           </Col>
           <Col className={styles['order-entry']}>
             <OrderEntry {...props}/>

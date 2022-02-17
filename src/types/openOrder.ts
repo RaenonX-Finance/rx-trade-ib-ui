@@ -2,7 +2,8 @@ import {OrderSide, SecurityIdentifier} from './common';
 
 
 export type OpenOrderData = {
-  identifier: number,
+  orderId: number,
+  identifier: SecurityIdentifier,
   side: OrderSide,
   quantity: number,
   price: number,

@@ -18,7 +18,7 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
         formatSignedNumber(level - currentPx, decimalPlaces)
       ),
       getPxLineColor: ({type}) => getSrLevelColor(type),
-      getPxLineStyle: () => LineStyle.Dotted,
+      getPxLineStyle: () => LineStyle.SparseDotted,
     },
   );
 };
