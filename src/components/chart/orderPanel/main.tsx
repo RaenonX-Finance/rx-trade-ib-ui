@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Row from 'react-bootstrap/Row';
 
+import {usePositionSelector} from '../../../state/position/selector';
 import {Order} from '../../../types/order';
 import {OrderEntry} from './entry/main';
 import {OrderList} from './list/main';
@@ -12,9 +13,13 @@ import styles from './main.module.scss';
 import {OrderPanelProps} from './type';
 
 
-export const OrderPanel = (props: OrderPanelProps) => {
-  const {state, setState} = props;
+export const OrderPanel = (props: Omit<OrderPanelProps, 'position'>) => {
+  const {state, setState, identifier} = props;
   const {show} = state;
+  const position = usePositionSelector()[identifier] || {
+    avgPx: 0,
+    position: 0,
+  };
 
   const handleClose = () => setState({...state, show: false});
 
@@ -34,10 +39,10 @@ export const OrderPanel = (props: OrderPanelProps) => {
       <Offcanvas.Body>
         <Row>
           <Col>
-            <OrderList {...props}/>
+            <OrderList position={position} {...props}/>
           </Col>
           <Col className={styles['order-entry']}>
-            <OrderEntry setOrder={setOrder} {...props}/>
+            <OrderEntry position={position} setOrder={setOrder} {...props}/>
           </Col>
         </Row>
       </Offcanvas.Body>

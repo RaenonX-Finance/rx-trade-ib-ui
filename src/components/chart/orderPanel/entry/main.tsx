@@ -3,8 +3,7 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {usePositionSelector} from '../../../../state/position/selector';
-import {OrderPanelPartProps} from '../type';
+import {OrderPanelCommonProps, OrderPanelPartProps} from '../type';
 import {OrderPanelControl} from './control';
 import {OrderPanelPx} from './px';
 import {OrderPanelQuantity} from './quantity';
@@ -13,25 +12,25 @@ import {OrderPanelStats} from './stats';
 
 
 export const OrderEntry = (props: OrderPanelPartProps) => {
-  const {state, setOrder, identifier} = props;
+  const {state, setOrder, position} = props;
   const {order, pxTick} = state;
-  const position = usePositionSelector()[identifier];
+
+  const panelProps: OrderPanelCommonProps = {
+    order,
+    setOrder,
+    position,
+  };
 
   return (
     <>
       <Row className="g-3">
         <Col>
-          <OrderPanelSide order={order} setOrder={setOrder}/>
-          <OrderPanelQuantity order={order} setOrder={setOrder} position={position}/>
+          <OrderPanelSide {...panelProps}/>
+          <OrderPanelQuantity {...panelProps}/>
         </Col>
         <Col>
-          <OrderPanelPx order={order} setOrder={setOrder} pxTick={pxTick}/>
-          <OrderPanelStats
-            order={order}
-            position={position}
-            setOrder={setOrder}
-            pxTick={pxTick}
-          />
+          <OrderPanelPx {...panelProps} pxTick={pxTick}/>
+          <OrderPanelStats {...panelProps} pxTick={pxTick}/>
         </Col>
         <Col>
           <OrderPanelControl {...props}/>

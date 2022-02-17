@@ -2,9 +2,7 @@ import React from 'react';
 
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 
 import {SocketContext} from '../../../../layout/socket/socket';
@@ -16,6 +14,8 @@ import {OrderSide} from '../../../../types/common';
 import {OpenOrder, OpenOrderData} from '../../../../types/openOrder';
 import {forceMinTick} from '../../../../utils/calc';
 import {OrderPanelProps} from '../type';
+import {calculateNewAvgPx, sideMultiplier} from '../utils';
+import {OrderListButtonBar} from './bar';
 import styles from './main.module.scss';
 
 
@@ -24,7 +24,7 @@ const orderSideClassName: {[side in OrderSide]: string} = {
   SELL: styles['sell'],
 };
 
-export const OrderList = ({state, identifier}: OrderPanelProps) => {
+export const OrderList = ({state, position, identifier}: OrderPanelProps) => {
   const {pxTick} = state;
   const openOrdersAll = useOpenOrderSelector().openOrders;
   const openOrders = openOrdersAll[identifier];
@@ -38,6 +38,8 @@ export const OrderList = ({state, identifier}: OrderPanelProps) => {
   if (!openOrders) {
     return <Alert variant="info">No active orders.</Alert>;
   }
+
+  const {position: pos, avgPx} = position;
 
   const getUpdatedOpenOrders = (order: OpenOrderData): OpenOrder => {
     return {
@@ -68,19 +70,14 @@ export const OrderList = ({state, identifier}: OrderPanelProps) => {
 
   return (
     <>
-      <Row className="text-end mb-2">
-        <Col>
-          <Button size="sm" variant="outline-danger" onClick={onReset}>
-            Reset
-          </Button>
-        </Col>
-      </Row>
+      <OrderListButtonBar onReset={onReset}/>
       <Table responsive className="align-middle">
         <thead>
           <tr>
             <th>Side</th>
             <th>Px</th>
             <th>Quantity</th>
+            <th>Avg Px After</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -122,6 +119,10 @@ export const OrderList = ({state, identifier}: OrderPanelProps) => {
                     )}
                     onMouseOver={(e) => e.currentTarget.focus()}
                   />
+                </td>
+                <td className="text-end">
+                  {calculateNewAvgPx(avgPx, pos, order.px, sideMultiplier[order.side] * order.quantity)
+                    .toFixed(2)}
                 </td>
                 <td>
                   <Button size="sm" variant="outline-warning" onClick={onOrderUpdate(order.orderId)} className="me-2">
