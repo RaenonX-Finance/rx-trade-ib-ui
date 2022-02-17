@@ -18,6 +18,7 @@ export const OrderPanelPx = ({order, setOrder, pxTick}: Props) => {
         size="lg"
         type="number"
         placeholder=""
+        className="text-end"
         value={forceMinTick(order.px, pxTick)}
         onChange={(e) => (
           setOrder({px: forceMinTick(parseFloat(e.currentTarget.value), pxTick)})

@@ -12,7 +12,7 @@ export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
     e,
     {
       objectKey: 'openOrders',
-      getData: (e) => e.payload.openOrder,
+      getData: (e) => Object.values(e.payload.openOrder || {}),
       getPx: (data: OpenOrderData) => data.px,
       getLabelTitle: ({side, px, quantity}, currentPx, decimalPlaces) => {
         const diff = formatSignedNumber(px - currentPx, decimalPlaces);

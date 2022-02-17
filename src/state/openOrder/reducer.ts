@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {OpenOrder} from '../../types/openOrder';
 import {openOrderDispatchers} from './dispatchers';
 import {OPEN_ORDER_STATE_NAME, OpenOrderDispatcherName, OpenOrderState} from './types';
 
@@ -17,7 +16,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       openOrderDispatchers[OpenOrderDispatcherName.UPDATE],
-      (state: OpenOrderState, {payload}: {payload: OpenOrder}) => {
+      (state: OpenOrderState, {payload}) => {
         // Remove all then add it back
         state.openOrders = {};
         Object
@@ -27,8 +26,16 @@ const slice = createSlice({
     );
     builder.addCase(
       openOrderDispatchers[OpenOrderDispatcherName.SET_POLL],
-      (state: OpenOrderState, {payload}: {payload: boolean}) => {
+      (state: OpenOrderState, {payload}) => {
         state.poll = payload;
+      },
+    );
+    builder.addCase(
+      openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE],
+      (state: OpenOrderState, {payload: order}) => {
+        const {identifier} = order;
+
+        state.openOrders[identifier][order.orderId] = order;
       },
     );
   },

@@ -25,6 +25,7 @@ export type TradingViewChartProps<T, P, R, L> = {
   calcObjects: ChartCalcObjects<T, L>,
   renderObjects: ChartRenderObjects<T, L>,
   getIdentifier: (data: T) => SecurityIdentifier,
+  getPnLMultiplier: (data: T) => number,
 };
 
 export const TradingViewChart = <T, P, R, L>({
@@ -36,6 +37,7 @@ export const TradingViewChart = <T, P, R, L>({
   onDataUpdated,
   renderObjects,
   getIdentifier,
+  getPnLMultiplier,
 }: TradingViewChartProps<T, P, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
@@ -93,6 +95,7 @@ export const TradingViewChart = <T, P, R, L>({
           state={order}
           setState={setOrder}
           identifier={getIdentifier(chartData)}
+          multiplier={getPnLMultiplier(chartData)}
         />
       }
       <div className="mb-2" style={{height}} ref={chartContainerRef}>

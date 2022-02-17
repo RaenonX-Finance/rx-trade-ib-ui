@@ -37,6 +37,22 @@ export const calculateNewOrderPx = (
   return (-currentAvgPx * position + newAvgPx * (signedQuantity + position)) / signedQuantity;
 };
 
+export const calculatePnL = (
+  avgPx: number,
+  position: number,
+  orderPx: number,
+  signedQuantity: number,
+  multiplier: number,
+): number | null => {
+  const positionsAfter = position + signedQuantity;
+
+  if (positionsAfter === 0 || positionsAfter * position < 0) {
+    return (orderPx - avgPx) * position * multiplier;
+  }
+
+  return null;
+};
+
 export const sideMultiplier: {[side in OrderSide]: number} = {
   BUY: 1,
   SELL: -1,

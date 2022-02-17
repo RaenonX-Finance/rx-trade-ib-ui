@@ -6,6 +6,7 @@ export const OPEN_ORDER_STATE_NAME = 'OpenOrder';
 
 export enum OpenOrderDispatcherName {
   UPDATE = 'updateOpenOrder',
+  UPDATE_SINGLE = 'updateSingleOpenOrder',
   SET_POLL = 'setPoll',
 }
 

@@ -11,7 +11,7 @@ import {PxChartInitData, PxChartLegendData, PxChartPayload} from './type';
 
 type Props = Omit<
   TradingViewChartProps<PxData, PxChartPayload, PxChartInitData, PxChartLegendData>,
-  'initChart' | 'calcObjects' | 'renderObjects' | 'onDataUpdated' | 'getIdentifier'
+  'initChart' | 'calcObjects' | 'renderObjects' | 'onDataUpdated' | 'getIdentifier' | 'getPnLMultiplier'
 >;
 
 
@@ -50,6 +50,7 @@ export const PxDataChart = (props: Props) => {
         legend: (_, legend) => <PxChartLegend data={legend}/>,
       }}
       getIdentifier={(data) => data.uniqueIdentifier}
+      getPnLMultiplier={(data) => data.contract.multiplier}
       {...props}
     />
   );

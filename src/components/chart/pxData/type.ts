@@ -42,7 +42,7 @@ export type PxChartInitData = {
 
 export type PxChartPayload = {
   position: PositionData | undefined,
-  openOrder: OpenOrderData[] | undefined,
+  openOrder: Record<number, OpenOrderData> | undefined,
   execution: ExecutionGroup[] | undefined,
 };
 

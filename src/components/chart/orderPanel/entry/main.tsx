@@ -13,13 +13,14 @@ import {OrderPanelStats} from './stats';
 
 
 export const OrderEntry = (props: OrderPanelPartProps) => {
-  const {state, setOrder, position} = props;
+  const {state, setOrder, position, multiplier} = props;
   const {order, pxTick} = state;
 
   const panelProps: OrderPanelCommonProps = {
     order,
     setOrder,
     position,
+    multiplier,
   };
 
   return (

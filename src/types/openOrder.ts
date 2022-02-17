@@ -9,4 +9,4 @@ export type OpenOrderData = {
   px: number,
 };
 
-export type OpenOrder = Record<SecurityIdentifier, OpenOrderData[]>;
+export type OpenOrder = Record<SecurityIdentifier, Record<number, OpenOrderData>>;

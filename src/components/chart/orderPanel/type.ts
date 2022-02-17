@@ -18,6 +18,7 @@ export type OrderPanelProps = {
   setState: React.Dispatch<React.SetStateAction<OrderPanelState>>,
   position: PositionData,
   identifier: SecurityIdentifier,
+  multiplier: number,
 };
 
 export type OrderPanelPartProps = OrderPanelProps & {
@@ -28,4 +29,5 @@ export type OrderPanelCommonProps = {
   order: Order,
   setOrder: (order: DeepPartial<Order>) => void,
   position: PositionData,
+  multiplier: number,
 };
