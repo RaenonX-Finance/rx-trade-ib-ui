@@ -3,7 +3,6 @@ import {LineStyle} from 'lightweight-charts';
 import {forceMinTick, getDecimalPlaces} from '../../../../../utils/calc';
 import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
-import {openOrderPreviewColor} from '../const';
 
 
 export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChartUpdatedEvent) => {
@@ -26,16 +25,16 @@ export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChar
   const minTick = chartDataRef.current.contract.minTick;
   const decimalPlaces = getDecimalPlaces(minTick);
 
-  const {side, px, quantity} = order.order;
+  const {px, quantity} = order.order;
 
   const orderPx = forceMinTick(px, minTick);
   const diff = formatSignedNumber(px - currentPx.close, decimalPlaces);
-  const title = `${side} @ ${orderPx} x ${quantity} (${diff})`;
+  const title = `${orderPx} x ${quantity} (${diff})`;
 
   const commonOptions = {
     price: orderPx,
     title,
-    color: openOrderPreviewColor[side],
+    color: '#303030',
   };
 
   if (orderEntry) {

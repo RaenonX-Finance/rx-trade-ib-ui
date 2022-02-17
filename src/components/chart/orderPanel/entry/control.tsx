@@ -17,24 +17,21 @@ const signToSide: {[sign in number]: OrderSide} = {
   [1]: 'SELL',
 };
 
-export const OrderPanelControl = ({state, setState, identifier, position}: OrderPanelProps) => {
+export const OrderPanelControl = ({state, identifier, position}: OrderPanelProps) => {
   const socket = React.useContext(SocketContext);
 
   if (!socket) {
     return <></>;
   }
 
-  const onClick = (isMarket: boolean) => () => {
-    const order: OrderSocketMessage = state.order;
-
-    if (isMarket) {
-      order.px = null;
-    } else {
-      order.px = forceMinTick(state.order.px, state.pxTick);
-    }
+  const onClick = (side: OrderSide, isMarket: boolean) => () => {
+    const order: OrderSocketMessage = {
+      ...state.order,
+      px: isMarket ? null : forceMinTick(state.order.px, state.pxTick),
+      side,
+    };
 
     socket.emit('orderPlace', JSON.stringify(order));
-    setState({...state, show: false});
   };
 
   const onClickToClose = () => {
@@ -46,15 +43,31 @@ export const OrderPanelControl = ({state, setState, identifier, position}: Order
     };
 
     socket.emit('orderPlace', JSON.stringify(order));
-    setState({...state, show: false});
   };
 
   return (
     <>
-      <Row>
+      <Row className="g-3">
         <Col>
-          <Button variant="outline-danger" className={styles['control']} onClick={onClick(true)}>
-            Submit MKT
+          <Button variant="outline-info" className={styles['control']} onClick={onClick('BUY', false)}>
+            Buy
+          </Button>
+        </Col>
+        <Col>
+          <Button variant="outline-danger" className={styles['control']} onClick={onClick('SELL', false)}>
+            Sell
+          </Button>
+        </Col>
+      </Row>
+      <Row className="g-3">
+        <Col>
+          <Button variant="outline-info" className={styles['control']} onClick={onClick('BUY', true)}>
+            Buy MKT
+          </Button>
+        </Col>
+        <Col>
+          <Button variant="outline-danger" className={styles['control']} onClick={onClick('SELL', true)}>
+            Sell MKT
           </Button>
         </Col>
       </Row>
@@ -67,13 +80,6 @@ export const OrderPanelControl = ({state, setState, identifier, position}: Order
             disabled={position.position === 0}
           >
             Close MKT
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button variant="success" className={styles['control']} onClick={onClick(false)}>
-            Submit
           </Button>
         </Col>
       </Row>

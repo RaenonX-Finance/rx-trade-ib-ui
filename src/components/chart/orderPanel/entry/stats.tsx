@@ -1,10 +1,11 @@
 import React from 'react';
 
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/Row';
 
 import {OrderPanelCommonProps} from '../type';
-import {calculateNewAvgPx, calculatePnL, sideMultiplier} from '../utils';
+import {calculateNewAvgPx, calculatePnL} from '../utils';
+import {StatsField} from './statsField';
 
 
 type Props = OrderPanelCommonProps & {
@@ -12,32 +13,39 @@ type Props = OrderPanelCommonProps & {
 };
 
 export const OrderPanelStats = ({order, position, multiplier}: Props) => {
-  const {px, quantity, side} = order;
-  const signedQuantity = quantity * sideMultiplier[side];
+  const {px, quantity} = order;
   const {avgPx, position: pos} = position;
 
   return (
     <>
-      <FloatingLabel label="Avg Px after placement" className="mb-3">
-        <Form.Control
-          size="lg"
-          type="number"
-          placeholder=""
-          className="text-end"
-          value={parseFloat(calculateNewAvgPx(avgPx, pos, px, signedQuantity).toFixed(2))}
-          disabled
-        />
-      </FloatingLabel>
-      <FloatingLabel label="PnL" className="mb-3">
-        <Form.Control
-          size="lg"
-          type="number"
-          placeholder=""
-          className="text-end"
-          value={calculatePnL(avgPx, pos, px, signedQuantity, multiplier)?.toFixed(2) || ''}
-          disabled
-        />
-      </FloatingLabel>
+      <Row className="g-3">
+        <Col>
+          <StatsField
+            label="Avg Px (Buy)"
+            value={parseFloat(calculateNewAvgPx(avgPx, pos, px, quantity).toFixed(2))}
+          />
+        </Col>
+        <Col>
+          <StatsField
+            label="Avg Px (Sell)"
+            value={parseFloat(calculateNewAvgPx(avgPx, pos, px, -quantity).toFixed(2))}
+          />
+        </Col>
+      </Row>
+      <Row className="g-3">
+        <Col>
+          <StatsField
+            label="PnL (Buy)"
+            value={calculatePnL(avgPx, pos, px, quantity, multiplier)?.toFixed(2) || ''}
+          />
+        </Col>
+        <Col>
+          <StatsField
+            label="PnL (Sell)"
+            value={calculatePnL(avgPx, pos, px, -quantity, multiplier)?.toFixed(2) || ''}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

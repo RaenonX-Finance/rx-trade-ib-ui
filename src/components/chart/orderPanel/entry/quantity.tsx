@@ -23,9 +23,9 @@ export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
 
   return (
     <>
-      {[1, 11].map((offset) => (
+      {[1, 6, 11, 16].map((offset) => (
         <ButtonGroup key={offset} className="w-100 mb-3">
-          {Array.from(Array(10).keys()).map((quantity) => {
+          {Array.from(Array(5).keys()).map((quantity) => {
             quantity += offset;
 
             return (

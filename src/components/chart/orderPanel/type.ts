@@ -7,9 +7,11 @@ import {Order} from '../../../types/order';
 import {PositionData} from '../../../types/position';
 
 
+export type OrderPanelInfo = Omit<Order, 'side'>;
+
 export type OrderPanelState = {
   show: boolean,
-  order: Order,
+  order: OrderPanelInfo,
   pxTick: number,
 };
 
@@ -26,7 +28,7 @@ export type OrderPanelPartProps = OrderPanelProps & {
 };
 
 export type OrderPanelCommonProps = {
-  order: Order,
+  order: OrderPanelInfo,
   setOrder: (order: DeepPartial<Order>) => void,
   position: PositionData,
   multiplier: number,

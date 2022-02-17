@@ -18,8 +18,8 @@ a {
   text-decoration: none;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button:not(:disabled),
+input::-webkit-inner-spin-button:not(:disabled) {
   margin-left: 0.4rem;
 }
 

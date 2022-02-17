@@ -45,8 +45,8 @@ export const OrderList = (props: OrderPanelProps) => {
         <tbody>
           {[...Object.values(openOrders)]
             .sort((a, b) => b.px - a.px)
-            .map((order, idx) => (
-              <OrderListEntry key={idx} {...props} order={order}/>
+            .map((order) => (
+              <OrderListEntry key={order.orderId} {...props} order={order}/>
             ))}
         </tbody>
       </Table>
