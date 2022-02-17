@@ -3,7 +3,7 @@ import {LineStyle} from 'lightweight-charts';
 import {forceMinTick, getDecimalPlaces} from '../../../../../utils/calc';
 import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
-import {openOrderColor} from '../const';
+import {openOrderPreviewColor} from '../const';
 
 
 export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChartUpdatedEvent) => {
@@ -35,7 +35,7 @@ export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChar
   const commonOptions = {
     price: orderPx,
     title,
-    color: openOrderColor[side],
+    color: openOrderPreviewColor[side],
   };
 
   if (orderEntry) {

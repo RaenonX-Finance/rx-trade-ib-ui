@@ -2,7 +2,7 @@ import {SeriesMarker, Time, UTCTimestamp} from 'lightweight-charts';
 
 import {ExecutionSide} from '../../../../../types/common';
 import {OnPxChartUpdatedEvent} from '../../type';
-import {tradeEntryColor, tradeExitColor} from '../const';
+import {longLighterColor, shortLighterColor} from '../const';
 
 
 type MarkerConfig = Pick<SeriesMarker<Time>, 'position' | 'shape'>;
@@ -38,7 +38,7 @@ export const handleExecution = ({chartObjectRef, payload, showMarker}: OnPxChart
     return {
       time: epochSec as UTCTimestamp,
       ...sideToMarkerConfig[side],
-      color: realizedPnL ? tradeExitColor : tradeEntryColor,
+      color: realizedPnL ? shortLighterColor : longLighterColor,
       text: quantity.toFixed(0),
     };
   }));
