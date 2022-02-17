@@ -19,24 +19,6 @@ export const calculateNewAvgPx = (
   return (currentAvgPx * position + orderPx * signedQuantity) / (position + signedQuantity);
 };
 
-export const calculateNewOrderPx = (
-  currentAvgPx: number,
-  position: number,
-  newAvgPx: number,
-  signedQuantity: number,
-): number => {
-  const positionsAfter = position + signedQuantity;
-
-  if (positionsAfter === 0) {
-    return 0;
-  } else if (positionsAfter * position < 0) {
-    // Switched side
-    return newAvgPx;
-  }
-
-  return (-currentAvgPx * position + newAvgPx * (signedQuantity + position)) / signedQuantity;
-};
-
 export const calculatePnL = (
   avgPx: number,
   position: number,
@@ -46,11 +28,15 @@ export const calculatePnL = (
 ): number | null => {
   const positionsAfter = position + signedQuantity;
 
-  if (positionsAfter === 0 || positionsAfter * position < 0) {
-    return (orderPx - avgPx) * position * multiplier;
+  if (position * signedQuantity > 0) {
+    return null;
   }
 
-  return null;
+  if (positionsAfter === 0 || positionsAfter * position > 0) {
+    return (orderPx - avgPx) * (position - positionsAfter) * multiplier;
+  }
+
+  return (orderPx - avgPx) * (position) * multiplier;
 };
 
 export const sideMultiplier: {[side in OrderSide]: number} = {

@@ -28,7 +28,7 @@ export const OrderPanel = (props: Omit<OrderPanelProps, 'position'>) => {
   };
 
   return (
-    <Offcanvas show={show} onHide={handleClose} placement="bottom">
+    <Offcanvas show={show} onHide={handleClose} placement="bottom" backdrop={false}>
       <div className="mb-0"/>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>

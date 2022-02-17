@@ -94,7 +94,7 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
         <Button variant="outline-warning" onClick={onOrderUpdate} disabled={!allowUpdate} className="me-2">
           Update
         </Button>
-        <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)} disabled={!allowUpdate}>
+        <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)}>
           Cancel
         </Button>
       </td>
