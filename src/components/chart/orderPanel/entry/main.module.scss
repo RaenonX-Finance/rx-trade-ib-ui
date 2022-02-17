@@ -1,3 +1,10 @@
+div {
+  &.order-entry {
+    position: sticky;
+    top: -1rem;
+  }
+}
+
 button {
   &.control {
     width: 100%;

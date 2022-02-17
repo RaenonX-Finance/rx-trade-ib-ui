@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 
 import {OrderPanelCommonProps, OrderPanelPartProps} from '../type';
 import {OrderPanelControl} from './control';
+import styles from './main.module.scss';
 import {OrderPanelPx} from './px';
 import {OrderPanelQuantity} from './quantity';
 import {OrderPanelSide} from './side';
@@ -22,20 +23,18 @@ export const OrderEntry = (props: OrderPanelPartProps) => {
   };
 
   return (
-    <>
-      <Row className="g-3">
-        <Col>
-          <OrderPanelSide {...panelProps}/>
-          <OrderPanelQuantity {...panelProps}/>
-        </Col>
-        <Col>
-          <OrderPanelPx {...panelProps} pxTick={pxTick}/>
-          <OrderPanelStats {...panelProps} pxTick={pxTick}/>
-        </Col>
-        <Col>
-          <OrderPanelControl {...props}/>
-        </Col>
-      </Row>
-    </>
+    <Row className={`g-3 ${styles['order-entry']}`}>
+      <Col>
+        <OrderPanelSide {...panelProps}/>
+        <OrderPanelQuantity {...panelProps}/>
+      </Col>
+      <Col>
+        <OrderPanelPx {...panelProps} pxTick={pxTick}/>
+        <OrderPanelStats {...panelProps} pxTick={pxTick}/>
+      </Col>
+      <Col>
+        <OrderPanelControl {...props}/>
+      </Col>
+    </Row>
   );
 };

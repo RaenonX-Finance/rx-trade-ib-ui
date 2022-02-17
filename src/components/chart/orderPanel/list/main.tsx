@@ -91,7 +91,6 @@ export const OrderList = ({state, position, identifier}: OrderPanelProps) => {
                 </td>
                 <td>
                   <Form.Control
-                    size="sm"
                     type="number"
                     value={forceMinTick(order.px, pxTick)}
                     className="text-end"
@@ -107,7 +106,6 @@ export const OrderList = ({state, position, identifier}: OrderPanelProps) => {
                 </td>
                 <td>
                   <Form.Control
-                    size="sm"
                     type="number"
                     value={order.quantity}
                     className="text-end"
@@ -125,10 +123,10 @@ export const OrderList = ({state, position, identifier}: OrderPanelProps) => {
                     .toFixed(2)}
                 </td>
                 <td>
-                  <Button size="sm" variant="outline-warning" onClick={onOrderUpdate(order.orderId)} className="me-2">
+                  <Button variant="outline-warning" onClick={onOrderUpdate(order.orderId)} className="me-2">
                     Update
                   </Button>
-                  <Button size="sm" variant="outline-danger" onClick={onOrderCancel(order.orderId)}>
+                  <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)}>
                     Cancel
                   </Button>
                 </td>
