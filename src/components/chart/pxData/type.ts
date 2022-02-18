@@ -32,6 +32,7 @@ export type PxChartLegendData = {
   low: number,
   close: number,
   vwap: number,
+  amplitude: number,
 };
 
 export type PxChartInitData = {

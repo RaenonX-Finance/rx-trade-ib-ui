@@ -43,10 +43,10 @@ export const PriceDataMain = () => {
     return <>Not Connected</>;
   }
 
-  const refreshStatus = () => {
+  const refreshStatus = (forceOpenOrderRefresh: boolean = false) => {
     socket.emit('position', '');
     socket.emit('execution', '');
-    if (poll) {
+    if (poll || forceOpenOrderRefresh) {
       socket.emit('openOrder', '');
     }
   };
@@ -95,6 +95,7 @@ export const PriceDataMain = () => {
 
     alert.show(<OrderFilledAlert data={data}/>);
     audio.play().then(() => void 0);
+    refreshStatus(true);
   };
 
   React.useEffect(() => {

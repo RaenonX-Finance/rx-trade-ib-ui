@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const PxChartLegend = ({data}: Props) => {
-  const {vwap, open, high, low, close, decimals, epochSec} = data;
+  const {vwap, open, high, low, close, amplitude, decimals, epochSec} = data;
 
   let vwapClassName: LegendDataCellProps['useValueClass'];
   const vwapDiff = close - vwap;
@@ -42,6 +42,7 @@ export const PxChartLegend = ({data}: Props) => {
           {formatSignedNumber(diff, decimals)}
         </Col>
       </Row>
+      <LegendDataCell title="Ampl" value={amplitude} decimals={decimals}/>
       <Row className="text-center">
         <Col>
           {epochSecToFormattedString(epochSec)}

@@ -1,4 +1,4 @@
-import {BarPrice, BarPrices, isBusinessDay, ISeriesApi} from 'lightweight-charts';
+import {BarPrice, isBusinessDay, ISeriesApi} from 'lightweight-charts';
 
 import {businessDayToEpochSec} from '../../../../utils/chart';
 import {OnPxChartInitEvent} from '../type';
@@ -7,7 +7,6 @@ import {OnPxChartInitEvent} from '../type';
 export const handleLegendUpdate = (
   e: OnPxChartInitEvent,
   vwap: ISeriesApi<'Line'>,
-  price: ISeriesApi<'Candlestick'>,
 ) => {
   const {chartRef, chartDataRef, setObject} = e;
 
@@ -19,7 +18,7 @@ export const handleLegendUpdate = (
     const last = chartDataRef.current.data.at(-1);
 
     const vwapPrice = seriesPrices.get(vwap) as BarPrice | undefined;
-    const lastPrice = seriesPrices.get(price) as BarPrices | undefined;
+    const lastPrice = chartDataRef.current.data.find(({epochSec}) => epochSec === time);
 
     setObject.legend((legend) => ({
       ...legend,
@@ -28,6 +27,7 @@ export const handleLegendUpdate = (
       high: lastPrice?.high || last?.high || NaN,
       low: lastPrice?.low || last?.low || NaN,
       close: lastPrice?.close || last?.close || NaN,
+      amplitude: lastPrice?.amplitude || last?.amplitude || NaN,
       epochSec: (
         time ?
           (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
