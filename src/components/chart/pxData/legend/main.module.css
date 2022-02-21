@@ -3,6 +3,7 @@ div.legend {
   margin: 0.3rem;
   border-radius: 0.5rem;
   background-color: rgba(17, 17, 17, 0.65);
+  width: 20rem;
 }
 div.legend.vwap-neutral {
   border: 1px solid #fafafa;

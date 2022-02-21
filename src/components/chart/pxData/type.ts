@@ -3,7 +3,7 @@ import {IPriceLine, ISeriesApi} from 'lightweight-charts';
 import {ExecutionGroup} from '../../../types/execution';
 import {OpenOrderData} from '../../../types/openOrder';
 import {PositionData} from '../../../types/position';
-import {PxData} from '../../../types/pxData';
+import {PxData, PxDataBar} from '../../../types/pxData';
 import {
   ChartDataUpdatedEventHandler,
   ChartInitEventHandler,
@@ -24,15 +24,8 @@ export type PxChartLines = {
   openOrders: Record<number, IPriceLine>,
 };
 
-export type PxChartLegendData = {
-  epochSec: number,
+export type PxChartLegendData = PxDataBar & {
   decimals: number,
-  open: number,
-  high: number,
-  low: number,
-  close: number,
-  vwap: number,
-  amplitude: number,
 };
 
 export type PxChartInitData = {

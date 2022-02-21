@@ -27,7 +27,8 @@ export const handleLegendUpdate = (
       high: lastPrice?.high || last?.high || NaN,
       low: lastPrice?.low || last?.low || NaN,
       close: lastPrice?.close || last?.close || NaN,
-      amplitude: lastPrice?.amplitude || last?.amplitude || NaN,
+      amplitudeHL: lastPrice?.amplitudeHL || last?.amplitudeHL || NaN,
+      amplitudeOC: lastPrice?.amplitudeOC || last?.amplitudeOC || NaN,
       epochSec: (
         time ?
           (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :

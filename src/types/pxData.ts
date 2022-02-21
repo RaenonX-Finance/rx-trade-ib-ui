@@ -3,7 +3,8 @@ import {SecurityIdentifier} from './common';
 
 export type PxDataBar = {
   epochSec: number,
-  amplitude: number,
+  amplitudeHL: number,
+  amplitudeOC: number,
   open: number,
   high: number,
   low: number,
