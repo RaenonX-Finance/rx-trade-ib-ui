@@ -68,6 +68,13 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
           step={pxTick}
         />
       </td>
+      <td className="text-end">
+        {
+          pos !== 0 && (pos * sideMultiplier[order.side]) < 0 ?
+            ((order.px - avgPx) * Math.sign(pos)).toFixed(2) :
+            ''
+        }
+      </td>
       <td>
         <Form.Control
           type="number"

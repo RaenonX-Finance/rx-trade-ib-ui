@@ -36,6 +36,7 @@ export const OrderList = (props: OrderPanelProps) => {
           <tr>
             <th>Side</th>
             <th>Px</th>
+            <th>Px Side</th>
             <th>Quantity</th>
             <th>New Avg Px</th>
             <th>PnL</th>
