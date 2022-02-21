@@ -43,6 +43,12 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>Profit</th>
           <th>Loss</th>
           <th>WR</th>
+          <th>Profit (L)</th>
+          <th>Loss (L)</th>
+          <th>WR (L)</th>
+          <th>Profit (S)</th>
+          <th>Loss (S)</th>
+          <th>WR (S)</th>
           <th>Avg Profit</th>
           <th>Avg Loss</th>
           <th>R/R</th>
@@ -78,6 +84,12 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
               <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
               <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
               <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
+              <td className={styles['up']}>{execution.realizedPnL && execution.profitLong}</td>
+              <td className={styles['down']}>{execution.realizedPnL && execution.lossLong}</td>
+              <td>{execution.realizedPnL && execution.winRateLong?.toFixed(3)}</td>
+              <td className={styles['up']}>{execution.realizedPnL && execution.profitShort}</td>
+              <td className={styles['down']}>{execution.realizedPnL && execution.lossShort}</td>
+              <td>{execution.realizedPnL && execution.winRateShort?.toFixed(3)}</td>
               <td className={styles['up']}>
                 {execution.realizedPnL && execution.avgPnLProfit?.toFixed(2)}
               </td>
