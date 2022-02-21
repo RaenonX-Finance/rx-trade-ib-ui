@@ -36,7 +36,7 @@ export const handleExecution = ({chartObjectRef, payload, showMarker}: OnPxChart
     const {epochSec, side, quantity, realizedPnL} = props;
 
     return {
-      time: epochSec as UTCTimestamp,
+      time: epochSec - 60 as UTCTimestamp, // Displayed marker somehow has 60 sec (period) time offset
       ...sideToMarkerConfig[side],
       color: realizedPnL ? shortLighterColor : longLighterColor,
       text: quantity.toFixed(0),
