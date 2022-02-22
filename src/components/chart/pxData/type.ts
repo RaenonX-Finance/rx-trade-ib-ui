@@ -15,6 +15,7 @@ import {
 export type PxChartSeries = {
   price: ISeriesApi<'Candlestick'>,
   vwap: ISeriesApi<'Line'>,
+  ema120: ISeriesApi<'Line'>,
   avgCost: IPriceLine | null,
   orderEntry: IPriceLine | null,
 };

@@ -34,6 +34,7 @@ export const PxDataChart = (props: Props) => {
             vwap: NaN,
             amplitudeHL: NaN,
             amplitudeOC: NaN,
+            ema120: NaN,
             ...last,
           };
         },
