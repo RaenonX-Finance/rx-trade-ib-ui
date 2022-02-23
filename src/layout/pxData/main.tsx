@@ -121,19 +121,24 @@ export const PriceDataMain = () => {
   }, [poll]); // if `poll` changes, the variable used for event listener should also be updated
 
   return (
-    <Row className="mb-3 g-3">
-      {Object.values(pxData).map((data) => (
-        <Col key={data.uniqueIdentifier} xs={6}>
-          <PriceDataIndividual
-            pxData={data}
-            payload={{
-              position: position[data.contract.identifier],
-              openOrder: openOrders[data.contract.identifier],
-              execution: execution[data.contract.identifier],
-            }}
-          />
-        </Col>
-      ))}
+    <Row className="g-3">
+      {Object.values(pxData)
+        .sort((a, b) => (
+          a.contract.identifier - b.contract.identifier ||
+          a.periodSec - b.periodSec
+        ))
+        .map((data) => (
+          <Col key={data.uniqueIdentifier} xs={6}>
+            <PriceDataIndividual
+              pxData={data}
+              payload={{
+                position: position[data.contract.identifier],
+                openOrder: openOrders[data.contract.identifier],
+                execution: execution[data.contract.identifier],
+              }}
+            />
+          </Col>
+        ))}
     </Row>
   );
 };

@@ -49,7 +49,7 @@ export const TradingViewChart = <T, P, R, L>({
   const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
-  const [showMarker, setShowMarker] = React.useState(true);
+  const [showMarker, setShowMarker] = React.useState(getPeriodSec(chartData) <= 60);
   const dispatch = useDispatch();
   const socket = React.useContext(SocketContext);
 
