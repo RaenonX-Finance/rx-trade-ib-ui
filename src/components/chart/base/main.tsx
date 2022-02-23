@@ -63,7 +63,6 @@ export const TradingViewChart = <T, P, R, L>({
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
     onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order, showMarker});
-    setLastUpdated(Date.now());
   };
 
   const onLoad = () => {
@@ -85,6 +84,7 @@ export const TradingViewChart = <T, P, R, L>({
   };
 
   const onChartDataUpdated = () => {
+    setLastUpdated(Date.now());
     if (updateIndicatorRef.current) {
       // Trigger animation
       updateIndicatorRef.current.style.animation = 'none';
@@ -104,7 +104,7 @@ export const TradingViewChart = <T, P, R, L>({
     [chartObjectRef.current?.initData, chartData, payload, order, showMarker],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
-  React.useEffect(onChartDataUpdated, [lastUpdated]);
+  React.useEffect(onChartDataUpdated, [chartData]);
 
   return (
     <>

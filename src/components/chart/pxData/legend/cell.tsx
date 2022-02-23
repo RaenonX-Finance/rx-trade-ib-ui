@@ -31,7 +31,7 @@ export const LegendDataCell = ({title, value, decimals, large, useValueClass = f
   }
 
   return (
-    <Row className="align-self-end">
+    <Row className="align-self-end flex-nowrap">
       <Col>{title}</Col>
       <Col xs="auto" className={`float-end ${large ? styles['price-lg'] : ''} ${valueClass}`}>
         {value.toFixed(decimals)}

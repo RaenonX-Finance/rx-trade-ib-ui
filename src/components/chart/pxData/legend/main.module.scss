@@ -10,11 +10,12 @@ div {
       }
     }
 
+    font-size: 0.9rem;
     padding: 0.4rem;
     margin: 0.3rem;
     border-radius: 0.5rem;
     background-color: rgba(17 17 17 / 0.65);
-    width: 20rem;
+    width: 17rem;
 
     @include vwap-styling(neutral, $color-neutral);
     @include vwap-styling(up, $color-up);
@@ -34,6 +35,6 @@ div {
   }
 
   &.price-lg {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 }
