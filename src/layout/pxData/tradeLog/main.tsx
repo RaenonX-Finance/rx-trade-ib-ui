@@ -16,7 +16,7 @@ type Props = {
 
 export const TradeLog = ({executions, symbol}: Props) => {
   const [show, setShow] = React.useState(false);
-  const [showNoPnL, setShowNoPnL] = React.useState(true);
+  const [showNoPnL, setShowNoPnL] = React.useState(false);
 
   return (
     <>

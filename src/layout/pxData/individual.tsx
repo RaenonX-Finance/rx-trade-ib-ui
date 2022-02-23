@@ -21,7 +21,9 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
     <div>
       <Row className="g-0 mb-2">
         <Col xs="auto">
-          <h3>{pxData.contract.symbol}&nbsp;({(pxData.periodSec / 60).toFixed(0)})</h3>
+          <h4 className="mb-0">
+            {pxData.contract.symbol}&nbsp;({(pxData.periodSec / 60).toFixed(0)})
+          </h4>
         </Col>
         <Col className="text-end">
           {execution && <TradeLog executions={execution} symbol={pxData.contract.symbol}/>}
