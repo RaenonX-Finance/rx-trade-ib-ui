@@ -7,4 +7,19 @@ div.tooltip {
   z-index: 1000;
 }
 
+span.update-animation {
+  border: 1px solid #325bc2;
+  padding: 0 0.5rem;
+  border-radius: 0.5rem;
+  animation: 1s update-light;
+}
+@keyframes update-light {
+  from {
+    background: #325bc2;
+  }
+  to {
+    background: unset;
+  }
+}
+
 /*# sourceMappingURL=main.module.css.map */

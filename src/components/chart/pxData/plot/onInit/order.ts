@@ -32,7 +32,7 @@ export const handlePxClick = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlest
       show: true,
       order: {
         ...state.order,
-        identifier: pxData.uniqueIdentifier,
+        identifier: pxData.contract.identifier,
         side: px > currentPx.close ? 'SELL' : 'BUY',
         px,
       },

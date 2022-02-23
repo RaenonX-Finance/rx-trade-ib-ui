@@ -9,8 +9,10 @@ import {openOrderDispatchers} from '../../../state/openOrder/dispatchers';
 import {OpenOrderDispatcherName} from '../../../state/openOrder/types';
 import {useDispatch} from '../../../state/store';
 import {SecurityIdentifier} from '../../../types/common';
+import {TimeAgo} from '../../timeAgo/main';
 import {OrderPanel} from '../orderPanel/main';
 import {OrderPanelState} from '../orderPanel/type';
+import {PeriodTimer} from '../periodTimer/main';
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
 import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
@@ -26,6 +28,7 @@ export type TradingViewChartProps<T, P, R, L> = {
   renderObjects: ChartRenderObjects<T, L>,
   getIdentifier: (data: T) => SecurityIdentifier,
   getPnLMultiplier: (data: T) => number,
+  getPeriodSec: (data: T) => number,
 };
 
 export const TradingViewChart = <T, P, R, L>({
@@ -38,14 +41,19 @@ export const TradingViewChart = <T, P, R, L>({
   renderObjects,
   getIdentifier,
   getPnLMultiplier,
+  getPeriodSec,
 }: TradingViewChartProps<T, P, R, L>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
+  const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
+  const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
   const [showMarker, setShowMarker] = React.useState(true);
   const dispatch = useDispatch();
   const socket = React.useContext(SocketContext);
+
+  const periodSec = getPeriodSec(chartData);
 
   const setObject = {
     legend: setLegend,
@@ -55,6 +63,7 @@ export const TradingViewChart = <T, P, R, L>({
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
     onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order, showMarker});
+    setLastUpdated(Date.now());
   };
 
   const onLoad = () => {
@@ -75,6 +84,15 @@ export const TradingViewChart = <T, P, R, L>({
     socket?.emit('openOrder', ''); // Ensure the open order data is up-to-date
   };
 
+  const onChartDataUpdated = () => {
+    if (updateIndicatorRef.current) {
+      // Trigger animation
+      updateIndicatorRef.current.style.animation = 'none';
+      updateIndicatorRef.current.offsetHeight;
+      updateIndicatorRef.current.style.animation = '';
+    }
+  };
+
   const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
     initChart,
     onDataUpdated: onDataUpdatedInternal,
@@ -86,6 +104,7 @@ export const TradingViewChart = <T, P, R, L>({
     [chartObjectRef.current?.initData, chartData, payload, order, showMarker],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
+  React.useEffect(onChartDataUpdated, [lastUpdated]);
 
   return (
     <>
@@ -103,7 +122,7 @@ export const TradingViewChart = <T, P, R, L>({
           {renderObjects.legend(chartData, legend)}
         </div>
       </div>
-      <Row className="g-0 text-end">
+      <Row className="g-2 align-items-center">
         <Col>
           <Button size="sm" variant="outline-info" className="me-2" onClick={() => setShowMarker(!showMarker)}>
             {`${showMarker ? 'Hide' : 'Show'} Markers`}
@@ -119,6 +138,18 @@ export const TradingViewChart = <T, P, R, L>({
           }}>
             Reset Scales
           </Button>
+        </Col>
+        <Col xs="auto">
+          <PeriodTimer periodSec={periodSec}/>
+        </Col>
+        <Col xs="auto" className="text-end">
+          <TimeAgo
+            ref={updateIndicatorRef}
+            epochSec={lastUpdated}
+            format={(secDiffMs) => `Last updated ${secDiffMs.toFixed(0)} secs ago`}
+            updateMs={100}
+            className={styles['update-animation']}
+          />
         </Col>
       </Row>
     </>

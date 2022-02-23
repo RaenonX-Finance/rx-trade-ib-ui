@@ -12,3 +12,22 @@ div {
     @include overlay;
   }
 }
+
+span.update-animation {
+  $update-theme: #325bc2;
+
+  @keyframes update-light {
+    from {
+      background: $update-theme;
+    }
+
+    to {
+      background: unset;
+    }
+  }
+
+  border: 1px solid $update-theme;
+  padding: 0 0.5rem;
+  border-radius: 0.5rem;
+  animation: 1s update-light;
+}

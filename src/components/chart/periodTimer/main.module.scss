@@ -1,0 +1,31 @@
+@use "sass:color";
+
+span {
+  $theme-running: #ababab;
+  $theme-closing: #ad0000;
+
+  @keyframes closing-light {
+    from {
+      background: $theme-closing;
+    }
+
+    to {
+      background: unset;
+    }
+  }
+
+  &.period-timer {
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    display: inline;
+
+    &.period-timer-running {
+      border: 1px solid $theme-running;
+    }
+
+    &.period-timer-closing {
+      border: 1px solid $theme-closing;
+      animation: 1s closing-light;
+    }
+  }
+}

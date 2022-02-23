@@ -1,6 +1,8 @@
 import {SecurityIdentifier} from './common';
 
 
+export type PxDataUniqueIdentifier = string;
+
 export type PxDataBar = {
   epochSec: number,
   open: number,
@@ -14,6 +16,7 @@ export type PxDataBar = {
 };
 
 export type PxDataContract = {
+  identifier: SecurityIdentifier,
   symbol: string,
   minTick: number,
   multiplier: number,
@@ -28,12 +31,13 @@ export type PxDataSupportResistance = {
 };
 
 export type PxData = {
-  uniqueIdentifier: number,
+  uniqueIdentifier: string,
+  periodSec: number,
   contract: PxDataContract,
   data: PxDataBar[],
   supportResistance: PxDataSupportResistance[],
 };
 
 export type PxDataCollection = {
-  [identifier: SecurityIdentifier]: PxData,
+  [identifier: PxDataUniqueIdentifier]: PxData,
 };

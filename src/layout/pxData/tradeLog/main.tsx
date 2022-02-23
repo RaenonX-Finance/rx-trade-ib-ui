@@ -20,11 +20,9 @@ export const TradeLog = ({executions, symbol}: Props) => {
 
   return (
     <>
-      <Row className="text-end">
-        <Col>
-          <Button variant="info" onClick={() => setShow(true)}>{`Show Trade Log (${symbol})`}</Button>
-        </Col>
-      </Row>
+      <Button size="sm" variant="info" onClick={() => setShow(true)}>
+        {`Show Trade Log (${symbol})`}
+      </Button>
       <Offcanvas
         show={show}
         onHide={() => setShow(false)}

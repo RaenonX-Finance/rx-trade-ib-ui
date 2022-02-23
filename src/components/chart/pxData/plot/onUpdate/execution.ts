@@ -18,7 +18,7 @@ const sideToMarkerConfig: {[side in ExecutionSide]: MarkerConfig} = {
   },
 };
 
-export const handleExecution = ({chartObjectRef, payload, showMarker}: OnPxChartUpdatedEvent) => {
+export const handleExecution = ({chartDataRef, chartObjectRef, payload, showMarker}: OnPxChartUpdatedEvent) => {
   const {execution} = payload;
 
   if (!chartObjectRef.current) {
@@ -36,7 +36,8 @@ export const handleExecution = ({chartObjectRef, payload, showMarker}: OnPxChart
     const {epochSec, side, quantity, realizedPnL} = props;
 
     return {
-      time: epochSec - 60 as UTCTimestamp, // Displayed marker somehow has 60 sec (period) time offset
+      // Displayed marker somehow has a single period of time offset
+      time: epochSec - chartDataRef.current.periodSec as UTCTimestamp,
       ...sideToMarkerConfig[side],
       color: realizedPnL ? shortLighterColor : longLighterColor,
       text: quantity.toFixed(0),

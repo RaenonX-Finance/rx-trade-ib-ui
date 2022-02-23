@@ -127,9 +127,9 @@ export const PriceDataMain = () => {
           <PriceDataIndividual
             pxData={data}
             payload={{
-              position: position[data.uniqueIdentifier],
-              openOrder: openOrders[data.uniqueIdentifier],
-              execution: execution[data.uniqueIdentifier],
+              position: position[data.contract.identifier],
+              openOrder: openOrders[data.contract.identifier],
+              execution: execution[data.contract.identifier],
             }}
           />
         </Col>

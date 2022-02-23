@@ -40,14 +40,24 @@ const slice = createSlice({
       pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET],
       (state: PxDataState, {payload}: {payload: PxDataMarket}) => {
         const {contractId, px} = payload;
-        const pxData = state[contractId];
-        const lastBar = pxData?.data.at(-1);
 
-        if (!lastBar) {
-          return;
-        }
+        Object.entries(state).forEach(([_, pxData]) => {
+          if (pxData.contract.identifier !== contractId) {
+            return;
+          }
 
-        pxData.data[pxData.data.length - 1] = updatePxDataBar(lastBar, px);
+          const lastBar = pxData.data.at(-1);
+
+          if (!lastBar) {
+            console.error(
+              `Last data of the PxData ` +
+              `(Contract: ${pxData.contract.symbol} / Period: ${pxData.periodSec} sec) undefined.`,
+            );
+            return;
+          }
+
+          pxData.data[pxData.data.length - 1] = updatePxDataBar(lastBar, px);
+        });
       },
     );
   },
