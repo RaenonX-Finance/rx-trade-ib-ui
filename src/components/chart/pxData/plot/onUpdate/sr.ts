@@ -19,6 +19,7 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
       ),
       getPxLineColor: () => srLevelColor,
       getPxLineStyle: () => LineStyle.SparseDotted,
+      configKey: 'srLevel',
     },
   );
 };

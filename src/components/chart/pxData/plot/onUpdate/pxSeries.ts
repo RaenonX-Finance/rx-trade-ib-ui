@@ -1,7 +1,7 @@
 import {ISeriesApi, LineStyle} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../../utils/calc';
-import {OnPxChartUpdatedEvent, PxChartLines} from '../../type';
+import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLines} from '../../type';
 
 
 export type HandlePxSeriesOptions< T> = {
@@ -11,6 +11,7 @@ export type HandlePxSeriesOptions< T> = {
   getLabelTitle: (data: T, currentPx: number, decimalPlaces: number) => string,
   getPxLineColor: (data: T) => string,
   getPxLineStyle: (data: T) => LineStyle,
+  configKey?: PxChartLayoutConfigKeys,
 };
 
 const removePxLines = <T>(
@@ -43,6 +44,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
   const {chartDataRef, chartObjectRef, layoutConfig} = e;
   const {
     objectKey,
+    configKey,
     getData,
     getPx,
     getLabelTitle,
@@ -67,7 +69,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
     return;
   }
 
-  if (!data || !layoutConfig.srLevel.enable) {
+  if (!data || (configKey && !layoutConfig[configKey].enable)) {
     // No data available / layout config not enabled, remove all Px lines
     removePxLines(e, opts, leftoverLevels, priceSeries);
     return;
