@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {SocketContext} from '../../../../layout/socket/socket';
+import {useSocket} from '../../../../hooks/socket/main';
 import {OrderSide} from '../../../../types/common';
 import {OrderSocketMessage} from '../../../../types/order';
 import {forceMinTick} from '../../../../utils/calc';
@@ -18,11 +18,7 @@ const signToSide: {[sign in number]: OrderSide} = {
 };
 
 export const OrderPanelControl = ({state, identifier, position}: OrderPanelProps) => {
-  const socket = React.useContext(SocketContext);
-
-  if (!socket) {
-    return <></>;
-  }
+  const socket = useSocket();
 
   const onClick = (side: OrderSide, isMarket: boolean) => () => {
     const order: OrderSocketMessage = {

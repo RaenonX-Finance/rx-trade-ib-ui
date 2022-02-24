@@ -3,7 +3,7 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 
-import {SocketContext} from '../../../../layout/socket/socket';
+import {useSocket} from '../../../../hooks/socket/main';
 import {useOpenOrderSelector} from '../../../../state/openOrder/selector';
 import {OrderPanelProps} from '../type';
 import {OrderListButtonBar} from './bar';
@@ -14,11 +14,7 @@ export const OrderList = (props: OrderPanelProps) => {
   const {identifier} = props;
   const openOrdersAll = useOpenOrderSelector().openOrders;
   const openOrders = openOrdersAll[identifier];
-  const socket = React.useContext(SocketContext);
-
-  if (!socket) {
-    return <></>;
-  }
+  const socket = useSocket();
 
   if (!openOrders) {
     return <Alert variant="info">No active orders.</Alert>;

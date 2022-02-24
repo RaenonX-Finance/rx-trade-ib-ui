@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {SocketContext} from '../../../layout/socket/socket';
+import {useSocket} from '../../../hooks/socket/main';
 import {openOrderDispatchers} from '../../../state/openOrder/dispatchers';
 import {OpenOrderDispatcherName} from '../../../state/openOrder/types';
 import {useDispatch} from '../../../state/store';
@@ -51,7 +51,7 @@ export const TradingViewChart = <T, P, R, L>({
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
   const [showMarker, setShowMarker] = React.useState(getPeriodSec(chartData) <= 60);
   const dispatch = useDispatch();
-  const socket = React.useContext(SocketContext);
+  const socket = useSocket();
 
   const periodSec = getPeriodSec(chartData);
 
@@ -80,7 +80,7 @@ export const TradingViewChart = <T, P, R, L>({
 
   const onOrderPanelShowChanged = () => {
     dispatch(openOrderDispatchers[OpenOrderDispatcherName.SET_POLL](!order.show));
-    socket?.emit('openOrder', ''); // Ensure the open order data is up-to-date
+    socket.emit('openOrder', ''); // Ensure the open order data is up-to-date
   };
 
   const onChartDataUpdated = () => {

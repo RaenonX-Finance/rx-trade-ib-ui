@@ -3,7 +3,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import {SocketContext} from '../../../../layout/socket/socket';
+import {useSocket} from '../../../../hooks/socket/main';
 import {openOrderDispatchers} from '../../../../state/openOrder/dispatchers';
 import {OpenOrderDispatcherName} from '../../../../state/openOrder/types';
 import {useDispatch} from '../../../../state/store';
@@ -26,12 +26,8 @@ type Props = OrderPanelProps & {
 
 export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
   const dispatch = useDispatch();
-  const socket = React.useContext(SocketContext);
+  const socket = useSocket();
   const [allowUpdate, setAllowUpdate] = React.useState(false);
-
-  if (!socket) {
-    return <></>;
-  }
 
   const {pxTick} = state;
   const {position: pos, avgPx} = position;

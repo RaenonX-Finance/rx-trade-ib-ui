@@ -1,11 +1,12 @@
 import {Socket} from 'socket.io-client';
 
 
-type SocketMessageHandler = (message: string) => void;
+export type SocketMessageHandler = (message: string) => void;
 
-type SocketEventKeys =
+export type SocketEventKeys =
   'pxUpdated' |
   'pxUpdatedMarket' |
+  'pxRequest' |
   'pxInit' |
   'position' |
   'openOrder' |
