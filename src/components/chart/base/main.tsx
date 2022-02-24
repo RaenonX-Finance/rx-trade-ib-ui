@@ -15,23 +15,30 @@ import {OrderPanelState} from '../orderPanel/type';
 import {PeriodTimer} from '../periodTimer/main';
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
-import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
+import {
+  ChartCalcObjects,
+  ChartDataUpdatedEventHandler,
+  ChartInitEventHandler,
+  ChartRenderObjects,
+} from './type';
 
 
-export type TradingViewChartProps<T, P, R, L> = {
+export type TradingViewChartProps<T, P, R, L, A> = {
   height: number,
   initChart: ChartInitEventHandler<T, R, L>,
   chartData: T,
   payload: P,
-  onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L>,
+  onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L, A>,
   calcObjects: ChartCalcObjects<T, L>,
   renderObjects: ChartRenderObjects<T, L>,
+  renderLayoutConfig: (config: A, setConfig: (newConfig: A) => void) => React.ReactNode,
   getIdentifier: (data: T) => SecurityIdentifier,
   getPnLMultiplier: (data: T) => number,
   getPeriodSec: (data: T) => number,
+  getInitialLayoutConfig: (data: T) => A,
 };
 
-export const TradingViewChart = <T, P, R, L>({
+export const TradingViewChart = <T, P, R, L, A>({
   height,
   initChart,
   calcObjects,
@@ -39,17 +46,19 @@ export const TradingViewChart = <T, P, R, L>({
   payload,
   onDataUpdated,
   renderObjects,
+  renderLayoutConfig,
   getIdentifier,
   getPnLMultiplier,
   getPeriodSec,
-}: TradingViewChartProps<T, P, R, L>) => {
+  getInitialLayoutConfig,
+}: TradingViewChartProps<T, P, R, L, A>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
   const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
   const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
-  const [showMarker, setShowMarker] = React.useState(getPeriodSec(chartData) <= 60);
+  const [layoutConfig, setLayoutConfig] = React.useState<A>(getInitialLayoutConfig(chartData));
   const dispatch = useDispatch();
   const socket = useSocket();
 
@@ -62,7 +71,7 @@ export const TradingViewChart = <T, P, R, L>({
 
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
-    onDataUpdated({chartDataRef, chartObjectRef, setObject, payload, order, showMarker});
+    onDataUpdated({chartRef, chartDataRef, chartObjectRef, setObject, payload, order, layoutConfig});
   };
 
   const onLoad = () => {
@@ -101,7 +110,7 @@ export const TradingViewChart = <T, P, R, L>({
   React.useEffect(onLoad, []);
   React.useEffect(
     onDataUpdatedInternal,
-    [chartObjectRef.current?.initData, chartData, payload, order, showMarker],
+    [chartObjectRef.current?.initData, chartData, payload, order, layoutConfig],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
   React.useEffect(onChartDataUpdated, [chartData]);
@@ -124,9 +133,7 @@ export const TradingViewChart = <T, P, R, L>({
       </div>
       <Row className="g-2 align-items-center">
         <Col>
-          <Button size="sm" variant="outline-info" className="me-2" onClick={() => setShowMarker(!showMarker)}>
-            {`${showMarker ? 'Hide' : 'Show'} Markers`}
-          </Button>
+          {renderLayoutConfig(layoutConfig, setLayoutConfig)}
           <Button size="sm" variant="outline-success" className="me-2" onClick={() => {
             chartRef.current?.timeScale().scrollToRealTime();
           }}>

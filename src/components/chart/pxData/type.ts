@@ -15,7 +15,7 @@ import {
 export type PxChartSeries = {
   price: ISeriesApi<'Candlestick'>,
   vwap: ISeriesApi<'Line'>,
-  ema120: ISeriesApi<'Line'>,
+  ema120: ISeriesApi<'Line'> | null,
   avgCost: IPriceLine | null,
   orderEntry: IPriceLine | null,
 };
@@ -28,6 +28,15 @@ export type PxChartLines = {
 export type PxChartLegendData = PxDataBar & {
   decimals: number,
 };
+
+export type PxChartLayoutConfigKeys = 'ema120' | 'srLevel' | 'marker';
+
+export type PxChartLayoutConfigEntry = {
+  title: string,
+  enable: boolean,
+};
+
+export type PxChartLayoutConfig = {[key in PxChartLayoutConfigKeys]: PxChartLayoutConfigEntry};
 
 export type PxChartInitData = {
   series: PxChartSeries,
@@ -57,12 +66,14 @@ export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<
   PxData,
   PxChartPayload,
   PxChartInitData,
-  PxChartLegendData
+  PxChartLegendData,
+  PxChartLayoutConfig
 >;
 
 export type PxChartUpdatedEventHandler = ChartDataUpdatedEventHandler<
   PxData,
   PxChartPayload,
   PxChartInitData,
-  PxChartLegendData
+  PxChartLegendData,
+  PxChartLayoutConfig
 >;

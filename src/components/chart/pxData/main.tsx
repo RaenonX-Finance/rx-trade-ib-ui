@@ -3,29 +3,47 @@ import React from 'react';
 import {PxData} from '../../../types/pxData';
 import {getDecimalPlaces} from '../../../utils/calc';
 import {TradingViewChart, TradingViewChartProps} from '../base/main';
+import {PxChartLayoutConfigPanel} from './layoutConfig/main';
 import {PxChartLegend} from './legend/main';
 import {onPxChartInit} from './plot/onInit/main';
 import {onPxChartUpdated} from './plot/onUpdate/main';
-import {PxChartInitData, PxChartLegendData, PxChartPayload} from './type';
+import {
+  PxChartInitData,
+  PxChartLayoutConfig,
+  PxChartLegendData,
+  PxChartPayload,
+} from './type';
 
 
 type Props = Omit<
-  TradingViewChartProps<PxData, PxChartPayload, PxChartInitData, PxChartLegendData>,
+  TradingViewChartProps<
+    PxData,
+    PxChartPayload,
+    PxChartInitData,
+    PxChartLegendData,
+    PxChartLayoutConfig
+  >,
   'initChart' |
   'calcObjects' |
   'renderObjects' |
+  'renderLayoutConfig' |
   'onDataUpdated' |
   'getIdentifier' |
   'getPnLMultiplier' |
-  'getPeriodSec'
->;
+  'getPeriodSec' |
+  'getInitialLayoutConfig'
+> & {
+  title: string,
+};
 
 
 export const PxDataChart = (props: Props) => {
+  const {title} = props;
+
   return (
     <TradingViewChart
       initChart={onPxChartInit}
-      onDataUpdated={(e) => onPxChartUpdated(e)}
+      onDataUpdated={onPxChartUpdated}
       calcObjects={{
         legend: (data) => {
           const last = data.data.at(-1);
@@ -58,9 +76,26 @@ export const PxDataChart = (props: Props) => {
       renderObjects={{
         legend: (_, legend) => <PxChartLegend data={legend}/>,
       }}
+      renderLayoutConfig={(config, setConfig) => (
+        <PxChartLayoutConfigPanel title={title} config={config} setConfig={setConfig}/>
+      )}
       getIdentifier={(data) => data.contract.identifier}
       getPnLMultiplier={(data) => data.contract.multiplier}
       getPeriodSec={(data) => data.periodSec}
+      getInitialLayoutConfig={(data) => ({
+        ema120: {
+          title: 'EMA 120',
+          enable: true,
+        },
+        srLevel: {
+          title: 'S/R Levels',
+          enable: true,
+        },
+        marker: {
+          title: 'Trade Markers',
+          enable: data.periodSec <= 60,
+        },
+      })}
       {...props}
     />
   );

@@ -17,12 +17,14 @@ type Props = {
 export const PriceDataIndividual = ({pxData, payload}: Props) => {
   const {execution} = payload;
 
+  const title = `${pxData.contract.symbol} - ${(pxData.periodSec / 60).toFixed(0)}`;
+
   return (
     <div>
       <Row className="g-0 mb-2">
         <Col xs="auto">
           <h4 className="mb-0">
-            {pxData.contract.symbol}&nbsp;({(pxData.periodSec / 60).toFixed(0)})
+            {title}
           </h4>
         </Col>
         <Col className="text-end">
@@ -32,6 +34,7 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
       <Row className="g-0 mb-2">
         <Col>
           <PxDataChart
+            title={title}
             chartData={pxData}
             payload={payload}
             height={370}

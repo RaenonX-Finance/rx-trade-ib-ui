@@ -50,21 +50,20 @@ export type UseChartReturn<T, R, L> = {
 };
 
 export type OnChartChangedEventCommon<T, R, L> = {
+  chartRef: React.MutableRefObject<IChartApi | undefined>,
   chartDataRef: React.MutableRefObject<T>,
   chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
   setObject: ChartSetStateObjects<L>,
 };
 
-export type OnChartInitEvent<T, R, L> = InitChartPayload<T, L> & OnChartChangedEventCommon<T, R, L> & {
-  chartRef: React.MutableRefObject<IChartApi | undefined>,
-};
+export type OnChartInitEvent<T, R, L> = InitChartPayload<T, L> & OnChartChangedEventCommon<T, R, L>;
 
 export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R;
 
-export type OnChartDataUpdatedEvent<T, P, R, L> = OnChartChangedEventCommon<T, R, L> & {
+export type OnChartDataUpdatedEvent<T, P, R, L, A> = OnChartChangedEventCommon<T, R, L> & {
   payload: P,
   order: OrderPanelState,
-  showMarker: boolean,
+  layoutConfig: A,
 };
 
-export type ChartDataUpdatedEventHandler<T, P, R, L> = (e: OnChartDataUpdatedEvent<T, P, R, L>) => void;
+export type ChartDataUpdatedEventHandler<T, P, R, L, A> = (e: OnChartDataUpdatedEvent<T, P, R, L, A>) => void;

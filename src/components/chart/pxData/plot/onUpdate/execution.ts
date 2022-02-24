@@ -18,7 +18,7 @@ const sideToMarkerConfig: {[side in ExecutionSide]: MarkerConfig} = {
   },
 };
 
-export const handleExecution = ({chartDataRef, chartObjectRef, payload, showMarker}: OnPxChartUpdatedEvent) => {
+export const handleExecution = ({chartDataRef, chartObjectRef, payload, layoutConfig}: OnPxChartUpdatedEvent) => {
   const {execution} = payload;
 
   if (!chartObjectRef.current) {
@@ -27,7 +27,7 @@ export const handleExecution = ({chartDataRef, chartObjectRef, payload, showMark
 
   const {price} = chartObjectRef.current.initData.series;
 
-  if (!execution?.length || !showMarker) {
+  if (!execution?.length || !layoutConfig.marker) {
     price.setMarkers([]);
     return;
   }
