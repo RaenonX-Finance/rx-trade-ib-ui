@@ -15,10 +15,11 @@ import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
 import {OrderFilledResult} from '../../types/orderFilled';
 import {SocketContext} from '../../types/socket/socket';
+import {DataSocket} from '../../types/socket/type';
 import {useSocketEventHandler} from './utils';
 
 
-export const useSocketInit = () => {
+export const useSocketInit = (): DataSocket => {
   const socket = React.useContext(SocketContext);
   const openOrderState = useOpenOrderSelector();
 
@@ -77,4 +78,6 @@ export const useSocketInit = () => {
       socket.off('orderFilled', onOrderFilled);
     };
   }, [poll]); // if `poll` changes, the variable used for event listener should also be updated
+
+  return socket;
 };
