@@ -89,7 +89,7 @@ export const PxDataChart = (props: Props) => {
         },
         srLevel: {
           title: 'S/R Levels',
-          enable: true,
+          enable: data.periodSec <= 60,
         },
         marker: {
           title: 'Trade Markers',

@@ -53,13 +53,15 @@ export type PxChartPayload = {
 export type OnPxChartInitEvent = OnChartInitEvent<
   PxData,
   PxChartInitData,
-  PxChartLegendData
+  PxChartLegendData,
+  PxChartLayoutConfig
 >;
 
 export type PxChartInitEventHandler = ChartInitEventHandler<
   PxData,
   PxChartInitData,
-  PxChartLegendData
+  PxChartLegendData,
+  PxChartLayoutConfig
 >;
 
 export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<

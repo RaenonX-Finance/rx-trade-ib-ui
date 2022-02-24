@@ -25,7 +25,7 @@ import {
 
 export type TradingViewChartProps<T, P, R, L, A> = {
   height: number,
-  initChart: ChartInitEventHandler<T, R, L>,
+  initChart: ChartInitEventHandler<T, R, L, A>,
   chartData: T,
   payload: P,
   onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L, A>,
@@ -83,6 +83,7 @@ export const TradingViewChart = <T, P, R, L, A>({
     makeChart({
       chartDataRef,
       setObject,
+      layoutConfig,
       chartContainer: chartContainerRef.current,
     });
   };

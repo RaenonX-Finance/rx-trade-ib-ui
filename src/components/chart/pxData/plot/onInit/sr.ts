@@ -7,13 +7,13 @@ import {srLevelColor} from '../const';
 
 
 export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>): Record<number, IPriceLine> => {
-  const {chartDataRef} = e;
+  const {chartDataRef, layoutConfig} = e;
 
   const srLevelLines: Record<number, IPriceLine> = {};
   const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
   const currentPx = chartDataRef.current.data.at(-1);
 
-  if (!currentPx) {
+  if (!currentPx || !layoutConfig.srLevel.enable) {
     return {};
   }
 

@@ -7,15 +7,15 @@ import {chartOptions} from './options';
 import {ChartObjectRef, UseChartPayload, UseChartReturn} from './type';
 
 
-export const useTradingViewChart = <T, R, L>({
+export const useTradingViewChart = <T, R, L, A>({
   initChart,
   onDataUpdated,
-}: UseChartPayload<T, R, L>): UseChartReturn<T, R, L> => {
+}: UseChartPayload<T, R, L, A>): UseChartReturn<T, R, L, A> => {
   const chartRef = React.useRef<IChartApi>();
   const chartObjectRef = React.useRef<ChartObjectRef<R>>();
   const {dimension} = useLayout();
 
-  const makeChart: UseChartReturn<T, R, L>['makeChart'] = (payload) => {
+  const makeChart: UseChartReturn<T, R, L, A>['makeChart'] = (payload) => {
     const {chartContainer} = payload;
 
     chartRef.current = createChart(chartContainer, {

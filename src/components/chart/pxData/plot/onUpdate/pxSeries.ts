@@ -40,7 +40,7 @@ const removePxLines = <T>(
 };
 
 export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesOptions<T>) => {
-  const {chartDataRef, chartObjectRef} = e;
+  const {chartDataRef, chartObjectRef, layoutConfig} = e;
   const {
     objectKey,
     getData,
@@ -67,8 +67,8 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
     return;
   }
 
-  if (!data) {
-    // No data available, should remove all Px lines
+  if (!data || !layoutConfig.srLevel.enable) {
+    // No data available / layout config not enabled, remove all Px lines
     removePxLines(e, opts, leftoverLevels, priceSeries);
     return;
   }

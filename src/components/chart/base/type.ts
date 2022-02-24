@@ -32,38 +32,39 @@ export type ChartObjectRef<T> = {
   initData: T,
 };
 
-export type InitChartPayload<T, L> = {
+export type InitChartPayload<T, L, A> = {
   chartDataRef: React.MutableRefObject<T>,
   setObject: ChartSetStateObjects<L>,
   chartContainer: HTMLDivElement,
+  layoutConfig: A,
 };
 
-export type UseChartPayload<T, R, L> = {
-  initChart: ChartInitEventHandler<T, R, L>,
+export type UseChartPayload<T, R, L, A> = {
+  initChart: ChartInitEventHandler<T, R, L, A>,
   onDataUpdated: () => void,
 };
 
-export type UseChartReturn<T, R, L> = {
-  makeChart: (payload: InitChartPayload<T, L>) => void,
+export type UseChartReturn<T, R, L, A> = {
+  makeChart: (payload: InitChartPayload<T, L, A>) => void,
   chartRef: React.MutableRefObject<IChartApi | undefined>,
   chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
 };
 
-export type OnChartChangedEventCommon<T, R, L> = {
+export type OnChartChangedEventCommon<T, R, L, A> = {
   chartRef: React.MutableRefObject<IChartApi | undefined>,
   chartDataRef: React.MutableRefObject<T>,
   chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
   setObject: ChartSetStateObjects<L>,
+  layoutConfig: A,
 };
 
-export type OnChartInitEvent<T, R, L> = InitChartPayload<T, L> & OnChartChangedEventCommon<T, R, L>;
+export type OnChartInitEvent<T, R, L, A> = InitChartPayload<T, L, A> & OnChartChangedEventCommon<T, R, L, A>;
 
-export type ChartInitEventHandler<T, R, L> = (e: OnChartInitEvent<T, R, L>) => R;
+export type ChartInitEventHandler<T, R, L, A> = (e: OnChartInitEvent<T, R, L, A>) => R;
 
-export type OnChartDataUpdatedEvent<T, P, R, L, A> = OnChartChangedEventCommon<T, R, L> & {
+export type OnChartDataUpdatedEvent<T, P, R, L, A> = OnChartChangedEventCommon<T, R, L, A> & {
   payload: P,
   order: OrderPanelState,
-  layoutConfig: A,
 };
 
 export type ChartDataUpdatedEventHandler<T, P, R, L, A> = (e: OnChartDataUpdatedEvent<T, P, R, L, A>) => void;
