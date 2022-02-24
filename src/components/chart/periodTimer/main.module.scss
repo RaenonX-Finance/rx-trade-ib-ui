@@ -2,17 +2,23 @@
 
 span {
   $theme-running: #ababab;
-  $theme-closing: #ad0000;
+  $theme-warning: #9ca62b;
+  $theme-closing: #c20000;
 
-  @keyframes closing-light {
-    from {
-      background: $theme-closing;
-    }
+  @mixin lighting-animation($name, $color) {
+    @keyframes #{$name}-light {
+      from {
+        background: $color;
+      }
 
-    to {
-      background: unset;
+      to {
+        background: unset;
+      }
     }
   }
+
+  @include lighting-animation(warning, $theme-warning);
+  @include lighting-animation(closing, $theme-closing);
 
   &.period-timer {
     border-radius: 0.5rem;
@@ -22,6 +28,11 @@ span {
 
     &.period-timer-running {
       border: 1px solid $theme-running;
+    }
+
+    &.period-timer-warning {
+      border: 1px solid $theme-warning;
+      animation: 1s warning-light;
     }
 
     &.period-timer-closing {

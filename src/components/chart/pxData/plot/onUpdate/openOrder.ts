@@ -3,7 +3,7 @@ import {LineStyle} from 'lightweight-charts';
 import {OpenOrderData} from '../../../../../types/openOrder';
 import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
-import {openOrderColor} from '../const';
+import {orderSideColor} from '../const';
 import {handlePxLines} from './pxSeries';
 
 
@@ -18,7 +18,7 @@ export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
         const diff = formatSignedNumber(px - currentPx, decimalPlaces);
         return `${side} @ ${px} x ${quantity} (${diff})`;
       },
-      getPxLineColor: ({side}) => openOrderColor[side],
+      getPxLineColor: ({side}) => orderSideColor[side],
       getPxLineStyle: () => LineStyle.Dotted,
     },
   );

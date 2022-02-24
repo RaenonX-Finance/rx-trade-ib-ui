@@ -1,6 +1,14 @@
+@keyframes warning-light {
+  from {
+    background: #9ca62b;
+  }
+  to {
+    background: unset;
+  }
+}
 @keyframes closing-light {
   from {
-    background: #ad0000;
+    background: #c20000;
   }
   to {
     background: unset;
@@ -15,8 +23,12 @@ span.period-timer {
 span.period-timer.period-timer-running {
   border: 1px solid #ababab;
 }
+span.period-timer.period-timer-warning {
+  border: 1px solid #9ca62b;
+  animation: 1s warning-light;
+}
 span.period-timer.period-timer-closing {
-  border: 1px solid #ad0000;
+  border: 1px solid #c20000;
   animation: 1s closing-light;
 }
 

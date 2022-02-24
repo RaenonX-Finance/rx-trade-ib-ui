@@ -3,6 +3,16 @@ import React from 'react';
 import styles from './main.module.scss';
 
 
+const getAnimationClassName = (secLeft: number): string => {
+  if (secLeft < 10) {
+    return styles['period-timer-closing'];
+  }
+  if (secLeft < 20) {
+    return styles['period-timer-warning'];
+  }
+  return styles['period-timer-running'];
+};
+
 type Props = {
   periodSec: number,
 };
@@ -30,10 +40,7 @@ export const PeriodTimer = ({periodSec}: Props) => {
 
   return (
     <span
-      className={
-        `${styles['period-timer']} ` +
-        `${secLeft < 10 ? styles['period-timer-closing'] : styles['period-timer-running']}`
-      }
+      className={`${styles['period-timer']} ${getAnimationClassName(secLeft)}`}
       ref={secLeftElemRef}
     >
       {secLeft.toFixed(0)}&nbsp;s&nbsp;until&nbsp;reset
