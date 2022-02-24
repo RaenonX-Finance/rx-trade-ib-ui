@@ -19,4 +19,4 @@ export const useSocketEventHandler = <T>(
   if (afterAction) {
     afterAction();
   }
-}, []);
+}, [afterAction]);

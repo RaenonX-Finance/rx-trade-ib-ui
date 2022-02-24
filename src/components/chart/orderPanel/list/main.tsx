@@ -4,17 +4,28 @@ import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 
 import {useSocket} from '../../../../hooks/socket/main';
+import {openOrderDispatchers} from '../../../../state/openOrder/dispatchers';
 import {useOpenOrderSelector} from '../../../../state/openOrder/selector';
+import {OpenOrderDispatcherName} from '../../../../state/openOrder/types';
+import {useDispatch} from '../../../../state/store';
 import {OrderPanelProps} from '../type';
 import {OrderListButtonBar} from './bar';
 import {OrderListEntry} from './entry';
 
 
 export const OrderList = (props: OrderPanelProps) => {
-  const {identifier} = props;
-  const openOrdersAll = useOpenOrderSelector().openOrders;
-  const openOrders = openOrdersAll[identifier];
   const socket = useSocket();
+  const dispatch = useDispatch();
+
+  const {identifier} = props;
+  const {openOrders: openOrderCollection, sortedOrderIds: sortedOrderIdCollection} = useOpenOrderSelector();
+  const openOrders = openOrderCollection[identifier];
+  const sortedOrderIds = sortedOrderIdCollection[identifier];
+  const [pendingUpdate, setPendingUpdate] = React.useState<Record<number, boolean>>(
+    openOrders ?
+      Object.fromEntries(Object.keys(openOrders).map((orderId) => [orderId, false])) :
+      {},
+  );
 
   if (!openOrders) {
     return <Alert variant="info">No active orders.</Alert>;
@@ -22,6 +33,13 @@ export const OrderList = (props: OrderPanelProps) => {
 
   const onReset = () => {
     socket.emit('openOrder', '');
+  };
+
+  const setPendingUpdateOfOrder = (orderId: number, flag: boolean) => {
+    setPendingUpdate({
+      ...pendingUpdate,
+      [orderId]: flag,
+    });
   };
 
   return (
@@ -40,11 +58,19 @@ export const OrderList = (props: OrderPanelProps) => {
           </tr>
         </thead>
         <tbody>
-          {[...Object.values(openOrders)]
-            .sort((a, b) => b.px - a.px)
-            .map((order) => (
-              <OrderListEntry key={order.orderId} {...props} order={order}/>
-            ))}
+          {sortedOrderIds.map((orderId) => (
+            <OrderListEntry
+              key={orderId}
+              order={openOrders[orderId]}
+              allowUpdate={pendingUpdate[orderId]}
+              onEdited={() => setPendingUpdateOfOrder(orderId, true)}
+              onSubmittedModification={() => {
+                setPendingUpdateOfOrder(orderId, false);
+                dispatch(openOrderDispatchers[OpenOrderDispatcherName.SORT]());
+              }}
+              {...props}
+            />
+          ))}
         </tbody>
       </Table>
     </>

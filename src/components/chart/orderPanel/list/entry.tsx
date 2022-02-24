@@ -22,12 +22,22 @@ const orderSideClassName: {[side in OrderSide]: string} = {
 
 type Props = OrderPanelProps & {
   order: OpenOrderData,
+  allowUpdate: boolean,
+  onEdited: () => void,
+  onSubmittedModification: () => void,
 };
 
-export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
+export const OrderListEntry = ({
+  state,
+  position,
+  multiplier,
+  order,
+  allowUpdate,
+  onEdited,
+  onSubmittedModification,
+}: Props) => {
   const dispatch = useDispatch();
   const socket = useSocket();
-  const [allowUpdate, setAllowUpdate] = React.useState(false);
 
   const {pxTick} = state;
   const {position: pos, avgPx} = position;
@@ -35,12 +45,12 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
 
   const onOrderCancel = (orderId: number) => () => {
     socket.emit('orderCancel', orderId.toString());
-    setAllowUpdate(false);
+    onSubmittedModification();
   };
 
   const onOrderUpdate = () => {
     socket.emit('orderPlace', JSON.stringify(order));
-    setAllowUpdate(false);
+    onSubmittedModification();
   };
 
   return (
@@ -58,9 +68,16 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
               ...order,
               px: forceMinTick(parseFloat(e.currentTarget.value), pxTick),
             }));
-            setAllowUpdate(true);
+            onEdited();
           }}
           onMouseOver={(e) => e.currentTarget.focus()}
+          onKeyDown={(e) => {
+            if (e.key !== 'Enter') {
+              return;
+            }
+
+            onOrderUpdate();
+          }}
           step={pxTick}
         />
       </td>
@@ -81,9 +98,16 @@ export const OrderListEntry = ({state, position, multiplier, order}: Props) => {
               ...order,
               quantity: Math.max(1, parseInt(e.currentTarget.value)),
             }));
-            setAllowUpdate(true);
+            onEdited();
           }}
           onMouseOver={(e) => e.currentTarget.focus()}
+          onKeyDown={(e) => {
+            if (e.key !== 'Enter') {
+              return;
+            }
+
+            onOrderUpdate();
+          }}
         />
       </td>
       <td className="text-end">
