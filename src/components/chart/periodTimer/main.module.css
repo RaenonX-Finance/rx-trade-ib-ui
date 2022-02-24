@@ -10,6 +10,7 @@ span.period-timer {
   border-radius: 0.5rem;
   padding: 0 0.5rem;
   display: inline;
+  font-size: 1.2rem;
 }
 span.period-timer.period-timer-running {
   border: 1px solid #ababab;
