@@ -3,7 +3,6 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import {useDataPoller} from '../../hooks/dataPoller/main';
 import {useSocketInit} from '../../hooks/socket/init';
 import {useExecutionSelector} from '../../state/execution/selector';
 import {useOpenOrderSelector} from '../../state/openOrder/selector';
@@ -18,8 +17,7 @@ export const PriceDataMain = () => {
   const openOrderState = useOpenOrderSelector();
   const execution = useExecutionSelector();
 
-  const socket = useSocketInit();
-  useDataPoller(socket);
+  useSocketInit();
 
   const {openOrders} = openOrderState;
 
