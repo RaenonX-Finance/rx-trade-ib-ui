@@ -27,7 +27,7 @@ export const handleExecution = ({chartDataRef, chartObjectRef, payload, layoutCo
 
   const {price} = chartObjectRef.current.initData.series;
 
-  if (!execution?.length || !layoutConfig.marker) {
+  if (!execution?.length || !layoutConfig.marker.enable) {
     price.setMarkers([]);
     return;
   }
