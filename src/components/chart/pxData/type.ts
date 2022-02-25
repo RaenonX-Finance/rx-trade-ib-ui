@@ -4,6 +4,7 @@ import {ExecutionGroup} from '../../../types/execution';
 import {OpenOrderData} from '../../../types/openOrder';
 import {PositionData} from '../../../types/position';
 import {PxData, PxDataBar} from '../../../types/pxData';
+import {Optional} from '../../../utils/types';
 import {
   ChartDataUpdatedEventHandler,
   ChartInitEventHandler,
@@ -25,7 +26,7 @@ export type PxChartLines = {
   openOrders: Record<number, IPriceLine>,
 };
 
-export type PxChartLegendData = PxDataBar & {
+export type PxChartLegendData = Optional<PxDataBar, 'ema120' | 'vwap'> & {
   decimals: number,
 };
 

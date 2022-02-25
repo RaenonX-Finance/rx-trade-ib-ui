@@ -1,4 +1,4 @@
-import {BarData, LineData, UTCTimestamp} from 'lightweight-charts';
+import {BarData, LineData as LineDataApi, UTCTimestamp} from 'lightweight-charts';
 
 import {PxDataBar} from '../../../types/pxData';
 
@@ -8,7 +8,21 @@ export const toBarData = (bar: PxDataBar): BarData => ({
   ...bar,
 });
 
-export const toLineData = <K extends keyof PxDataBar>(key: K) => (bar: PxDataBar): LineData => ({
-  time: bar.epochSec as UTCTimestamp,
-  value: bar[key],
-});
+type LineData = Omit<LineDataApi, 'value'> & {
+  value?: number
+};
+
+export const toLineData = <K extends keyof PxDataBar>(key: K) => (bar: PxDataBar): LineData => {
+  const value = bar[key];
+
+  if (!value) {
+    return {
+      time: bar.epochSec as UTCTimestamp,
+    };
+  }
+
+  return {
+    time: bar.epochSec as UTCTimestamp,
+    value,
+  };
+};

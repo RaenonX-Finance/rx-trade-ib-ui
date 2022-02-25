@@ -18,7 +18,7 @@ export const PxChartLegend = ({data}: Props) => {
   const {vwap, open, high, low, close, amplitudeHL, amplitudeOC, decimals, epochSec} = data;
 
   let vwapClassName: LegendDataCellProps['useValueClass'];
-  const vwapDiff = close - vwap;
+  const vwapDiff = vwap ? close - vwap : 0;
   if (vwapDiff > 0) {
     vwapClassName = 'up';
   } else if (vwapDiff < 0) {
