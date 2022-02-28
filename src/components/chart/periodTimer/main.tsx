@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {useAnimation} from '../../../hooks/animation';
 import styles from './main.module.scss';
 
 
@@ -18,8 +19,10 @@ type Props = {
 };
 
 export const PeriodTimer = ({periodSec}: Props) => {
-  const secLeftElemRef = React.useRef<HTMLSpanElement>(null);
   const [secLeft, setSecLeft] = React.useState(periodSec - (Date.now() / 1000) % periodSec);
+  const secLeftElemRef = useAnimation({
+    deps: [secLeft],
+  });
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
@@ -28,15 +31,6 @@ export const PeriodTimer = ({periodSec}: Props) => {
 
     return () => clearInterval(intervalId);
   }, []);
-
-  React.useEffect(() => {
-    if (secLeftElemRef.current) {
-      // Trigger animation
-      secLeftElemRef.current.style.animation = 'none';
-      secLeftElemRef.current.offsetHeight;
-      secLeftElemRef.current.style.animation = '';
-    }
-  }, [secLeft]);
 
   return (
     <span

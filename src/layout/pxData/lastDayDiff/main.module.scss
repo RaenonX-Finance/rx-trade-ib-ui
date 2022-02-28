@@ -1,0 +1,27 @@
+span {
+  $color-up: #26a69a;
+  $color-down: #ef5350;
+
+  @mixin last-day-diff-theme($suffix, $color) {
+    @keyframes last-day-diff-#{$suffix}-animation {
+      from {
+        box-shadow: inset 0 0 1rem $color;
+      }
+
+      to {
+        box-shadow: unset;
+      }
+    }
+
+    &.last-day-diff-#{$suffix} {
+      border: 1px solid $color;
+      border-radius: 0.5rem;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      animation: 1s last-day-diff-#{$suffix}-animation;
+    }
+  }
+
+  @include last-day-diff-theme(up, $color-up);
+  @include last-day-diff-theme(down, $color-down);
+}

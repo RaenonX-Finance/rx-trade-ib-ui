@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import {PxDataChart} from '../../components/chart/pxData/main';
 import {PxChartPayload} from '../../components/chart/pxData/type';
 import {PxData} from '../../types/pxData';
+import {PxLastDayDiff} from './lastDayDiff/main';
 import {TradeLog} from './tradeLog/main';
 
 
@@ -27,8 +28,15 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
             {title}
           </h4>
         </Col>
-        <Col className="text-end">
-          {execution && <TradeLog executions={execution} symbol={pxData.contract.symbol}/>}
+        <Col>
+          <Row className="g-2 text-end align-items-center">
+            <Col>
+              <PxLastDayDiff data={pxData}/>
+            </Col>
+            <Col xs="auto">
+              {execution && <TradeLog executions={execution} symbol={pxData.contract.symbol}/>}
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row className="g-0 mb-2">

@@ -5,20 +5,25 @@ span {
   $theme-warning: #9ca62b;
   $theme-closing: #c20000;
 
-  @mixin lighting-animation($name, $color) {
-    @keyframes #{$name}-light {
-      from {
-        background: $color;
-      }
+  @keyframes closing-light {
+    from {
+      background: $theme-closing;
+    }
 
-      to {
-        background: unset;
-      }
+    to {
+      background: unset;
     }
   }
 
-  @include lighting-animation(warning, $theme-warning);
-  @include lighting-animation(closing, $theme-closing);
+  @keyframes warning-light {
+    from {
+      box-shadow: inset 0 0 1rem $theme-warning;
+    }
+
+    to {
+      background: unset;
+    }
+  }
 
   &.period-timer {
     border-radius: 0.5rem;

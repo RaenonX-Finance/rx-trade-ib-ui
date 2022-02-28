@@ -1,0 +1,32 @@
+@keyframes last-day-diff-up-animation {
+  from {
+    box-shadow: inset 0 0 1rem #26a69a;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+span.last-day-diff-up {
+  border: 1px solid #26a69a;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  animation: 1s last-day-diff-up-animation;
+}
+@keyframes last-day-diff-down-animation {
+  from {
+    box-shadow: inset 0 0 1rem #ef5350;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+span.last-day-diff-down {
+  border: 1px solid #ef5350;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  animation: 1s last-day-diff-down-animation;
+}
+
+/*# sourceMappingURL=main.module.css.map */

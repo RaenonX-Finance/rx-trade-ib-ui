@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {useAnimation} from '../../../hooks/animation';
 import {useSocket} from '../../../hooks/socket/main';
 import {openOrderDispatchers} from '../../../state/openOrder/dispatchers';
 import {OpenOrderDispatcherName} from '../../../state/openOrder/types';
@@ -15,12 +16,7 @@ import {OrderPanelState} from '../orderPanel/type';
 import {PeriodTimer} from '../periodTimer/main';
 import {useTradingViewChart} from './hook';
 import styles from './main.module.scss';
-import {
-  ChartCalcObjects,
-  ChartDataUpdatedEventHandler,
-  ChartInitEventHandler,
-  ChartRenderObjects,
-} from './type';
+import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, ChartRenderObjects} from './type';
 
 
 export type TradingViewChartProps<T, P, R, L, A> = {
@@ -54,7 +50,10 @@ export const TradingViewChart = <T, P, R, L, A>({
 }: TradingViewChartProps<T, P, R, L, A>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
-  const updateIndicatorRef = React.useRef<HTMLSpanElement>(null);
+  const updateIndicatorRef = useAnimation({
+    deps: [chartData],
+    onTrigger: () => setLastUpdated(Date.now()),
+  });
   const [lastUpdated, setLastUpdated] = React.useState(Date.now());
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
@@ -93,16 +92,6 @@ export const TradingViewChart = <T, P, R, L, A>({
     socket.emit('openOrder', ''); // Ensure the open order data is up-to-date
   };
 
-  const onChartDataUpdated = () => {
-    setLastUpdated(Date.now());
-    if (updateIndicatorRef.current) {
-      // Trigger animation
-      updateIndicatorRef.current.style.animation = 'none';
-      updateIndicatorRef.current.offsetHeight;
-      updateIndicatorRef.current.style.animation = '';
-    }
-  };
-
   const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
     initChart,
     onDataUpdated: onDataUpdatedInternal,
@@ -114,7 +103,6 @@ export const TradingViewChart = <T, P, R, L, A>({
     [chartObjectRef.current?.initData, chartData, payload, order, layoutConfig],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
-  React.useEffect(onChartDataUpdated, [chartData]);
 
   return (
     <>

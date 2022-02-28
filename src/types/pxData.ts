@@ -36,6 +36,7 @@ export type PxData = {
   contract: PxDataContract,
   data: PxDataBar[],
   supportResistance: PxDataSupportResistance[],
+  lastDayClose: number | null,
 };
 
 export type PxDataCollection = {
