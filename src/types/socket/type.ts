@@ -13,7 +13,8 @@ export type SocketEventKeys =
   'execution' |
   'orderPlace' |
   'orderFilled' |
-  'orderCancel';
+  'orderCancel' |
+  'error';
 
 export type SocketEvent = {[key in SocketEventKeys]: SocketMessageHandler};
 

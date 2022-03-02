@@ -3,6 +3,8 @@ import React from 'react';
 import {useAlert} from 'react-alert';
 
 import {OrderFilledAlert} from '../../layout/alert/orderFilled';
+import {errorDispatchers} from '../../state/error/dispatchers';
+import {ErrorDispatcherName} from '../../state/error/types';
 import {executionDispatchers} from '../../state/execution/dispatchers';
 import {ExecutionDispatcherName} from '../../state/execution/types';
 import {openOrderDispatchers} from '../../state/openOrder/dispatchers';
@@ -47,6 +49,7 @@ export const useSocketInit = (): DataSocket => {
   const onPosition = useSocketEventHandler(dispatch, positionDispatchers[PositionDispatcherName.UPDATE]);
   const onOpenOrder = useSocketEventHandler(dispatch, openOrderDispatchers[OpenOrderDispatcherName.UPDATE]);
   const onExecution = useSocketEventHandler(dispatch, executionDispatchers[ExecutionDispatcherName.UPDATE]);
+  const onError = useSocketEventHandler(dispatch, errorDispatchers[ErrorDispatcherName.UPDATE]);
 
   const onOrderFilled = React.useCallback((message: string) => {
     const data: OrderFilledResult = JSON.parse(message);
@@ -64,6 +67,7 @@ export const useSocketInit = (): DataSocket => {
     socket.on('position', onPosition);
     socket.on('openOrder', onOpenOrder);
     socket.on('execution', onExecution);
+    socket.on('error', onError);
     socket.on('orderFilled', onOrderFilled);
 
     socket.emit('pxInit', '');
@@ -75,6 +79,7 @@ export const useSocketInit = (): DataSocket => {
       socket.off('position', onPosition);
       socket.off('openOrder', onOpenOrder);
       socket.off('execution', onExecution);
+      socket.off('error', onError);
       socket.off('orderFilled', onOrderFilled);
     };
   }, [poll]); // if `poll` changes, the variable used for event listener should also be updated
