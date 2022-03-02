@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import {forceMinTick} from '../../../../utils/calc';
-import {formatSignedNumber} from '../../../../utils/string';
 import {OrderPanelCommonProps} from '../type';
 import {StatsField} from './statsField';
 
@@ -40,7 +39,7 @@ export const OrderPanelPx = ({order, setOrder, pxTick, position}: Props) => {
       <Col xs={5}>
         <StatsField
           label="Px Diff"
-          value={formatSignedNumber(px - avgPx, 2)}
+          value={(px - avgPx).toFixed(2)}
         />
       </Col>
     </Row>
