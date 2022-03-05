@@ -3,7 +3,6 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import Row from 'react-bootstrap/Row';
 
 import {ExecutionGroup} from '../../../types/execution';
 import {TradeLogOffcanvas} from './body';
@@ -21,7 +20,7 @@ export const TradeLog = ({executions, symbol}: Props) => {
   return (
     <>
       <Button size="sm" variant="info" onClick={() => setShow(true)}>
-        {`Show Trade Log (${symbol})`}
+        {`Trade Log (${symbol})`}
       </Button>
       <Offcanvas
         show={show}
@@ -35,14 +34,12 @@ export const TradeLog = ({executions, symbol}: Props) => {
           <Offcanvas.Title>
             {`Trade Log (${symbol})`}
           </Offcanvas.Title>
-        </Offcanvas.Header>
-        <Row className="text-end mb-2 p-2">
-          <Col>
-            <Button variant="info" onClick={() => setShowNoPnL(!showNoPnL)}>
+          <Col className="me-2">
+            <Button className="float-end" variant="info" onClick={() => setShowNoPnL(!showNoPnL)}>
               {`${showNoPnL ? 'Hide' : 'Show'} no PnL`}
             </Button>
           </Col>
-        </Row>
+        </Offcanvas.Header>
         <Offcanvas.Body>
           <TradeLogOffcanvas executions={executions} showNoPnL={showNoPnL}/>
         </Offcanvas.Body>

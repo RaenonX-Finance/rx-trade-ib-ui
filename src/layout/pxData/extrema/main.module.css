@@ -4,7 +4,7 @@ span.extrema-safe {
   color: white;
   padding: 0.25rem 0.5rem;
   margin: 0.25rem;
-  animation: 1s last-day-diff-safe-animation;
+  box-shadow: inset 0 0 0.5rem #33ec57;
 }
 span.extrema-warning {
   border: 1px solid #f5d937;
@@ -12,7 +12,7 @@ span.extrema-warning {
   color: white;
   padding: 0.25rem 0.5rem;
   margin: 0.25rem;
-  animation: 1s last-day-diff-warning-animation;
+  box-shadow: inset 0 0 0.5rem #f5d937;
 }
 span.extrema-danger {
   border: 1px solid #ff3d3a;
@@ -20,7 +20,7 @@ span.extrema-danger {
   color: white;
   padding: 0.25rem 0.5rem;
   margin: 0.25rem;
-  animation: 1s last-day-diff-danger-animation;
+  box-shadow: inset 0 0 0.5rem #ff3d3a;
 }
 
 /*# sourceMappingURL=main.module.css.map */
