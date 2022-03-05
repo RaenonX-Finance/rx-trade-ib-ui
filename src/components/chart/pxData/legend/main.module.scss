@@ -2,7 +2,12 @@ $color-neutral: #fafafa;
 $color-up: #26a69a;
 $color-down: #ef5350;
 
-div {
+div, span {
+  &.data-cell {
+    display: inline;
+    padding: 0.1rem 0.75rem 0.1rem 0;
+  }
+
   &.legend {
     @mixin vwap-styling($name, $color) {
       &.vwap-#{$name} {
@@ -15,7 +20,7 @@ div {
     margin: 0.3rem;
     border-radius: 0.5rem;
     background-color: rgba(17 17 17 / 0.65);
-    width: 17rem;
+    width: 35vw;
 
     @include vwap-styling(neutral, $color-neutral);
     @include vwap-styling(up, $color-up);

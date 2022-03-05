@@ -1,14 +1,11 @@
 import React from 'react';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
 import styles from './main.module.scss';
 
 
 export type LegendDataCellProps = {
-  title: string,
-  value?: number,
+  title?: string,
+  value?: string | number,
   decimals: number,
   large?: boolean,
   useValueClass?: 'neutral' | 'up' | 'down' | boolean,
@@ -34,11 +31,13 @@ export const LegendDataCell = ({title, value, decimals, large, useValueClass = f
   }
 
   return (
-    <Row className="align-self-end flex-nowrap">
-      <Col>{title}</Col>
-      <Col xs="auto" className={`float-end ${large ? styles['price-lg'] : ''} ${valueClass}`}>
-        {value ? value.toFixed(decimals) : '-'}
-      </Col>
-    </Row>
+    <div className={styles['data-cell']}>
+      {title && <><span>{title}</span>&nbsp;</>}
+      <span className={`${large ? styles['price-lg'] : ''} ${valueClass}`}>
+        {value ?
+          (typeof value === 'number' ? value.toFixed(decimals) : value) :
+          '-'}
+      </span>
+    </div>
   );
 };

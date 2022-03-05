@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {epochSecToFormattedString} from '../../../../utils/chart';
-import {formatSignedNumber} from '../../../../utils/string';
 import {PxChartLegendData} from '../type';
 import {LegendDataCell, LegendDataCellProps} from './cell';
 import styles from './main.module.scss';
@@ -28,13 +27,15 @@ export const PxChartLegend = ({data}: Props) => {
   }
 
   const diff = close - open;
-  const diffUp = diff > 0;
 
   return (
     <div className={`${styles['legend']} ${styles[`vwap-${vwapClassName}`]}`}>
-      <Row className="text-center h5">
-        <Col>
-          {epochSecToFormattedString(epochSec)}
+      <Row>
+        <Col className="d-inline">
+          <LegendDataCell value={epochSecToFormattedString(epochSec)} decimals={decimals} large/>
+          <LegendDataCell title="VWAP" value={vwap} decimals={2} useValueClass={vwapClassName}/>
+          <LegendDataCell title="Ampl-HL" value={amplitudeHL} decimals={decimals}/>
+          <LegendDataCell title="Ampl-OC" value={amplitudeOC} decimals={decimals}/>
         </Col>
       </Row>
       <Row>
@@ -42,17 +43,8 @@ export const PxChartLegend = ({data}: Props) => {
           <LegendDataCell title="O" value={open} decimals={decimals}/>
           <LegendDataCell title="H" value={high} decimals={decimals}/>
           <LegendDataCell title="L" value={low} decimals={decimals}/>
-          <LegendDataCell title="C" value={close} decimals={decimals} large/>
-          <Row>
-            <Col className={`${diffUp ? styles['val-up'] : styles['val-down']} text-end`}>
-              {formatSignedNumber(diff, decimals)}
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <LegendDataCell title="VWAP" value={vwap} decimals={2} useValueClass={vwapClassName}/>
-          <LegendDataCell title="Ampl-HL" value={amplitudeHL} decimals={decimals}/>
-          <LegendDataCell title="Ampl-OC" value={amplitudeOC} decimals={decimals}/>
+          <LegendDataCell title="C" value={close} decimals={decimals}/>
+          <LegendDataCell value={diff} decimals={decimals} useValueClass/>
         </Col>
       </Row>
     </div>
