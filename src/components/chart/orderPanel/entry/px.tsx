@@ -16,7 +16,7 @@ type Props = OrderPanelCommonProps & {
 
 export const OrderPanelPx = ({order, setOrder, pxTick, position}: Props) => {
   const {px} = order;
-  const {avgPx} = position;
+  const {avgPx, position: pos} = position;
 
   return (
     <Row className="g-3">
@@ -39,7 +39,7 @@ export const OrderPanelPx = ({order, setOrder, pxTick, position}: Props) => {
       <Col xs={5}>
         <StatsField
           label="Px Diff"
-          value={(px - avgPx).toFixed(2)}
+          value={pos ? (px - avgPx).toFixed(2) : ''}
         />
       </Col>
     </Row>

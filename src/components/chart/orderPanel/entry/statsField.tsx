@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 
 type Props = {
   label: string,
-  value: string | number,
+  value: number | string,
 };
 
 export const StatsField = ({label, value}: Props) => {

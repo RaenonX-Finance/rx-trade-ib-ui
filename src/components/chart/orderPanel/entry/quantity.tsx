@@ -23,7 +23,7 @@ export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
 
   return (
     <>
-      {[1, 6, 11, 16].map((offset) => (
+      {[1, 6].map((offset) => (
         <ButtonGroup key={offset} className="w-100 mb-3">
           {Array.from(Array(5).keys()).map((quantity) => {
             quantity += offset;
@@ -39,8 +39,9 @@ export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
                 active={quantity === order.quantity}
                 onClick={() => setOrder({quantity})}
                 className="bg-gradient"
-                style={{width: '10%'}}
-                size="sm"
+                style={{width: '20%'}}
+                size="lg"
+                disabled={posQuantity > 0 ? quantity > posQuantity : false}
               >
                 <span className={styles['button-text']}>
                   {quantity}
