@@ -36,16 +36,14 @@ export type PxDataExtremaCurrentData = {
   pct: number,
 };
 
-export type PxDataExtremaCurrentStats = {
-  swingDiff: PxDataExtremaCurrentData,
-  swingDiffAmplRatio: PxDataExtremaCurrentData,
-  duration: PxDataExtremaCurrentData,
-};
+export type PxDataExtremaDataKey =
+  'swing' |
+  'swingAmplRatio' |
+  'duration';
 
-export type PxDataExtrema = {
-  diff: PxDataExtremaData,
-  diffAmplRatio: PxDataExtremaData,
-  length: PxDataExtremaData,
+export type PxDataExtremaCurrentStats = {[key in PxDataExtremaDataKey]: PxDataExtremaCurrentData};
+
+export type PxDataExtrema = {[key in PxDataExtremaDataKey]: PxDataExtremaData} & {
   current: PxDataExtremaCurrentStats,
 };
 
