@@ -1,0 +1,20 @@
+span {
+  $color-safe: #33ec57;
+  $color-warning: #f5d937;
+  $color-danger: #ff3d3a;
+
+  @mixin extrema-theme($suffix, $color) {
+    &.extrema-#{$suffix} {
+      border: 1px solid $color;
+      border-radius: 0.5rem;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      margin: 0.25rem;
+      animation: 1s last-day-diff-#{$suffix}-animation;
+    }
+  }
+
+  @include extrema-theme(safe, $color-safe);
+  @include extrema-theme(warning, $color-warning);
+  @include extrema-theme(danger, $color-danger);
+}

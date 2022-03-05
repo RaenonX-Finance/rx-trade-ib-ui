@@ -3,6 +3,13 @@ import {SecurityIdentifier} from './common';
 
 export type PxDataUniqueIdentifier = string;
 
+export type PxDataContract = {
+  identifier: SecurityIdentifier,
+  symbol: string,
+  minTick: number,
+  multiplier: number,
+};
+
 export type PxDataBar = {
   epochSec: number,
   open: number,
@@ -19,11 +26,27 @@ export type PxDataBar = {
   ema120: number,
 };
 
-export type PxDataContract = {
-  identifier: SecurityIdentifier,
-  symbol: string,
-  minTick: number,
-  multiplier: number,
+export type PxDataExtremaData = {
+  pos: number[],
+  neg: number[],
+};
+
+export type PxDataExtremaCurrentData = {
+  val: number,
+  pct: number,
+};
+
+export type PxDataExtremaCurrentStats = {
+  swingDiff: PxDataExtremaCurrentData,
+  swingDiffAmplRatio: PxDataExtremaCurrentData,
+  duration: PxDataExtremaCurrentData,
+};
+
+export type PxDataExtrema = {
+  diff: PxDataExtremaData,
+  diffAmplRatio: PxDataExtremaData,
+  length: PxDataExtremaData,
+  current: PxDataExtremaCurrentStats,
 };
 
 export type PxDataSupportResistance = {
@@ -39,6 +62,7 @@ export type PxData = {
   periodSec: number,
   contract: PxDataContract,
   data: PxDataBar[],
+  extrema: PxDataExtrema,
   supportResistance: PxDataSupportResistance[],
   lastDayClose: number | null,
 };

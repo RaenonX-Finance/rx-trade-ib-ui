@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import {PxDataChart} from '../../components/chart/pxData/main';
 import {PxChartPayload} from '../../components/chart/pxData/type';
 import {PxData} from '../../types/pxData';
+import {PxExtrema} from './extrema/main';
 import {PxLastDayDiff} from './lastDayDiff/main';
 import {TradeLog} from './tradeLog/main';
 
@@ -31,6 +32,9 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
         <Col>
           <Row className="g-2 text-end align-items-center">
             <Col>
+              <PxExtrema data={pxData}/>
+            </Col>
+            <Col xs="auto">
               <PxLastDayDiff data={pxData}/>
             </Col>
             <Col xs="auto">

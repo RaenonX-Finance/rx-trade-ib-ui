@@ -8,7 +8,7 @@ div.legend, span.legend {
   margin: 0.3rem;
   border-radius: 0.5rem;
   background-color: rgba(17, 17, 17, 0.65);
-  width: 35vw;
+  width: 28vw;
 }
 div.legend.vwap-neutral, span.legend.vwap-neutral {
   border: 1px solid #fafafa;
