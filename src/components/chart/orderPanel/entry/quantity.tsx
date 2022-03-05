@@ -22,36 +22,32 @@ export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
   };
 
   return (
-    <>
-      {[1, 6].map((offset) => (
-        <ButtonGroup key={offset} className="w-100 mb-3">
-          {Array.from(Array(5).keys()).map((quantity) => {
-            quantity += offset;
+    <ButtonGroup className="w-100 mb-3">
+      {Array.from(Array(5).keys()).map((quantity) => {
+        quantity += 1;
 
-            return (
-              <Button
-                key={quantity}
-                variant={(
-                  quantity === order.quantity ?
-                    'light' :
-                    (quantity === posQuantity ? getVariantByPositionSide(signedPosition) : 'secondary')
-                )}
-                active={quantity === order.quantity}
-                onClick={() => setOrder({quantity})}
-                className="bg-gradient"
-                style={{width: '20%'}}
-                size="lg"
-                disabled={posQuantity > 0 ? quantity > posQuantity : false}
-              >
-                <span className={styles['button-text']}>
-                  {quantity}
-                </span>
-              </Button>
-            );
-          })}
-          <br/>
-        </ButtonGroup>
-      ))}
-    </>
+        return (
+          <Button
+            key={quantity}
+            variant={(
+              quantity === order.quantity ?
+                'light' :
+                (quantity === posQuantity ? getVariantByPositionSide(signedPosition) : 'secondary')
+            )}
+            active={quantity === order.quantity}
+            onClick={() => setOrder({quantity})}
+            className="bg-gradient"
+            style={{width: '20%'}}
+            size="lg"
+            disabled={posQuantity > 0 ? quantity > posQuantity : false}
+          >
+            <span className={styles['button-text']}>
+              {quantity}
+            </span>
+          </Button>
+        );
+      })}
+      <br/>
+    </ButtonGroup>
   );
 };
