@@ -30,7 +30,7 @@ export type PxChartLegendData = Optional<PxDataBar, 'ema120' | 'vwap'> & {
   decimals: number,
 };
 
-export type PxChartLayoutConfigKeys = 'ema120' | 'srLevel' | 'marker';
+export type PxChartLayoutConfigKeys = 'ema120' | 'srLevel' | 'marker' | 'extrema';
 
 export type PxChartLayoutConfigEntry = {
   title: string,

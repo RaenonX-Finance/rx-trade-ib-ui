@@ -12,6 +12,10 @@ export type PxDataBar = {
   vwap: number,
   amplitudeHL: number,
   amplitudeOC: number,
+  extrema: {
+    min: boolean,
+    max: boolean,
+  },
   ema120: number,
 };
 

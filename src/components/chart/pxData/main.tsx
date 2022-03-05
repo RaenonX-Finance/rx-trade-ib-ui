@@ -58,6 +58,10 @@ export const PxDataChart = (props: Props) => {
             vwap: NaN,
             amplitudeHL: NaN,
             amplitudeOC: NaN,
+            extrema: {
+              min: false,
+              max: false,
+            },
             ema120: NaN,
             ...last,
           };
@@ -89,6 +93,10 @@ export const PxDataChart = (props: Props) => {
         },
         srLevel: {
           title: 'S/R Levels',
+          enable: data.periodSec <= 60,
+        },
+        extrema: {
+          title: 'Local Extrema',
           enable: data.periodSec <= 60,
         },
         marker: {
