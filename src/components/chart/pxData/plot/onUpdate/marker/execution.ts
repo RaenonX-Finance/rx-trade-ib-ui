@@ -1,11 +1,11 @@
-import {SeriesMarker, Time, UTCTimestamp} from 'lightweight-charts';
+import {SeriesMarker, UTCTimestamp} from 'lightweight-charts';
 
-import {ExecutionSide} from '../../../../../types/common';
-import {OnPxChartUpdatedEvent} from '../../type';
-import {longLighterColor, shortLighterColor} from '../const';
+import {ExecutionSide} from '../../../../../../types/common';
+import {OnPxChartUpdatedEvent} from '../../../type';
+import {longLighterColor, shortLighterColor} from '../../const';
 
 
-type MarkerConfig = Pick<SeriesMarker<Time>, 'position' | 'shape'>;
+type MarkerConfig = Pick<SeriesMarker<UTCTimestamp>, 'position' | 'shape'>;
 
 const sideToMarkerConfig: {[side in ExecutionSide]: MarkerConfig} = {
   BOT: {
@@ -18,21 +18,16 @@ const sideToMarkerConfig: {[side in ExecutionSide]: MarkerConfig} = {
   },
 };
 
-export const handleExecution = ({chartDataRef, chartObjectRef, payload, layoutConfig}: OnPxChartUpdatedEvent) => {
+export const handleExecution = ({
+  chartDataRef, payload, layoutConfig,
+}: OnPxChartUpdatedEvent): SeriesMarker<UTCTimestamp>[] => {
   const {execution} = payload;
 
-  if (!chartObjectRef.current) {
-    return;
-  }
-
-  const {price} = chartObjectRef.current.initData.series;
-
   if (!execution?.length || !layoutConfig.marker.enable) {
-    price.setMarkers([]);
-    return;
+    return [];
   }
 
-  price.setMarkers(execution.map((props) => {
+  return execution.map((props) => {
     const {epochSec, side, quantity, realizedPnL} = props;
 
     return {
@@ -42,5 +37,5 @@ export const handleExecution = ({chartDataRef, chartObjectRef, payload, layoutCo
       color: realizedPnL ? shortLighterColor : longLighterColor,
       text: quantity.toFixed(0),
     };
-  }));
+  });
 };

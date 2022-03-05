@@ -35,6 +35,7 @@ export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChar
     price: orderPx,
     title,
     color: '#b321fc',
+    lineVisible: true,
   };
 
   if (orderEntry) {

@@ -27,6 +27,7 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
       color: srLevelColor,
       lineWidth: 2,
       lineStyle: (type.fractal && type.window) ? LineStyle.Dotted : LineStyle.SparseDotted,
+      lineVisible: true,
     });
   });
 

@@ -51,6 +51,7 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
       color: avgCostColor,
       lineWidth: 2,
       lineStyle: LineStyle.LargeDashed,
+      lineVisible: true,
     });
   }
 };

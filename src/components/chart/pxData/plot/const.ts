@@ -13,6 +13,10 @@ export const longLighterColor = 'rgb(92, 149, 255)';
 
 export const shortLighterColor = 'rgb(255, 119, 92)';
 
+export const bullishColor = '#00e071';
+
+export const bearishColor = '#ff4b4b';
+
 export const orderSideColor: {[side in OrderSide]: string} = {
   BUY: longColor,
   SELL: shortColor,

@@ -86,6 +86,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
       chartObjectRef.current.initData.lines[objectKey][price] = priceSeries.createPriceLine({
         price,
         axisLabelVisible: true,
+        lineVisible: true,
         title,
         color: getPxLineColor(dataEntry),
         lineWidth: 2,

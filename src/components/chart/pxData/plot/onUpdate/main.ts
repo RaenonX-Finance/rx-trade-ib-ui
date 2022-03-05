@@ -1,8 +1,7 @@
 import {PxChartUpdatedEventHandler} from '../../type';
 import {handleAvgCost} from './cost';
 import {handleEma120} from './ema';
-import {handleExecution} from './execution';
-import {handleExtrema} from './extrema';
+import {handleMarkers} from './marker/main';
 import {handleOpenOrder} from './openOrder';
 import {handleOrderEntry} from './orderEntry';
 import {handlePrice} from './price';
@@ -17,7 +16,6 @@ export const onPxChartUpdated: PxChartUpdatedEventHandler = (e) => {
   handleSR(e);
   handleAvgCost(e);
   handleOpenOrder(e);
-  handleExecution(e);
-  handleExtrema(e);
+  handleMarkers(e);
   handleOrderEntry(e);
 };
