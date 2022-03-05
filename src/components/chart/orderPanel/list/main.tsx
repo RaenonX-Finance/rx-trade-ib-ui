@@ -48,6 +48,7 @@ export const OrderList = (props: OrderPanelProps) => {
       <Table responsive className="align-middle">
         <thead>
           <tr>
+            <th>#</th>
             <th>Side</th>
             <th>Px</th>
             <th>Px Side</th>

@@ -1,3 +1,15 @@
+@mixin common-style {
+  padding: 0.25rem 0.5rem !important;
+}
+
+tr {
+  &.order-entry-row {
+    & > td, & > td > input {
+      @include common-style;
+    }
+  }
+}
+
 td {
   // !important is needed to override default bootstrap style
   &.buy {

@@ -54,7 +54,10 @@ export const OrderListEntry = ({
   };
 
   return (
-    <tr>
+    <tr className={styles['order-entry-row']}>
+      <td>
+        {order.groupId}
+      </td>
       <td className={orderSideClassName[order.side]}>
         {order.side}
       </td>
@@ -118,10 +121,10 @@ export const OrderListEntry = ({
         {calculatePnL(avgPx, pos, order.px, signedQuantity, multiplier)?.toFixed(2) || ''}
       </td>
       <td>
-        <Button variant="outline-warning" onClick={onOrderUpdate} disabled={!allowUpdate} className="me-2">
+        <Button variant="outline-warning" size="sm" onClick={onOrderUpdate} disabled={!allowUpdate} className="me-2">
           Update
         </Button>
-        <Button variant="outline-danger" onClick={onOrderCancel(order.orderId)}>
+        <Button variant="outline-danger" size="sm" onClick={onOrderCancel(order.orderId)}>
           Cancel
         </Button>
       </td>

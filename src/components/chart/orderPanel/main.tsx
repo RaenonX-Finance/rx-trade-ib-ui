@@ -29,13 +29,6 @@ export const OrderPanel = (props: Omit<OrderPanelProps, 'position'>) => {
 
   return (
     <Offcanvas show={show} onHide={handleClose} placement="bottom">
-      <div className="mb-0"/>
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>
-          Order Entry
-        </Offcanvas.Title>
-      </Offcanvas.Header>
-      <hr className="my-0"/>
       <Offcanvas.Body>
         <Row>
           <Col>
