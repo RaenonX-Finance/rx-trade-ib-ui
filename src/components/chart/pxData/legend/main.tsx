@@ -34,8 +34,14 @@ export const PxChartLegend = ({data}: Props) => {
         <Col className="d-inline">
           <LegendDataCell value={epochSecToFormattedString(epochSec)} decimals={decimals} large/>
           <LegendDataCell title="VWAP" value={vwap} decimals={2} useValueClass={vwapClassName}/>
-          <LegendDataCell title="Ampl-HL" value={amplitudeHL} decimals={decimals}/>
-          <LegendDataCell title="Ampl-OC" value={amplitudeOC} decimals={decimals}/>
+          <LegendDataCell
+            title={<>HL&nbsp;<i className="bi bi-activity"/></>}
+            value={amplitudeHL} decimals={decimals}
+          />
+          <LegendDataCell
+            title={<>OC&nbsp;<i className="bi bi-activity"/></>}
+            value={amplitudeOC} decimals={decimals}
+          />
         </Col>
       </Row>
       <Row>
@@ -44,7 +50,10 @@ export const PxChartLegend = ({data}: Props) => {
           <LegendDataCell title="H" value={high} decimals={decimals}/>
           <LegendDataCell title="L" value={low} decimals={decimals}/>
           <LegendDataCell title="C" value={close} decimals={decimals}/>
-          <LegendDataCell value={diff} decimals={decimals} useValueClass/>
+          <LegendDataCell
+            title={<i className="bi bi-plus-slash-minus"/>}
+            value={diff} decimals={decimals} useValueClass
+          />
         </Col>
       </Row>
     </div>

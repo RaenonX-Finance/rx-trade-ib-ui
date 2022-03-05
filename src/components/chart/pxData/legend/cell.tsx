@@ -4,7 +4,7 @@ import styles from './main.module.scss';
 
 
 export type LegendDataCellProps = {
-  title?: string,
+  title?: React.ReactNode,
   value?: string | number,
   decimals: number,
   large?: boolean,
@@ -31,9 +31,9 @@ export const LegendDataCell = ({title, value, decimals, large, useValueClass = f
   }
 
   return (
-    <div className={styles['data-cell']}>
+    <div className={`${styles['data-cell']} ${valueClass}`}>
       {title && <><span>{title}</span>&nbsp;</>}
-      <span className={`${large ? styles['price-lg'] : ''} ${valueClass}`}>
+      <span className={large ? styles['price-lg'] : ''}>
         {value ?
           (typeof value === 'number' ? value.toFixed(decimals) : value) :
           '-'}
