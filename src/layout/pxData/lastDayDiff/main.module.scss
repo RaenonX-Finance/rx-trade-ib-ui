@@ -1,7 +1,6 @@
-span {
-  $color-up: #26a69a;
-  $color-down: #ef5350;
+@use "../../../styles/colors";
 
+span {
   @mixin last-day-diff-theme($suffix, $color) {
     @keyframes last-day-diff-#{$suffix}-animation {
       from {
@@ -22,6 +21,6 @@ span {
     }
   }
 
-  @include last-day-diff-theme(up, $color-up);
-  @include last-day-diff-theme(down, $color-down);
+  @include last-day-diff-theme(up, colors.$color-up);
+  @include last-day-diff-theme(down, colors.$color-down);
 }

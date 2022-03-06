@@ -1,8 +1,6 @@
-span {
-  $color-safe: #33ec57;
-  $color-warning: #f5d937;
-  $color-danger: #ff3d3a;
+@use "../../../styles/colors";
 
+span {
   @mixin extrema-theme($suffix, $color) {
     &.extrema-#{$suffix} {
       border: 1px solid $color;
@@ -14,7 +12,7 @@ span {
     }
   }
 
-  @include extrema-theme(safe, $color-safe);
-  @include extrema-theme(warning, $color-warning);
-  @include extrema-theme(danger, $color-danger);
+  @include extrema-theme(safe, colors.$color-safe);
+  @include extrema-theme(warning, colors.$color-warning);
+  @include extrema-theme(danger, colors.$color-danger);
 }

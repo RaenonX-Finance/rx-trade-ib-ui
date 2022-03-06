@@ -1,6 +1,4 @@
-$color-neutral: #fafafa;
-$color-up: #26a69a;
-$color-down: #ef5350;
+@use "../../../../styles/colors";
 
 div, span {
   &.data-cell {
@@ -22,21 +20,21 @@ div, span {
     background-color: rgba(17 17 17 / 0.65);
     width: 28vw;
 
-    @include vwap-styling(neutral, $color-neutral);
-    @include vwap-styling(up, $color-up);
-    @include vwap-styling(down, $color-down);
+    @include vwap-styling(neutral, colors.$color-neutral);
+    @include vwap-styling(up, colors.$color-up);
+    @include vwap-styling(down, colors.$color-down);
   }
 
   &.val-neutral {
-    color: $color-neutral;
+    color: colors.$color-neutral;
   }
 
   &.val-up {
-    color: $color-up;
+    color: colors.$color-up;
   }
 
   &.val-down {
-    color: $color-down;
+    color: colors.$color-down;
   }
 
   &.price-lg {

@@ -1,12 +1,11 @@
-$color-up: #26a69a;
-$color-down: #ef5350;
+@use "../../../styles/colors";
 
 td {
   &.up {
-    color: $color-up;
+    color: colors.$color-up;
   }
 
   &.down {
-    color: $color-down;
+    color: colors.$color-down;
   }
 }
