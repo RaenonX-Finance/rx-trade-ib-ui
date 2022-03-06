@@ -30,7 +30,7 @@ type Props = {
 
 export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
   return (
-    <Table responsive>
+    <Table responsive className={styles['trade-log']}>
       <thead>
         <tr>
           <th>Date</th>
@@ -39,19 +39,21 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>P&L Sum</th>
           <th>Side</th>
           <th>Qty</th>
-          <th>Px Side</th>
-          <th>Px Side Sum</th>
+          <th>Px D</th>
+          <th>Px D Sum</th>
+          <th>Px D A/R</th>
+          <th className={styles['column-separator']}/>
           <th>Profit</th>
           <th>Loss</th>
           <th>WR</th>
-          <th>Profit (L)</th>
-          <th>Loss (L)</th>
+          <th>+ (L)</th>
+          <th>- (L)</th>
           <th>WR (L)</th>
-          <th>Profit (S)</th>
-          <th>Loss (S)</th>
+          <th>+ (S)</th>
+          <th>- (S)</th>
           <th>WR (S)</th>
-          <th>Avg Profit</th>
-          <th>Avg Loss</th>
+          <th>Avg +</th>
+          <th>Avg -</th>
           <th>R/R</th>
           <th>EWR</th>
           <th>Avg Px+</th>
@@ -87,6 +89,10 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
                 <td className={getClassName(execution.pxSideSum)}>
                   {execution.pxSideSum && formatSignedNumber(execution.pxSideSum, 2)}
                 </td>
+                <td>
+                  {execution.pxSideAmplRatio && `${execution.pxSideAmplRatio.toFixed(3)}x`}
+                </td>
+                <td className={styles['column-separator']}/>
                 <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
                 <td className={styles['down']}>{execution.realizedPnL && execution.loss}</td>
                 <td>{execution.realizedPnL && execution.winRate?.toFixed(3)}</td>
