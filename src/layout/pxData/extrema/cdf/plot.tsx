@@ -23,12 +23,13 @@ export type PxExtremaCdfPlotProps = {
   currentPct?: number,
   stroke: string,
   reverseX?: boolean,
+  syncId?: string,
 };
 
-export const PxExtremaCdfPlot = ({data, decimals, currentPct, stroke, reverseX}: PxExtremaCdfPlotProps) => {
+export const PxExtremaCdfPlot = ({data, decimals, currentPct, stroke, reverseX, syncId}: PxExtremaCdfPlotProps) => {
   return (
     <ResponsiveContainer height={300} className={styles['plot']}>
-      <LineChart data={data} layout="vertical">
+      <LineChart data={data} layout="vertical" syncId={syncId}>
         <CartesianGrid strokeDasharray="3 3" strokeWidth={0.5}/>
         <XAxis
           dataKey={(data: CdfData) => data.val}

@@ -4,7 +4,7 @@ import {toCdfData} from '../../../../utils/cdf';
 import {PxExtremaCdfPlot, PxExtremaCdfPlotProps} from './plot';
 
 
-type Props = Pick<PxExtremaCdfPlotProps, 'decimals' | 'currentPct' | 'stroke' | 'reverseX'> & {
+type Props = Pick<PxExtremaCdfPlotProps, 'decimals' | 'currentPct' | 'stroke' | 'reverseX' | 'syncId'> & {
   title: string,
   data: number[],
 };

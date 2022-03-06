@@ -27,6 +27,7 @@ export const PxExtremaCDF = ({data, currentSide, currentPct, decimals, reverseOn
           currentPct={currentSide === 'pos' ? currentPct : undefined}
           decimals={decimals}
           stroke={bullishColor}
+          syncId="data"
         />
       </Col>
       <Col>
@@ -37,6 +38,7 @@ export const PxExtremaCDF = ({data, currentSide, currentPct, decimals, reverseOn
           decimals={decimals}
           stroke={bearishColor}
           reverseX={reverseOnNegative}
+          syncId="data"
         />
       </Col>
     </Row>
