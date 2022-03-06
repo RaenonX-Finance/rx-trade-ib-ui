@@ -13,20 +13,27 @@ type Props = {
 };
 
 export const PxExtrema = ({data}: Props) => {
-  const {swing, swingAmplRatio, duration} = data.extrema.current;
-
   const decimals = getDecimalPlaces(data.contract.minTick);
 
   return (
     <Row className="g-1 justify-content-end">
       <Col xs="auto">
-        <PxExtremaItem icon={<i className="bi bi-plus-slash-minus"/>} data={swing} decimals={decimals}/>
+        <PxExtremaItem
+          icon={<i className="bi bi-plus-slash-minus"/>}
+          dataKey="swing" data={data.extrema} decimals={decimals}
+        />
       </Col>
       <Col xs="auto">
-        <PxExtremaItem icon={<i className="bi bi-activity"/>} data={swingAmplRatio} decimals={3} suffix="x"/>
+        <PxExtremaItem
+          icon={<i className="bi bi-activity"/>}
+          dataKey="swingAmplRatio" data={data.extrema} decimals={3} suffix="x"
+        />
       </Col>
       <Col xs="auto">
-        <PxExtremaItem icon={<i className="bi bi-stopwatch"/>} data={duration} decimals={0}/>
+        <PxExtremaItem
+          icon={<i className="bi bi-stopwatch"/>}
+          dataKey="duration" data={data.extrema} decimals={0}
+        />
       </Col>
     </Row>
   );

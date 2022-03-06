@@ -1,4 +1,4 @@
-import {ExecutionSide, OrderSide, PriceActionSide} from '../../../../types/common';
+import {OrderSide, PriceActionSide} from '../../../../types/common';
 
 
 export const srLevelColor = 'rgba(255, 255, 0, 0.6)';
@@ -20,11 +20,6 @@ export const bearishColor = '#ff4b4b';
 export const orderSideColor: {[side in OrderSide]: string} = {
   BUY: longColor,
   SELL: shortColor,
-};
-
-export const execSideColor: {[side in ExecutionSide]: string} = {
-  BOT: longLighterColor,
-  SLD: shortLighterColor,
 };
 
 export const actionSideColor: {[side in PriceActionSide]: string} = {

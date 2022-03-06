@@ -1,0 +1,20 @@
+div.plot-tooltip-safe {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(9, 93, 25, 0.7);
+}
+div.plot-tooltip-warning {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(97, 84, 5, 0.7);
+}
+div.plot-tooltip-danger {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(102, 2, 0, 0.7);
+}
+div.plot line {
+  shape-rendering: crispEdges;
+}
+
+/*# sourceMappingURL=main.module.css.map */

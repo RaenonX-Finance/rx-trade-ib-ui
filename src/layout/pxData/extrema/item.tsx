@@ -1,32 +1,54 @@
 import React from 'react';
 
-import {PxDataExtremaCurrentData} from '../../../types/pxData';
-import styles from './main.module.scss';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import {ButtonVariant} from 'react-bootstrap/types';
+
+import {PxDataExtrema, PxDataExtremaDataKey} from '../../../types/pxData';
+import {PxExtremaCDF} from './cdf/main';
 
 
 type Props = {
   icon: React.ReactNode,
-  data: PxDataExtremaCurrentData,
+  data: PxDataExtrema,
+  dataKey: PxDataExtremaDataKey,
   decimals: number,
   suffix?: string,
 };
 
-export const PxExtremaItem = ({icon, data, decimals, suffix}: Props) => {
-  const {val, pct} = data;
+export const PxExtremaItem = ({icon, dataKey, data, decimals, suffix}: Props) => {
+  const {val, pct} = data.current[dataKey];
+  const [show, setShow] = React.useState(false);
 
-  let className;
-  if (pct > 66) {
-    className = styles['extrema-safe'];
-  } else if (pct > 33) {
-    className = styles['extrema-warning'];
+  let variant: ButtonVariant;
+  if (pct > 60) {
+    variant = 'outline-success';
+  } else if (pct > 30) {
+    variant = 'outline-warning';
   } else {
-    className = styles['extrema-danger'];
+    variant = 'outline-danger';
   }
 
   return (
-    <span className={className}>
-      {icon}&nbsp;
-      {`${val.toFixed(decimals)}${suffix || ''} (${pct.toFixed(2)}%)`}
-    </span>
+    <>
+      <Modal show={show} size="xl" centered onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>CDF</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PxExtremaCDF
+            data={data[dataKey]}
+            currentSide={data.current.swing.val > 0 ? 'pos' : 'neg'}
+            currentPct={pct}
+            decimals={dataKey === 'duration' ? 0 : 2}
+            reverseOnNegative={dataKey === 'swing'}
+          />
+        </Modal.Body>
+      </Modal>
+      <Button size="sm" variant={variant} onClick={() => setShow(true)}>
+        {icon}&nbsp;
+        {`${val.toFixed(decimals)}${suffix || ''} (${pct.toFixed(2)}%)`}
+      </Button>
+    </>
   );
 };
