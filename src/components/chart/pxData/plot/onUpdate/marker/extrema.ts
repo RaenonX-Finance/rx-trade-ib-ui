@@ -11,8 +11,8 @@ export const handleExtrema = ({
     return [];
   }
 
-  const minData = chartDataRef.current.data.filter(({extrema}) => extrema.min);
-  const maxData = chartDataRef.current.data.filter(({extrema}) => extrema.max);
+  const minData = chartDataRef.current.data.filter(({extremaMin}) => extremaMin);
+  const maxData = chartDataRef.current.data.filter(({extremaMax}) => extremaMax);
 
   return [
     ...minData.map<SeriesMarker<UTCTimestamp>>(({epochSec}) => ({

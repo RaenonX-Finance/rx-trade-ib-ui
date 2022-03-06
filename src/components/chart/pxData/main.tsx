@@ -58,10 +58,8 @@ export const PxDataChart = (props: Props) => {
             vwap: NaN,
             amplitudeHL: NaN,
             amplitudeOC: NaN,
-            extrema: {
-              min: false,
-              max: false,
-            },
+            extremaMin: false,
+            extremaMax: false,
             ema120: NaN,
             ...last,
           };

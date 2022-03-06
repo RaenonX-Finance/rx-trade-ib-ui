@@ -1,4 +1,4 @@
-import {SecurityIdentifier} from './common';
+import {Direction, SecurityIdentifier} from './common';
 
 
 export type PxDataUniqueIdentifier = string;
@@ -19,16 +19,21 @@ export type PxDataBar = {
   vwap: number,
   amplitudeHL: number,
   amplitudeOC: number,
-  extrema: {
-    min: boolean,
-    max: boolean,
-  },
+  extremaMin: boolean,
+  extremaMax: boolean,
   ema120: number,
 };
 
-export type PxDataExtremaData = {
-  pos: number[],
-  neg: number[],
+export type PxDataExtremaDataKey =
+  'diff' |
+  'amplRatio' |
+  'length';
+
+export type ExtremaDataPoint = {
+  [key in PxDataExtremaDataKey]: number
+} & {
+  px: number,
+  direction: Direction,
 };
 
 export type PxDataExtremaCurrentData = {
@@ -36,14 +41,10 @@ export type PxDataExtremaCurrentData = {
   pct: number,
 };
 
-export type PxDataExtremaDataKey =
-  'swing' |
-  'swingAmplRatio' |
-  'duration';
-
 export type PxDataExtremaCurrentStats = {[key in PxDataExtremaDataKey]: PxDataExtremaCurrentData};
 
-export type PxDataExtrema = {[key in PxDataExtremaDataKey]: PxDataExtremaData} & {
+export type PxDataExtrema = {
+  points: ExtremaDataPoint[],
   current: PxDataExtremaCurrentStats,
 };
 

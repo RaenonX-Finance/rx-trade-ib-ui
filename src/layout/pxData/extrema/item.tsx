@@ -37,11 +37,12 @@ export const PxExtremaItem = ({icon, dataKey, data, decimals, suffix}: Props) =>
         </Modal.Header>
         <Modal.Body>
           <PxExtremaCDF
-            data={data[dataKey]}
-            currentSide={data.current.swing.val > 0 ? 'pos' : 'neg'}
+            points={data.points}
+            pointKey={dataKey}
+            currentSide={data.current.diff.val > 0 ? 'UP' : 'DOWN'}
             currentPct={pct}
-            decimals={dataKey === 'duration' ? 0 : 2}
-            reverseOnNegative={dataKey === 'swing'}
+            decimals={dataKey === 'length' ? 0 : 2}
+            reverseOnNegative={dataKey === 'diff'}
           />
         </Modal.Body>
       </Modal>

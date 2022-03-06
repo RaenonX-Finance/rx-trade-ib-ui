@@ -20,19 +20,19 @@ export const PxExtrema = ({data}: Props) => {
       <Col xs="auto">
         <PxExtremaItem
           icon={<i className="bi bi-plus-slash-minus"/>}
-          dataKey="swing" data={data.extrema} decimals={decimals}
+          dataKey="diff" data={data.extrema} decimals={decimals}
         />
       </Col>
       <Col xs="auto">
         <PxExtremaItem
           icon={<i className="bi bi-activity"/>}
-          dataKey="swingAmplRatio" data={data.extrema} decimals={3} suffix="x"
+          dataKey="amplRatio" data={data.extrema} decimals={3} suffix="x"
         />
       </Col>
       <Col xs="auto">
         <PxExtremaItem
           icon={<i className="bi bi-stopwatch"/>}
-          dataKey="duration" data={data.extrema} decimals={0}
+          dataKey="length" data={data.extrema} decimals={0}
         />
       </Col>
     </Row>
