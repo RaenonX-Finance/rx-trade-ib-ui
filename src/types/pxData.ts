@@ -32,6 +32,7 @@ export type PxDataExtremaDataKey =
 export type ExtremaDataPoint = {
   [key in PxDataExtremaDataKey]: number
 } & {
+  epochSec: number,
   px: number,
   direction: Direction,
 };

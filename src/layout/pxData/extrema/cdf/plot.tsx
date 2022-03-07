@@ -58,7 +58,7 @@ export const PxExtremaCdfPlot = ({data, decimals, currentPct, stroke, reverseX, 
           dataKey={(data: CdfData) => data.val}
           stroke={stroke}
           dot={false}
-          animationDuration={250}
+          animationDuration={500}
         />
       </LineChart>
     </ResponsiveContainer>

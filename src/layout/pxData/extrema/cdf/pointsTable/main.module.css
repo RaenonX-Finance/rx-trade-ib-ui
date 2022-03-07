@@ -1,0 +1,25 @@
+div.swing-points {
+  height: 40vh;
+  overflow-x: auto;
+}
+div.swing-points > table th {
+  padding: 0.4rem 0.4rem;
+}
+div.swing-points > table th:first-child, div.swing-points > table th:last-child {
+  padding: 0.4rem 0.7rem;
+}
+div.swing-points > table td {
+  padding: 0.4rem 0.3rem;
+}
+div.swing-points > table td:first-child, div.swing-points > table td:last-child {
+  padding: 0.4rem 0.7rem;
+}
+
+td.up {
+  color: #26a69a;
+}
+td.down {
+  color: #ef5350;
+}
+
+/*# sourceMappingURL=main.module.css.map */
