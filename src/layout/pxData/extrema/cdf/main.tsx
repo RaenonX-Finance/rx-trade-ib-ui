@@ -1,15 +1,19 @@
 import React from 'react';
 
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {bearishColor, bullishColor} from '../../../../components/chart/pxData/plot/const';
 import {Direction} from '../../../../types/common';
-import {PxDataExtrema, PxDataExtremaDataKey} from '../../../../types/pxData';
+import {ExtremaDataPoint, PxDataExtrema, PxDataExtremaDataKey} from '../../../../types/pxData';
 import {PxExtremaCdfPlotProps} from './plot';
 import {PxExtremaSwingPointsTable} from './pointsTable/main';
 import {PxExtremaCDFSingleSide} from './side';
 
+
+type DisplayEntryType = 'pos' | 'neg' | 'all';
 
 type Props = Pick<PxExtremaCdfPlotProps, 'decimals' | 'currentPct'> & {
   points: PxDataExtrema['points'],
@@ -19,8 +23,16 @@ type Props = Pick<PxExtremaCdfPlotProps, 'decimals' | 'currentPct'> & {
 };
 
 export const PxExtremaCDF = ({points, pointKey, currentSide, currentPct, decimals, reverseOnNegative}: Props) => {
-  const pos = points.filter(({diff}) => diff > 0).map((point) => point[pointKey]);
-  const neg = points.filter(({diff}) => diff < 0).map((point) => point[pointKey]);
+  const [display, setDisplay] = React.useState<DisplayEntryType>('all');
+
+  const pointsOnTable: {[key in DisplayEntryType]: ExtremaDataPoint[]} = {
+    pos: points.filter(({diff}) => diff > 0),
+    neg: points.filter(({diff}) => diff < 0),
+    all: points,
+  };
+
+  const pos = pointsOnTable['pos'].map((point) => point[pointKey]);
+  const neg = pointsOnTable['neg'].map((point) => point[pointKey]);
 
   return (
     <>
@@ -47,7 +59,24 @@ export const PxExtremaCDF = ({points, pointKey, currentSide, currentPct, decimal
           />
         </Col>
       </Row>
-      <PxExtremaSwingPointsTable points={points}/>
+      <Row>
+        <Col xs="auto">
+          <ButtonGroup vertical>
+            <Button variant={display === 'pos' ? 'success' : 'outline-success'} onClick={() => setDisplay('pos')}>
+              <i className="bi bi-plus-lg"/>
+            </Button>
+            <Button variant={display === 'neg' ? 'danger' : 'outline-danger'} onClick={() => setDisplay('neg')}>
+              <i className="bi bi-dash-lg"/>
+            </Button>
+            <Button variant={display === 'all' ? 'info' : 'outline-info'} onClick={() => setDisplay('all')}>
+              <i className="bi bi-plus-slash-minus"/>
+            </Button>
+          </ButtonGroup>
+        </Col>
+        <Col>
+          <PxExtremaSwingPointsTable points={pointsOnTable[display]}/>
+        </Col>
+      </Row>
     </>
   );
 };
