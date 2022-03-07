@@ -12,7 +12,7 @@ div {
 
   @include plot-tooltip-specific-style(safe, colors.$color-safe);
   @include plot-tooltip-specific-style(warning, colors.$color-warning);
-  @include plot-tooltip-specific-style(danger, colors.$color-danger);
+  @include plot-tooltip-specific-style(danger, colors.$color-danger-custom);
 
   &.plot {
     & line {

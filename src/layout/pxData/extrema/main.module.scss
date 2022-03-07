@@ -14,5 +14,5 @@ span {
 
   @include extrema-theme(safe, colors.$color-safe);
   @include extrema-theme(warning, colors.$color-warning);
-  @include extrema-theme(danger, colors.$color-danger);
+  @include extrema-theme(danger, colors.$color-danger-custom);
 }
