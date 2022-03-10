@@ -24,6 +24,7 @@ import {useSocketEventHandler} from './utils';
 export const useSocketInit = (): DataSocket => {
   const socket = React.useContext(SocketContext);
   const openOrderState = useOpenOrderSelector();
+  const lastUpdate = React.useRef(0);
 
   const {poll} = openOrderState;
 
@@ -35,6 +36,16 @@ export const useSocketInit = (): DataSocket => {
   const alert = useAlert();
 
   const refreshStatus = React.useCallback((forceOpenOrderRefresh: boolean = false) => {
+    const now = Date.now();
+
+    // Only refresh once per 3 secs
+    // > not using `setInterval()` because the frequency is more unreliable
+    if (now - lastUpdate.current < 3000) {
+      return;
+    }
+
+    console.log(now, 'refresh');
+    lastUpdate.current = now;
     socket.emit('position', '');
     socket.emit('execution', '');
     if (poll || forceOpenOrderRefresh) {
@@ -44,8 +55,12 @@ export const useSocketInit = (): DataSocket => {
 
   // Events
   const onPxInit = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.INIT], refreshStatus);
-  const onPxUpdated = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.UPDATE], refreshStatus);
-  const onPxUpdatedMarket = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET]);
+  const onPxUpdated = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.UPDATE]);
+  const onPxUpdatedMarket = useSocketEventHandler(
+    dispatch,
+    pxDataDispatchers[PxDataDispatcherName.UPDATE_MARKET],
+    refreshStatus,
+  );
   const onPosition = useSocketEventHandler(dispatch, positionDispatchers[PositionDispatcherName.UPDATE]);
   const onOpenOrder = useSocketEventHandler(dispatch, openOrderDispatchers[OpenOrderDispatcherName.UPDATE]);
   const onExecution = useSocketEventHandler(dispatch, executionDispatchers[ExecutionDispatcherName.UPDATE]);
