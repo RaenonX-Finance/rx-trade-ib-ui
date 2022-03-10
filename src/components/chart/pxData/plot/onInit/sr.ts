@@ -17,7 +17,7 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
     return {};
   }
 
-  chartDataRef.current.supportResistance.forEach(({level, type}) => {
+  chartDataRef.current.supportResistance.forEach(({level}) => {
     const title = formatSignedNumber(level - currentPx.close, decimalPlaces);
 
     srLevelLines[level] = price.createPriceLine({
@@ -26,7 +26,7 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
       title,
       color: srLevelColor,
       lineWidth: 2,
-      lineStyle: (type.fractal && type.window) ? LineStyle.Dotted : LineStyle.SparseDotted,
+      lineStyle: LineStyle.Dotted,
       lineVisible: true,
     });
   });

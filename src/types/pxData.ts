@@ -54,6 +54,7 @@ export type PxDataSupportResistance = {
   type: {
     window: boolean,
     fractal: boolean,
+    extrema: boolean,
   },
 };
 

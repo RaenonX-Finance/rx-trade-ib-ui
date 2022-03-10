@@ -91,7 +91,7 @@ export const PxDataChart = (props: Props) => {
         },
         srLevel: {
           title: 'S/R Levels',
-          enable: data.periodSec <= 60,
+          enable: data.periodSec > 60,
         },
         extrema: {
           title: 'Local Extrema',
