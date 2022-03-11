@@ -44,7 +44,6 @@ export const useSocketInit = (): DataSocket => {
       return;
     }
 
-    console.log(now, 'refresh');
     lastUpdate.current = now;
     socket.emit('position', '');
     socket.emit('execution', '');
