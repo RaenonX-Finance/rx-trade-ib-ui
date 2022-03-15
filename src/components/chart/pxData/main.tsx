@@ -61,6 +61,7 @@ export const PxDataChart = (props: Props) => {
             extremaMin: false,
             extremaMax: false,
             ema120: NaN,
+            ema120Trend: NaN,
             ...last,
           };
         },
@@ -76,7 +77,7 @@ export const PxDataChart = (props: Props) => {
         }),
       }}
       renderObjects={{
-        legend: (data, legend) => <PxChartLegend data={data} legend={legend}/>,
+        legend: (_, legend) => <PxChartLegend legend={legend}/>,
       }}
       renderLayoutConfig={(config, setConfig) => (
         <PxChartLayoutConfigPanel title={title} config={config} setConfig={setConfig}/>

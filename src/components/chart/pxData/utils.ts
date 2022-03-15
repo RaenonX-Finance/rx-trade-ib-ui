@@ -13,7 +13,7 @@ type LineData = Omit<LineDataApi, 'value'> & {
   value?: number
 };
 
-export const toLineData = <K extends KeysOfType<PxDataBar, number>>(key: K) => (bar: PxDataBar): LineData => {
+export const toLineData = <K extends KeysOfType<PxDataBar, number | null>>(key: K) => (bar: PxDataBar): LineData => {
   const value = bar[key];
 
   if (!value) {

@@ -5,7 +5,7 @@ import styles from './main.module.scss';
 
 export type LegendDataCellProps = {
   title?: React.ReactNode,
-  value?: string | number,
+  value?: string | number | null,
   decimals: number,
   large?: boolean,
   useValueClass?: 'neutral' | 'up' | 'down' | boolean,

@@ -37,6 +37,7 @@ export const handleLegendUpdate = (
       extremaMin: lastPrice?.extremaMin || last?.extremaMin || false,
       extremaMax: lastPrice?.extremaMax || last?.extremaMax || false,
       ema120: lastPrice?.ema120 || last?.ema120 || NaN,
+      ema120Trend: lastPrice?.ema120Trend || last?.ema120Trend || NaN,
       decimals,
     }));
   });

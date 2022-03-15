@@ -17,11 +17,12 @@ export type PxDataBar = {
   low: number,
   close: number,
   vwap: number,
-  amplitudeHL: number,
-  amplitudeOC: number,
-  extremaMin: boolean,
-  extremaMax: boolean,
-  ema120: number,
+  amplitudeHL: number | null,
+  amplitudeOC: number | null,
+  extremaMin: boolean | null,
+  extremaMax: boolean | null,
+  ema120: number | null,
+  ema120Trend: number | null,
 };
 
 export type PxDataExtremaDataKey =
