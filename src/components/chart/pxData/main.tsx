@@ -84,22 +84,22 @@ export const PxDataChart = (props: Props) => {
       getIdentifier={(data) => data.contract.identifier}
       getPnLMultiplier={(data) => data.contract.multiplier}
       getPeriodSec={(data) => data.periodSec}
-      getInitialLayoutConfig={(data) => ({
+      getInitialLayoutConfig={({periodSec}) => ({
         ema120: {
           title: 'EMA 120',
           enable: true,
         },
         srLevel: {
           title: 'S/R Levels',
-          enable: data.periodSec > 60,
+          enable: true,
         },
         extrema: {
           title: 'Local Extrema',
-          enable: data.periodSec <= 60,
+          enable: periodSec < 86400 && periodSec > 60,
         },
         marker: {
           title: 'Trade Markers',
-          enable: data.periodSec <= 60,
+          enable: periodSec <= 60,
         },
       })}
       {...props}
