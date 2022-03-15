@@ -23,6 +23,7 @@ export type PxDataBar = {
   extremaMax: boolean | null,
   ema120: number | null,
   ema120Trend: number | null,
+  ema120TrendChange: number | null,
   diff: number,
   diffSma: number | null,
   diffSmaTrend: number | null,

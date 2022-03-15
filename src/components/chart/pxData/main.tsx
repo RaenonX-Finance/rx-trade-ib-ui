@@ -62,6 +62,7 @@ export const PxDataChart = (props: Props) => {
             extremaMax: false,
             ema120: NaN,
             ema120Trend: NaN,
+            ema120TrendChange: NaN,
             diff: NaN,
             diffSma: NaN,
             diffSmaTrend: NaN,

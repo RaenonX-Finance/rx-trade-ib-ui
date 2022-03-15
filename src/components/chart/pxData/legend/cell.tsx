@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {formatSignedNumber} from '../../../../utils/string';
 import styles from './main.module.scss';
 
 
@@ -11,7 +12,13 @@ export type LegendDataCellProps = {
   useValueClass?: 'neutral' | 'up' | 'down' | boolean,
 };
 
-export const LegendDataCell = ({title, value, decimals, large, useValueClass = false}: LegendDataCellProps) => {
+export const LegendDataCell = ({
+  title,
+  value,
+  decimals,
+  large,
+  useValueClass = false,
+}: LegendDataCellProps) => {
   let valueClass = '';
 
   if (value) {
@@ -35,7 +42,15 @@ export const LegendDataCell = ({title, value, decimals, large, useValueClass = f
       {title && <><span>{title}</span>&nbsp;</>}
       <span className={large ? styles['price-lg'] : ''}>
         {value ?
-          (typeof value === 'number' ? value.toFixed(decimals) : value) :
+          (
+            typeof value === 'number' ?
+              (
+                typeof useValueClass === 'boolean' && useValueClass ?
+                  formatSignedNumber(value, decimals) :
+                  value.toFixed(decimals)
+              ) :
+              value
+          ) :
           '-'}
       </span>
     </div>

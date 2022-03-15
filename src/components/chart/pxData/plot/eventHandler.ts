@@ -38,6 +38,7 @@ export const handleLegendUpdate = (
       extremaMax: hovered?.extremaMax || last?.extremaMax || false,
       ema120: hovered?.ema120 || last?.ema120 || NaN,
       ema120Trend: hovered?.ema120Trend || last?.ema120Trend || NaN,
+      ema120TrendChange: hovered?.ema120TrendChange || last?.ema120TrendChange || NaN,
       diff: hovered?.diff || last?.diff || NaN,
       diffSma: hovered?.diffSma || last?.diffSma || NaN,
       diffSmaTrend: hovered?.diffSmaTrend || last?.diffSmaTrend || NaN,
