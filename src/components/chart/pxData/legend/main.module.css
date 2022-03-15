@@ -10,14 +10,17 @@ div.legend, span.legend {
   background-color: rgba(17, 17, 17, 0.65);
   width: 28vw;
 }
-div.legend.vwap-neutral, span.legend.vwap-neutral {
+div.legend.diff-neutral, span.legend.diff-neutral {
   border: 1px solid #fafafa;
+  box-shadow: inset 0 0 0.5rem #fafafa;
 }
-div.legend.vwap-up, span.legend.vwap-up {
+div.legend.diff-up, span.legend.diff-up {
   border: 1px solid #26a69a;
+  box-shadow: inset 0 0 0.5rem #26a69a;
 }
-div.legend.vwap-down, span.legend.vwap-down {
+div.legend.diff-down, span.legend.diff-down {
   border: 1px solid #ef5350;
+  box-shadow: inset 0 0 0.5rem #ef5350;
 }
 div.val-neutral, span.val-neutral {
   color: #fafafa;

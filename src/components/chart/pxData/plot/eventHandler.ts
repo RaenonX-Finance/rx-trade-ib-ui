@@ -20,8 +20,13 @@ export const handleLegendUpdate = (
     const vwapPrice = seriesPrices.get(vwap) as BarPrice | undefined;
     const lastPrice = chartDataRef.current.data.find(({epochSec}) => epochSec === time);
 
-    setObject.legend((legend) => ({
-      ...legend,
+    // Using `last` because moving out of chart makes `lastPrice` undefined
+    setObject.legend(({decimals}) => ({
+      epochSec: (
+        time ?
+          (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
+          (last ? last.epochSec : NaN)
+      ),
       vwap: vwapPrice || last?.vwap || NaN,
       open: lastPrice?.open || last?.open || NaN,
       high: lastPrice?.high || last?.high || NaN,
@@ -29,11 +34,10 @@ export const handleLegendUpdate = (
       close: lastPrice?.close || last?.close || NaN,
       amplitudeHL: lastPrice?.amplitudeHL || last?.amplitudeHL || NaN,
       amplitudeOC: lastPrice?.amplitudeOC || last?.amplitudeOC || NaN,
-      epochSec: (
-        time ?
-          (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
-          (last ? last.epochSec : NaN)
-      ),
+      extremaMin: lastPrice?.extremaMin || last?.extremaMin || false,
+      extremaMax: lastPrice?.extremaMax || last?.extremaMax || false,
+      ema120: lastPrice?.ema120 || last?.ema120 || NaN,
+      decimals,
     }));
   });
 };
