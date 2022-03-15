@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const PxChartLegend = ({legend}: Props) => {
-  const {ema120Trend, open, high, low, close, amplitudeHL, amplitudeOC, decimals, epochSec} = legend;
+  const {ema120Trend, open, high, low, close, diff, diffSma, diffSmaTrend, decimals, epochSec} = legend;
 
   let diffClassName: LegendDataCellProps['useValueClass'] = 'neutral';
   if (ema120Trend) {
@@ -25,21 +25,22 @@ export const PxChartLegend = ({legend}: Props) => {
     }
   }
 
-  const diff = close - open;
-
   return (
     <div className={`${styles['legend']} ${styles[`diff-${diffClassName}`]}`}>
       <Row>
         <Col className="d-inline">
           <LegendDataCell value={epochSecToFormattedString(epochSec)} decimals={decimals} large/>
-          <LegendDataCell value={ema120Trend} decimals={decimals} useValueClass/>
           <LegendDataCell
-            title={<>HL&nbsp;<i className="bi bi-activity"/></>}
-            value={amplitudeHL} decimals={decimals}
+            title={<i className="bi bi-arrows-expand"/>}
+            value={ema120Trend} decimals={decimals} useValueClass
           />
           <LegendDataCell
-            title={<>OC&nbsp;<i className="bi bi-activity"/></>}
-            value={amplitudeOC} decimals={decimals}
+            title={<i className="bi bi-activity"/>}
+            value={diffSma} decimals={decimals}
+          />
+          <LegendDataCell
+            title={<i className="bi bi-arrow-down-up"/>}
+            value={diffSmaTrend} decimals={decimals} useValueClass
           />
         </Col>
       </Row>
