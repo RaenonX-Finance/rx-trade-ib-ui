@@ -22,7 +22,7 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
 
     srLevelLines[level] = price.createPriceLine({
       price: level,
-      axisLabelVisible: true,
+      axisLabelVisible: false,
       title,
       color: srLevelColor,
       lineWidth: 2,

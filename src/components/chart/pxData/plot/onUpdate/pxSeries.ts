@@ -7,6 +7,7 @@ import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLines} from '../.
 export type HandlePxSeriesOptions< T> = {
   objectKey: keyof PxChartLines,
   getData: (e: OnPxChartUpdatedEvent) => T[] | undefined,
+  axisLabelVisible: boolean,
   getPx: (data: T) => number,
   getLabelTitle: (data: T, currentPx: number, decimalPlaces: number) => string,
   getPxLineColor: (data: T) => string,
@@ -45,6 +46,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
   const {
     objectKey,
     configKey,
+    axisLabelVisible,
     getData,
     getPx,
     getLabelTitle,
@@ -85,7 +87,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
     } else {
       chartObjectRef.current.initData.lines[objectKey][price] = priceSeries.createPriceLine({
         price,
-        axisLabelVisible: true,
+        axisLabelVisible,
         lineVisible: true,
         title,
         color: getPxLineColor(dataEntry),

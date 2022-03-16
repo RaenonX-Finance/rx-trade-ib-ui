@@ -12,6 +12,7 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
     e,
     {
       objectKey: 'srLevelLines',
+      axisLabelVisible: false,
       getData: (e) => e.chartDataRef.current.supportResistance,
       getPx: (data: PxDataSupportResistance) => data.level,
       getLabelTitle: ({level}, currentPx, decimalPlaces) => (

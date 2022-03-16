@@ -12,6 +12,7 @@ export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
     e,
     {
       objectKey: 'openOrders',
+      axisLabelVisible: true,
       getData: (e) => Object.values(e.payload.openOrder || {}),
       getPx: (data: OpenOrderData) => data.px,
       getLabelTitle: ({side, px, quantity}, currentPx, decimalPlaces) => {
