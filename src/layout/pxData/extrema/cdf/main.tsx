@@ -1,19 +1,17 @@
 import React from 'react';
 
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {bearishColor, bullishColor} from '../../../../components/chart/pxData/plot/const';
+import {SignFilterButtons} from '../../../../components/common/signFilter/main';
+import {DisplayEntryType} from '../../../../components/common/signFilter/type';
 import {Direction} from '../../../../types/common';
 import {ExtremaDataPoint, PxDataExtrema, PxDataExtremaDataKey} from '../../../../types/pxData';
 import {PxExtremaCdfPlotProps} from './plot';
 import {PxExtremaSwingPointsTable} from './pointsTable/main';
 import {PxExtremaCDFSingleSide} from './side';
 
-
-type DisplayEntryType = 'pos' | 'neg' | 'all';
 
 type Props = Pick<PxExtremaCdfPlotProps, 'decimals' | 'currentPct'> & {
   points: PxDataExtrema['points'],
@@ -61,17 +59,11 @@ export const PxExtremaCDF = ({points, pointKey, currentSide, currentPct, decimal
       </Row>
       <Row>
         <Col xs="auto">
-          <ButtonGroup vertical>
-            <Button variant={display === 'pos' ? 'success' : 'outline-success'} onClick={() => setDisplay('pos')}>
-              <i className="bi bi-plus-lg"/>
-            </Button>
-            <Button variant={display === 'neg' ? 'danger' : 'outline-danger'} onClick={() => setDisplay('neg')}>
-              <i className="bi bi-dash-lg"/>
-            </Button>
-            <Button variant={display === 'all' ? 'info' : 'outline-info'} onClick={() => setDisplay('all')}>
-              <i className="bi bi-plus-slash-minus"/>
-            </Button>
-          </ButtonGroup>
+          <SignFilterButtons
+            display={display}
+            setDisplay={setDisplay}
+            vertical
+          />
         </Col>
         <Col>
           <PxExtremaSwingPointsTable points={pointsOnTable[display]}/>
