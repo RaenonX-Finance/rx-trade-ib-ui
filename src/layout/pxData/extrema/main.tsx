@@ -20,7 +20,7 @@ export const PxExtrema = ({data}: Props) => {
       <Col xs="auto">
         <PxExtremaItem
           icon={<i className="bi bi-plus-slash-minus"/>}
-          dataKey="diff" data={data.extrema} decimals={decimals}
+          dataKey="diff" data={data.extrema} decimals={decimals} showDirection
         />
       </Col>
       <Col xs="auto">

@@ -8,15 +8,21 @@ import {PxDataExtrema, PxDataExtremaDataKey} from '../../../types/pxData';
 import {PxExtremaCDF} from './cdf/main';
 
 
+const signToDirectionIcon: {[sign in number]: React.ReactNode} = {
+  [1]: <>&nbsp;<i className="bi bi-arrow-up-right"/></>,
+  [-1]: <>&nbsp;<i className="bi bi-arrow-down-right"/></>,
+};
+
 type Props = {
   icon: React.ReactNode,
   data: PxDataExtrema,
   dataKey: PxDataExtremaDataKey,
   decimals: number,
   suffix?: string,
+  showDirection?: boolean,
 };
 
-export const PxExtremaItem = ({icon, dataKey, data, decimals, suffix}: Props) => {
+export const PxExtremaItem = ({icon, dataKey, data, decimals, suffix, showDirection}: Props) => {
   const {val, pct} = data.current[dataKey];
   const [show, setShow] = React.useState(false);
 
@@ -49,6 +55,7 @@ export const PxExtremaItem = ({icon, dataKey, data, decimals, suffix}: Props) =>
       <Button size="sm" variant={variant} onClick={() => setShow(true)}>
         {icon}&nbsp;
         {`${val.toFixed(decimals)}${suffix || ''} (${pct.toFixed(2)}%)`}
+        {showDirection && signToDirectionIcon[Math.sign(val)]}
       </Button>
     </>
   );
