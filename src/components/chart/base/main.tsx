@@ -113,6 +113,7 @@ export const TradingViewChart = <T, P, R, L, A>({
           setState={setOrder}
           identifier={getIdentifier(chartData)}
           multiplier={getPnLMultiplier(chartData)}
+          periodSec={periodSec}
         />
       }
       <div className="mb-2" style={{height}} ref={chartContainerRef}>

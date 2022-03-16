@@ -69,15 +69,16 @@ export const PxDataChart = (props: Props) => {
             ...last,
           };
         },
-        order: (data) => ({
+        order: ({contract, periodSec}) => ({
           show: false,
           order: {
             side: 'BUY',
             quantity: 1,
             px: NaN,
             identifier: NaN,
+            periodSec,
           },
-          pxTick: data.contract.minTick,
+          pxTick: contract.minTick,
         }),
       }}
       renderObjects={{

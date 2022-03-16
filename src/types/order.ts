@@ -6,6 +6,7 @@ export type Order = {
   side: OrderSide,
   quantity: number,
   px: number,
+  periodSec: number,
 };
 
 export type OrderSocketMessage = Omit<Order, 'px'> & {

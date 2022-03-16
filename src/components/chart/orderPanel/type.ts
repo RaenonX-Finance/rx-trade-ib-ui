@@ -21,6 +21,7 @@ export type OrderPanelProps = {
   position: PositionData,
   identifier: SecurityIdentifier,
   multiplier: number,
+  periodSec: number,
 };
 
 export type OrderPanelPartProps = OrderPanelProps & {

@@ -12,12 +12,12 @@ import {OrderPanelProps} from '../type';
 import styles from './main.module.scss';
 
 
-const signToSide: {[sign in number]: OrderSide} = {
+const signToSideForClose: {[sign in number]: OrderSide} = {
   [-1]: 'BUY',
   [1]: 'SELL',
 };
 
-export const OrderPanelControl = ({state, identifier, position}: OrderPanelProps) => {
+export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
   const socket = useSocket();
 
   const onClick = (side: OrderSide, isMarket: boolean) => () => {
@@ -32,10 +32,10 @@ export const OrderPanelControl = ({state, identifier, position}: OrderPanelProps
 
   const onClickToClose = () => {
     const order: OrderSocketMessage = {
-      identifier,
+      ...state.order,
       px: null,
       quantity: Math.abs(position.position),
-      side: signToSide[Math.sign(position.position)],
+      side: signToSideForClose[Math.sign(position.position)],
     };
 
     socket.emit('orderPlace', JSON.stringify(order));
