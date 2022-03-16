@@ -23,7 +23,7 @@ export type ExecutionGroup = {
   avgPnLEwr: number | null,
   pxSide: number | null,
   pxSideSum: number | null,
-  pxSideAmplRatio: number | null,
+  pxSideDiffSmaRatio: number | null,
   avgPxProfit: number | null,
   avgPxLoss: number | null,
   avgPxRrRatio: number | null,

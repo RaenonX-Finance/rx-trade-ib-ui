@@ -41,7 +41,7 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>Qty</th>
           <th>Px D</th>
           <th>Px D Sum</th>
-          <th>Px D A/R</th>
+          <th>Px D D/R</th>
           <th className={styles['column-separator']}/>
           <th>Profit</th>
           <th>Loss</th>
@@ -90,7 +90,7 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
                   {execution.pxSideSum && formatSignedNumber(execution.pxSideSum, 2)}
                 </td>
                 <td>
-                  {execution.pxSideAmplRatio && `${execution.pxSideAmplRatio.toFixed(3)}x`}
+                  {execution.pxSideDiffSmaRatio && `${execution.pxSideDiffSmaRatio.toFixed(3)}x`}
                 </td>
                 <td className={styles['column-separator']}/>
                 <td className={styles['up']}>{execution.realizedPnL && execution.profit}</td>
