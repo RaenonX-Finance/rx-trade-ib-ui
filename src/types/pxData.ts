@@ -31,7 +31,7 @@ export type PxDataBar = {
 
 export type PxDataExtremaDataKey =
   'diff' |
-  'amplRatio' |
+  'diffSmaRatio' |
   'length';
 
 export type ExtremaDataPoint = {

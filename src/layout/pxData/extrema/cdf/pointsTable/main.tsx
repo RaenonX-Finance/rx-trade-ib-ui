@@ -33,7 +33,7 @@ export const PxExtremaSwingPointsTable = ({points}: Props) => {
             <th>Px</th>
             <th>Direction</th>
             <th>+/-</th>
-            <th>Ampl Ratio</th>
+            <th>Diff SMA x</th>
             <th>Duration</th>
           </tr>
         </thead>
@@ -49,7 +49,7 @@ export const PxExtremaSwingPointsTable = ({points}: Props) => {
                   <td>{point.px}</td>
                   <td className={cellColorClass}>{directionIcon[point.direction]}</td>
                   <td className={cellColorClass}>{point.diff}</td>
-                  <td>{point.amplRatio.toFixed(3)}</td>
+                  <td>{point.diffSmaRatio.toFixed(3)}</td>
                   <td>{point.length}</td>
                 </tr>
               );

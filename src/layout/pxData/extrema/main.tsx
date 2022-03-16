@@ -26,7 +26,7 @@ export const PxExtrema = ({data}: Props) => {
       <Col xs="auto">
         <PxExtremaItem
           icon={<i className="bi bi-activity"/>}
-          dataKey="amplRatio" data={data.extrema} decimals={3} suffix="x"
+          dataKey="diffSmaRatio" data={data.extrema} decimals={3} suffix="x"
         />
       </Col>
       <Col xs="auto">

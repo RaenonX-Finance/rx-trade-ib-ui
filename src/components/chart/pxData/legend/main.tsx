@@ -21,12 +21,15 @@ export const PxChartLegend = ({legend}: Props) => {
     high,
     low,
     close,
-    diff,
     diffSma,
     diffSmaTrend,
     decimals,
     epochSec,
   } = legend;
+
+  // Not using diff from PxData because it is slightly lagged
+  // > PxData not updated when market data updated
+  const diff = close - open;
 
   let diffClassName: LegendDataCellProps['useValueClass'] = 'neutral';
   if (ema120Trend) {
