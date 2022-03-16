@@ -18,6 +18,7 @@ import {useDispatch} from '../../state/store';
 import {OrderFilledResult} from '../../types/orderFilled';
 import {SocketContext} from '../../types/socket/socket';
 import {DataSocket} from '../../types/socket/type';
+import {usePresetAudio} from '../audio/preset/main';
 import {useSocketEventHandler} from './utils';
 
 
@@ -25,6 +26,7 @@ export const useSocketInit = (): DataSocket => {
   const socket = React.useContext(SocketContext);
   const openOrderState = useOpenOrderSelector();
   const lastUpdate = React.useRef(0);
+  const {playBuy, playSell} = usePresetAudio();
 
   const {poll} = openOrderState;
 
@@ -67,10 +69,15 @@ export const useSocketInit = (): DataSocket => {
 
   const onOrderFilled = React.useCallback((message: string) => {
     const data: OrderFilledResult = JSON.parse(message);
-    const audio = new Audio('/audio/orderFilled.mp3');
+    const {action} = data;
 
     alert.show(<OrderFilledAlert data={data}/>);
-    audio.play().then(() => void 0);
+    if (action === 'BUY') {
+      playBuy();
+    } else if (action === 'SELL') {
+      playSell();
+    }
+
     refreshStatus(true);
   }, []);
 
