@@ -9,6 +9,7 @@ import {OpenOrderDispatcherName} from '../../../../state/openOrder/types';
 import {useDispatch} from '../../../../state/store';
 import {OrderSide} from '../../../../types/common';
 import {OpenOrderData} from '../../../../types/openOrder';
+import {OrderSocketMessage} from '../../../../types/order';
 import {forceMinTick} from '../../../../utils/calc';
 import {OrderPanelProps} from '../type';
 import {calculateNewAvgPx, calculatePnL, sideMultiplier} from '../utils';
@@ -35,6 +36,7 @@ export const OrderListEntry = ({
   allowUpdate,
   onEdited,
   onSubmittedModification,
+  periodSec,
 }: Props) => {
   const dispatch = useDispatch();
   const socket = useSocket();
@@ -49,7 +51,11 @@ export const OrderListEntry = ({
   };
 
   const onOrderUpdate = () => {
-    socket.emit('orderPlace', JSON.stringify(order));
+    const orderMessageBody: OrderSocketMessage = {
+      ...order,
+      periodSec,
+    };
+    socket.emit('orderPlace', JSON.stringify(orderMessageBody));
     onSubmittedModification();
   };
 
