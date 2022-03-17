@@ -28,9 +28,9 @@ export const actionSideColor: {[side in PriceActionSide]: string} = {
   SHORT: shortLighterColor,
 };
 
-const srLevelColorWeak = 'rgba(255, 255, 0, 0.6)';
+const srLevelColorWeak = 'rgba(255, 0, 221, 0.8)';
 
-const srLevelColorStrong = 'rgba(255, 0, 234, 0.6)';
+const srLevelColorStrong = 'rgba(255, 255, 0, 0.6)';
 
 const srLevelColorScale = chroma.scale([srLevelColorWeak, srLevelColorStrong]);
 

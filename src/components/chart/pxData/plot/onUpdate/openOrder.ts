@@ -19,7 +19,7 @@ export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
         return `${side} @ ${px} x ${quantity} (${diff})`;
       },
       getPxLineColor: ({side}) => orderSideColor[side],
-      getPxLineStyle: () => LineStyle.Dotted,
+      getPxLineStyle: () => LineStyle.LargeDashed,
       getAxisLabelVisible: () => true,
       getLineWidth: () => 2,
     },
