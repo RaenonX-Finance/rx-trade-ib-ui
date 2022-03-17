@@ -1,5 +1,6 @@
 import {isBusinessDay} from 'lightweight-charts';
 
+import {PxDataBarSmaKey} from '../../../../types/pxData';
 import {businessDayToEpochSec} from '../../../../utils/chart';
 import {OnPxChartInitEvent} from '../type';
 
@@ -12,9 +13,10 @@ export const handleLegendUpdate = (e: OnPxChartInitEvent) => {
   }
 
   chartRef.current.subscribeCrosshairMove(({time}) => {
-    const last = chartDataRef.current.data.at(-1);
+    const pxData = chartDataRef.current.data;
 
-    const hovered = chartDataRef.current.data.find(({epochSec}) => epochSec === time);
+    const last = pxData.at(-1);
+    const hovered = pxData.find(({epochSec}) => epochSec === time);
 
     // Using `last` because moving out of chart makes `lastPrice` undefined
     setObject.legend(({decimals}) => ({
@@ -39,6 +41,19 @@ export const handleLegendUpdate = (e: OnPxChartInitEvent) => {
       diffSma: hovered?.diffSma || last?.diffSma || NaN,
       diffSmaTrend: hovered?.diffSmaTrend || last?.diffSmaTrend || NaN,
       decimals,
+      ...Object.fromEntries(chartDataRef.current.smaPeriods
+        .map((period) => {
+          const key: PxDataBarSmaKey = `sma${period}`;
+
+          if (hovered) {
+            return [key, hovered[key]];
+          } else if (last) {
+            return [key, last[key]];
+          }
+
+          return [key, NaN];
+        }),
+      ),
     }));
   });
 };

@@ -5,13 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import {ButtonVariant} from 'react-bootstrap/types';
 
 import {PxDataExtrema, PxDataExtremaDataKey} from '../../../types/pxData';
+import {signToDirectionIcon} from '../../../utils/icons';
 import {PxExtremaCDF} from './cdf/main';
 
-
-const signToDirectionIcon: {[sign in number]: React.ReactNode} = {
-  [1]: <>&nbsp;<i className="bi bi-arrow-up-right"/></>,
-  [-1]: <>&nbsp;<i className="bi bi-arrow-down-right"/></>,
-};
 
 type Props = {
   icon: React.ReactNode,

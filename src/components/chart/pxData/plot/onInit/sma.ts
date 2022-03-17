@@ -16,8 +16,7 @@ export const addSma = ({
 
   const periodCount = chartDataRef.current.smaPeriods.length;
 
-  return Object.fromEntries([...chartDataRef.current.smaPeriods]
-    .sort((a, b) => a - b)
+  return Object.fromEntries(chartDataRef.current.smaPeriods
     .map((period, idx) => {
       if (!chartRef.current) {
         throw new Error(`Adding SMA ${period} while the chart is not ready`);

@@ -3,17 +3,21 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {PxData} from '../../../../types/pxData';
 import {epochSecToFormattedString} from '../../../../utils/chart';
 import {PxChartLegendData} from '../type';
 import {LegendDataCell, LegendDataCellProps} from './cell';
 import styles from './main.module.scss';
+import {LegendSmaPositions} from './smaPos';
 
 
-type Props = {
+export type PxChartLegendProps = {
+  data: PxData,
   legend: PxChartLegendData,
 };
 
-export const PxChartLegend = ({legend}: Props) => {
+export const PxChartLegend = (props: PxChartLegendProps) => {
+  const {legend} = props;
   const {
     ema120Trend,
     ema120TrendChange,
@@ -61,6 +65,7 @@ export const PxChartLegend = ({legend}: Props) => {
             title={<i className="bi bi-plus-slash-minus"/>}
             value={diffSmaTrend} decimals={decimals} useValueClass
           />
+          <LegendSmaPositions {...props}/>
         </Col>
       </Row>
       <Row>
