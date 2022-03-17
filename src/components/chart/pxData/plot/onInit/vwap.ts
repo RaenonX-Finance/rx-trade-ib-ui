@@ -4,7 +4,9 @@ import {OnPxChartInitEvent} from '../../type';
 import {toLineData} from '../../utils';
 
 
-export const handleVwap = ({chartRef, chartDataRef}: OnPxChartInitEvent): ISeriesApi<'Line'> => {
+export const addVwap = ({
+  chartRef, chartDataRef,
+}: Pick<OnPxChartInitEvent, 'chartRef' | 'chartDataRef'>): ISeriesApi<'Line'> | null => {
   if (!chartRef.current) {
     throw new Error('Adding VWAP while the chart is not ready');
   }
@@ -18,4 +20,14 @@ export const handleVwap = ({chartRef, chartDataRef}: OnPxChartInitEvent): ISerie
   vwap.setData(chartDataRef.current.data.map(toLineData('vwap')));
 
   return vwap;
+};
+
+export const handleVwap = (e: OnPxChartInitEvent): ISeriesApi<'Line'> | null => {
+  const {layoutConfig} = e;
+
+  if (!layoutConfig.vwap.enable) {
+    return null;
+  }
+
+  return addVwap(e);
 };

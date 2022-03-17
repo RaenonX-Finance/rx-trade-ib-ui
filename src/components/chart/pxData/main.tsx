@@ -7,12 +7,7 @@ import {PxChartLayoutConfigPanel} from './layoutConfig/main';
 import {PxChartLegend} from './legend/main';
 import {onPxChartInit} from './plot/onInit/main';
 import {onPxChartUpdated} from './plot/onUpdate/main';
-import {
-  PxChartInitData,
-  PxChartLayoutConfig,
-  PxChartLegendData,
-  PxChartPayload,
-} from './type';
+import {PxChartInitData, PxChartLayoutConfig, PxChartLegendData, PxChartPayload} from './type';
 
 
 type Props = Omit<
@@ -91,6 +86,10 @@ export const PxDataChart = (props: Props) => {
       getPnLMultiplier={(data) => data.contract.multiplier}
       getPeriodSec={(data) => data.periodSec}
       getInitialLayoutConfig={({periodSec}) => ({
+        vwap: {
+          title: 'VWAP',
+          enable: false,
+        },
         ema120: {
           title: 'EMA 120',
           enable: true,

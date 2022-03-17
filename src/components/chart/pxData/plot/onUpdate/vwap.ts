@@ -1,8 +1,11 @@
 import {OnPxChartUpdatedEvent} from '../../type';
 import {toLineData} from '../../utils';
+import {addVwap} from '../onInit/vwap';
 
 
-export const handleVwap = ({chartDataRef, chartObjectRef, setObject}: OnPxChartUpdatedEvent) => {
+export const handleVwap = (e: OnPxChartUpdatedEvent) => {
+  const {chartDataRef, chartObjectRef, setObject, layoutConfig} = e;
+
   if (!chartObjectRef.current) {
     return;
   }
@@ -11,7 +14,12 @@ export const handleVwap = ({chartDataRef, chartObjectRef, setObject}: OnPxChartU
 
   const lastPrice = chartDataRef.current.data.at(-1);
 
-  if (!lastPrice) {
+  if (!lastPrice || !vwap) {
+    if (layoutConfig.vwap.enable) {
+      // Did not have VWAP, but config indicates should have it
+      chartObjectRef.current.initData.series.vwap = addVwap(e);
+    }
+
     return;
   }
 

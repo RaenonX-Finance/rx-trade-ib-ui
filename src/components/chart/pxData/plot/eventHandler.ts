@@ -1,23 +1,19 @@
-import {BarPrice, isBusinessDay, ISeriesApi} from 'lightweight-charts';
+import {isBusinessDay} from 'lightweight-charts';
 
 import {businessDayToEpochSec} from '../../../../utils/chart';
 import {OnPxChartInitEvent} from '../type';
 
 
-export const handleLegendUpdate = (
-  e: OnPxChartInitEvent,
-  vwap: ISeriesApi<'Line'>,
-) => {
+export const handleLegendUpdate = (e: OnPxChartInitEvent) => {
   const {chartRef, chartDataRef, setObject} = e;
 
   if (!chartRef.current) {
     throw new Error('Legend to be handled while the chart is not ready');
   }
 
-  chartRef.current.subscribeCrosshairMove(({seriesPrices, time}) => {
+  chartRef.current.subscribeCrosshairMove(({time}) => {
     const last = chartDataRef.current.data.at(-1);
 
-    const vwapPrice = seriesPrices.get(vwap) as BarPrice | undefined;
     const hovered = chartDataRef.current.data.find(({epochSec}) => epochSec === time);
 
     // Using `last` because moving out of chart makes `lastPrice` undefined
@@ -27,7 +23,7 @@ export const handleLegendUpdate = (
           (isBusinessDay(time) ? businessDayToEpochSec(time) : time) :
           (last ? last.epochSec : NaN)
       ),
-      vwap: vwapPrice || last?.vwap || NaN,
+      vwap: hovered?.vwap || last?.vwap || NaN,
       open: hovered?.open || last?.open || NaN,
       high: hovered?.high || last?.high || NaN,
       low: hovered?.low || last?.low || NaN,

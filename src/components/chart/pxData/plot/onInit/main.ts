@@ -12,7 +12,7 @@ export const onPxChartInit: PxChartInitEventHandler = (e) => {
   const vwap = handleVwap(e);
   const ema120 = handleEma120(e);
   const srLevelLines = handleSR(e, price);
-  handleLegendUpdate(e, vwap);
+  handleLegendUpdate(e);
   handlePxClick(e, price);
 
   return {
