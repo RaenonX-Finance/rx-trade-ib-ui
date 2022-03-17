@@ -1,7 +1,8 @@
+import chroma from 'chroma-js';
+import {LineStyle, LineWidth} from 'lightweight-charts';
+
 import {OrderSide, PriceActionSide} from '../../../../types/common';
 
-
-export const srLevelColor = 'rgba(255, 255, 0, 0.6)';
 
 export const avgCostColor = 'rgba(240, 240, 240, 0.7)';
 
@@ -26,3 +27,17 @@ export const actionSideColor: {[side in PriceActionSide]: string} = {
   LONG: longLighterColor,
   SHORT: shortLighterColor,
 };
+
+const srLevelColorWeak = 'rgba(255, 255, 0, 0.6)';
+
+const srLevelColorStrong = 'rgba(255, 0, 234, 0.6)';
+
+const srLevelColorScale = chroma.scale([srLevelColorWeak, srLevelColorStrong]);
+
+export const getSrLevelColor = (ratio: number): string => {
+  return srLevelColorScale(ratio).hex('rgba');
+};
+
+export const srLevelLineStyle: LineStyle = LineStyle.Dashed;
+
+export const srLevelLineWidth: LineWidth = 1;

@@ -56,11 +56,7 @@ export type PxDataExtrema = {
 
 export type PxDataSupportResistance = {
   level: number,
-  type: {
-    window: boolean,
-    fractal: boolean,
-    extrema: boolean,
-  },
+  strength: number,
 };
 
 export type PxData = {

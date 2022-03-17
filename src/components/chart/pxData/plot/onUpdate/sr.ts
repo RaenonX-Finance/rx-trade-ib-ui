@@ -1,9 +1,6 @@
-import {LineStyle} from 'lightweight-charts';
-
 import {PxDataSupportResistance} from '../../../../../types/pxData';
-import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
-import {srLevelColor} from '../const';
+import {getSrLevelColor, srLevelLineStyle, srLevelLineWidth} from '../const';
 import {handlePxLines} from './pxSeries';
 
 
@@ -13,13 +10,11 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
     {
       objectKey: 'srLevelLines',
       axisLabelVisible: false,
+      lineWidth: srLevelLineWidth,
       getData: (e) => e.chartDataRef.current.supportResistance,
       getPx: (data: PxDataSupportResistance) => data.level,
-      getLabelTitle: ({level}, currentPx, decimalPlaces) => (
-        formatSignedNumber(level - currentPx, decimalPlaces)
-      ),
-      getPxLineColor: () => srLevelColor,
-      getPxLineStyle: () => LineStyle.Dotted,
+      getPxLineColor: ({strength}) => getSrLevelColor(strength),
+      getPxLineStyle: () => srLevelLineStyle,
       configKey: 'srLevel',
     },
   );

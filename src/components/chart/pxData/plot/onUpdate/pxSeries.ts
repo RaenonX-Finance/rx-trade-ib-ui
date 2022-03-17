@@ -1,4 +1,4 @@
-import {ISeriesApi, LineStyle} from 'lightweight-charts';
+import {ISeriesApi, LineStyle, LineWidth} from 'lightweight-charts';
 
 import {getDecimalPlaces} from '../../../../../utils/calc';
 import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLines} from '../../type';
@@ -6,14 +6,19 @@ import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLines} from '../.
 
 export type HandlePxSeriesOptions< T> = {
   objectKey: keyof PxChartLines,
+  lineWidth: LineWidth,
   getData: (e: OnPxChartUpdatedEvent) => T[] | undefined,
-  axisLabelVisible: boolean,
   getPx: (data: T) => number,
-  getLabelTitle: (data: T, currentPx: number, decimalPlaces: number) => string,
   getPxLineColor: (data: T) => string,
   getPxLineStyle: (data: T) => LineStyle,
   configKey?: PxChartLayoutConfigKeys,
-};
+} & ({
+  axisLabelVisible: true,
+  getLabelTitle: (data: T, currentPx: number, decimalPlaces: number) => string,
+} | {
+  axisLabelVisible: false,
+  getLabelTitle?: never,
+});
 
 const removePxLines = <T>(
   e: OnPxChartUpdatedEvent,
@@ -47,6 +52,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
     objectKey,
     configKey,
     axisLabelVisible,
+    lineWidth,
     getData,
     getPx,
     getLabelTitle,
@@ -80,7 +86,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
   for (const dataEntry of data) {
     const price = getPx(dataEntry);
     const priceLine = chartObjectRef.current.initData.lines[objectKey][price];
-    const title = getLabelTitle(dataEntry, currentPx.close, decimalPlaces);
+    const title = getLabelTitle ? getLabelTitle(dataEntry, currentPx.close, decimalPlaces) : '';
 
     if (priceLine) {
       priceLine.applyOptions({title});
@@ -91,7 +97,7 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
         lineVisible: true,
         title,
         color: getPxLineColor(dataEntry),
-        lineWidth: 2,
+        lineWidth,
         lineStyle: getPxLineStyle(dataEntry),
       });
     }
