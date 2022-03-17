@@ -41,3 +41,5 @@ export const getSrLevelColor = (ratio: number): string => {
 export const srLevelLineStyle: LineStyle = LineStyle.Dashed;
 
 export const srLevelLineWidth: LineWidth = 1;
+
+export const srLevelLineWidthStrong: LineWidth = 2;

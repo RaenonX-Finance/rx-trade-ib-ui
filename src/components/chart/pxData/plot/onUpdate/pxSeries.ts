@@ -6,19 +6,15 @@ import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLines} from '../.
 
 export type HandlePxSeriesOptions< T> = {
   objectKey: keyof PxChartLines,
-  lineWidth: LineWidth,
   getData: (e: OnPxChartUpdatedEvent) => T[] | undefined,
   getPx: (data: T) => number,
   getPxLineColor: (data: T) => string,
   getPxLineStyle: (data: T) => LineStyle,
-  configKey?: PxChartLayoutConfigKeys,
-} & ({
-  axisLabelVisible: true,
+  getLineWidth: (data: T) => LineWidth,
+  getAxisLabelVisible: (data: T) => boolean,
   getLabelTitle: (data: T, currentPx: number, decimalPlaces: number) => string,
-} | {
-  axisLabelVisible: false,
-  getLabelTitle?: never,
-});
+  configKey?: PxChartLayoutConfigKeys,
+};
 
 const removePxLines = <T>(
   e: OnPxChartUpdatedEvent,
@@ -51,13 +47,13 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
   const {
     objectKey,
     configKey,
-    axisLabelVisible,
-    lineWidth,
     getData,
     getPx,
     getLabelTitle,
     getPxLineColor,
     getPxLineStyle,
+    getAxisLabelVisible,
+    getLineWidth,
   } = opts;
 
   if (!chartObjectRef.current) {
@@ -93,11 +89,11 @@ export const handlePxLines = <T>(e: OnPxChartUpdatedEvent, opts: HandlePxSeriesO
     } else {
       chartObjectRef.current.initData.lines[objectKey][price] = priceSeries.createPriceLine({
         price,
-        axisLabelVisible,
+        axisLabelVisible: getAxisLabelVisible(dataEntry),
         lineVisible: true,
         title,
         color: getPxLineColor(dataEntry),
-        lineWidth,
+        lineWidth: getLineWidth(dataEntry),
         lineStyle: getPxLineStyle(dataEntry),
       });
     }

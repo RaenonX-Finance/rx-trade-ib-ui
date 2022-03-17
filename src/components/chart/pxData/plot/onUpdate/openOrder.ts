@@ -8,20 +8,20 @@ import {handlePxLines} from './pxSeries';
 
 
 export const handleOpenOrder = (e: OnPxChartUpdatedEvent) => {
-  handlePxLines(
+  handlePxLines<OpenOrderData>(
     e,
     {
       objectKey: 'openOrders',
-      lineWidth: 2,
-      axisLabelVisible: true,
       getData: (e) => Object.values(e.payload.openOrder || {}),
-      getPx: (data: OpenOrderData) => data.px,
+      getPx: ({px}) => px,
       getLabelTitle: ({side, px, quantity}, currentPx, decimalPlaces) => {
         const diff = formatSignedNumber(px - currentPx, decimalPlaces);
         return `${side} @ ${px} x ${quantity} (${diff})`;
       },
       getPxLineColor: ({side}) => orderSideColor[side],
       getPxLineStyle: () => LineStyle.Dotted,
+      getAxisLabelVisible: () => true,
+      getLineWidth: () => 2,
     },
   );
 };
