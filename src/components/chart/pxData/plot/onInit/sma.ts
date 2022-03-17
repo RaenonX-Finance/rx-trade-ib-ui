@@ -5,15 +5,11 @@ import {toLineData} from '../../utils';
 import {smaScale} from '../const';
 
 
-export const addSma = ({
+export const handleSma = ({
   chartRef,
   chartDataRef,
   layoutConfig,
-}: Pick<OnPxChartInitEvent, 'chartRef' | 'chartDataRef' | 'layoutConfig'>): PxChartSeries['sma'] => {
-  if (!layoutConfig.sma.enable) {
-    return [];
-  }
-
+}: OnPxChartInitEvent): PxChartSeries['sma'] => {
   const periodCount = chartDataRef.current.smaPeriods.length;
 
   return Object.fromEntries(chartDataRef.current.smaPeriods
@@ -30,13 +26,10 @@ export const addSma = ({
         priceLineVisible: false, // Disable vertical Px line
         lastValueVisible: false, // Disable label
         crosshairMarkerVisible: false,
+        visible: layoutConfig.sma.enable,
       });
       smaLine.setData(chartDataRef.current.data.map(toLineData(`sma${period}`)));
 
       return [period, smaLine];
     }));
-};
-
-export const handleSma = (e: OnPxChartInitEvent): PxChartSeries['sma'] => {
-  return addSma(e);
 };

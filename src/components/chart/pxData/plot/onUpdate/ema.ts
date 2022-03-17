@@ -1,5 +1,4 @@
 import {OnPxChartUpdatedEvent} from '../../type';
-import {addEma120} from '../onInit/ema';
 import {handlePxLine} from './pxLine/main';
 
 
@@ -11,7 +10,6 @@ export const handleEma120 = (e: OnPxChartUpdatedEvent) => {
       keyOfConfig: 'ema120',
       keyOfLegendData: 'ema120',
       keyForLineData: 'ema120',
-      getAddedSeries: addEma120,
     },
   );
 };

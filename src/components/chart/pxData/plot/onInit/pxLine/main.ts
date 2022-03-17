@@ -13,11 +13,7 @@ export const addPxLine = ({
   priceLineVisible,
   title,
   ...props
-}: AddPxLineOptions): ISeriesApi<'Line'> | null => {
-  if (!layoutConfig[keyOfConfig].enable) {
-    return null;
-  }
-
+}: AddPxLineOptions): ISeriesApi<'Line'> => {
   if (!chartRef.current) {
     throw new Error(`Adding ${title} while the chart is not ready`);
   }
@@ -26,6 +22,7 @@ export const addPxLine = ({
     ...props,
     title,
     priceLineVisible,
+    visible: layoutConfig[keyOfConfig].enable,
   });
   series.setData(chartDataRef.current.data.map(toLineData(keyForLineData)));
 

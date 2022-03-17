@@ -104,7 +104,7 @@ export const PxDataChart = (props: Props) => {
         },
         extrema: {
           title: 'Local Extrema',
-          enable: periodSec < 86400 && periodSec > 60,
+          enable: false,
         },
         marker: {
           title: 'Trade Markers',

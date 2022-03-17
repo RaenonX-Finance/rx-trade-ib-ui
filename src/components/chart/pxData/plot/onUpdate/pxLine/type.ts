@@ -1,7 +1,7 @@
 import {ISeriesApi} from 'lightweight-charts';
 
 import {KeysOfType} from '../../../../../../utils/types';
-import {OnPxChartUpdatedEvent, PxChartLayoutConfigKeys, PxChartLegendData, PxChartSeries} from '../../../type';
+import {PxChartLayoutConfigKeys, PxChartLegendData, PxChartSeries} from '../../../type';
 import {ValidKeyForLineData} from '../../../utils';
 
 
@@ -10,5 +10,4 @@ export type HandlePxLineOptions = {
   keyOfConfig: PxChartLayoutConfigKeys,
   keyOfLegendData: keyof PxChartLegendData,
   keyForLineData: ValidKeyForLineData,
-  getAddedSeries: (e: OnPxChartUpdatedEvent) => ISeriesApi<'Line'> | null,
 };
