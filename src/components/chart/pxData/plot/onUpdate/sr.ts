@@ -1,7 +1,6 @@
 import {PxDataSupportResistance} from '../../../../../types/pxData';
 import {OnPxChartUpdatedEvent} from '../../type';
 import {getSrLevelColor, srLevelLineStyle, srLevelLineWidth, srLevelLineWidthStrong} from '../const';
-import {getSrLevelLabel} from '../utils';
 import {handlePxLines} from './pxSeries';
 
 
@@ -16,9 +15,7 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
       getPxLineStyle: () => srLevelLineStyle,
       getLineWidth: ({strength}) => strength > 0.5 ? srLevelLineWidthStrong : srLevelLineWidth,
       getAxisLabelVisible: ({strength}) => strength > 0.5,
-      getLabelTitle: ({strength, level}, _, decimalPlaces) => (
-        getSrLevelLabel(level, decimalPlaces, strength)
-      ),
+      getLabelTitle: ({strengthCount}) => strengthCount.toString(),
       configKey: 'srLevel',
     },
   );

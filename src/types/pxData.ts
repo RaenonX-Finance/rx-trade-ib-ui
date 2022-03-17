@@ -57,6 +57,7 @@ export type PxDataExtrema = {
 export type PxDataSupportResistance = {
   level: number,
   strength: number,
+  strengthCount: number,
 };
 
 export type PxData = {
