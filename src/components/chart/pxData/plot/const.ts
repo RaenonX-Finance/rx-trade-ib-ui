@@ -18,6 +18,11 @@ export const bullishColor = '#00e071';
 
 export const bearishColor = '#ff4b4b';
 
+export const pxLineColors = {
+  vwap: '#5fa9ff',
+  ema120: '#dcdcdc',
+};
+
 export const orderSideColor: {[side in OrderSide]: string} = {
   BUY: longColor,
   SELL: shortColor,
@@ -43,3 +48,12 @@ export const srLevelLineStyle: LineStyle = LineStyle.Dashed;
 export const srLevelLineWidth: LineWidth = 1;
 
 export const srLevelLineWidthStrong: LineWidth = 2;
+
+export const smaScale = chroma.scale([
+  '#FF5252',
+  '#FF9800',
+  '#FFEB3B',
+  '#4CAF50',
+  '#2196F3',
+  '#8B29C2',
+]);

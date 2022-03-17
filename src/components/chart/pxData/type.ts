@@ -16,6 +16,7 @@ import {
 export type PxChartSeries = {
   price: ISeriesApi<'Candlestick'>,
   vwap: ISeriesApi<'Line'> | null,
+  sma: Record<number, ISeriesApi<'Line'>>,
   ema120: ISeriesApi<'Line'> | null,
   avgCost: IPriceLine | null,
   orderEntry: IPriceLine | null,
@@ -30,7 +31,7 @@ export type PxChartLegendData = Optional<PxDataBar, 'ema120' | 'vwap'> & {
   decimals: number,
 };
 
-export type PxChartLayoutConfigKeys = 'ema120' | 'srLevel' | 'marker' | 'extrema' | 'vwap';
+export type PxChartLayoutConfigKeys = 'ema120' | 'sma' | 'srLevel' | 'marker' | 'extrema' | 'vwap';
 
 export type PxChartLayoutConfigEntry = {
   title: string,

@@ -94,6 +94,10 @@ export const PxDataChart = (props: Props) => {
           title: 'EMA 120',
           enable: true,
         },
+        sma: {
+          title: 'SMAs',
+          enable: true,
+        },
         srLevel: {
           title: 'S/R Levels',
           enable: true,

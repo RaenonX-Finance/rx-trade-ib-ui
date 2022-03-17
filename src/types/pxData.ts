@@ -10,6 +10,8 @@ export type PxDataContract = {
   multiplier: number,
 };
 
+export type PxDataBarSmaKey = `sma${number}`;
+
 export type PxDataBar = {
   epochSec: number,
   open: number,
@@ -27,6 +29,8 @@ export type PxDataBar = {
   diff: number,
   diffSma: number | null,
   diffSmaTrend: number | null,
+} & {
+  [smaKey in PxDataBarSmaKey]?: number
 };
 
 export type PxDataExtremaDataKey =
@@ -70,6 +74,7 @@ export type PxData = {
   supportResistance: PxDataSupportResistance[],
   lastDayClose: number | null,
   isMajor: boolean,
+  smaPeriods: number[],
 };
 
 export type PxDataCollection = {

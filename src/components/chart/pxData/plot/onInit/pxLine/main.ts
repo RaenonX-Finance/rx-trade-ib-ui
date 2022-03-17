@@ -10,10 +10,9 @@ export const addPxLine = ({
   layoutConfig,
   keyOfConfig,
   keyForLineData,
+  priceLineVisible,
   title,
-  color,
-  lineWidth,
-  lastPriceAnimation,
+  ...props
 }: AddPxLineOptions): ISeriesApi<'Line'> | null => {
   if (!layoutConfig[keyOfConfig].enable) {
     return null;
@@ -24,10 +23,9 @@ export const addPxLine = ({
   }
 
   const series = chartRef.current.addLineSeries({
-    color,
+    ...props,
     title,
-    lineWidth,
-    lastPriceAnimation,
+    priceLineVisible,
   });
   series.setData(chartDataRef.current.data.map(toLineData(keyForLineData)));
 

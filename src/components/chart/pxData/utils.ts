@@ -1,6 +1,6 @@
 import {BarData, LineData as LineDataApi, UTCTimestamp} from 'lightweight-charts';
 
-import {PxDataBar} from '../../../types/pxData';
+import {PxDataBar, PxDataBarSmaKey} from '../../../types/pxData';
 import {KeysOfType} from '../../../utils/types';
 
 
@@ -15,7 +15,11 @@ type LineData = Omit<LineDataApi, 'value'> & {
 
 export type ValidKeyForLineData = KeysOfType<PxDataBar, number | null> | PxDataBarSmaKey;
 
-export const toLineData = <K extends KeysOfType<PxDataBar, number | null>>(key: K) => (bar: PxDataBar): LineData => {
+export const toLineData = <K extends ValidKeyForLineData>(
+  key: K,
+) => (
+  bar: PxDataBar,
+): LineData => {
   const value = bar[key];
 
   if (!value) {

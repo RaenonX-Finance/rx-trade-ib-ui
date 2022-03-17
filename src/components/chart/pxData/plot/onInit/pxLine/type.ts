@@ -8,9 +8,7 @@ export type AddPxLineOptionsFromInitEvent = Pick<OnPxChartInitEvent, 'chartRef' 
 
 export type AddPxLineOptions =
   AddPxLineOptionsFromInitEvent &
-  Pick<LineSeriesPartialOptions, 'lineWidth' | 'lastPriceAnimation'> & {
+  LineSeriesPartialOptions & {
     keyOfConfig: PxChartLayoutConfigKeys,
     keyForLineData: ValidKeyForLineData,
-    title: string,
-    color: string,
   };

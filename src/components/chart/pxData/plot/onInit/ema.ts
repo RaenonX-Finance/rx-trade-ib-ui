@@ -1,6 +1,7 @@
 import {ISeriesApi, LastPriceAnimationMode} from 'lightweight-charts';
 
 import {OnPxChartInitEvent} from '../../type';
+import {pxLineColors} from '../const';
 import {addPxLine} from './pxLine/main';
 import {AddPxLineOptionsFromInitEvent} from './pxLine/type';
 
@@ -10,10 +11,11 @@ export const addEma120 = (opts: AddPxLineOptionsFromInitEvent): ISeriesApi<'Line
     ...opts,
     keyOfConfig: 'ema120',
     keyForLineData: 'ema120',
-    title: 'EMA 120',
-    color: '#c45fff',
-    lineWidth: 1,
+    title: '',
+    color: pxLineColors.ema120,
+    lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
+    lastValueVisible: false, // Disable label
   });
 };
 

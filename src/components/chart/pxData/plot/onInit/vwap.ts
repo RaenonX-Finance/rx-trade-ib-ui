@@ -1,6 +1,7 @@
 import {ISeriesApi, LastPriceAnimationMode} from 'lightweight-charts';
 
 import {OnPxChartInitEvent} from '../../type';
+import {pxLineColors} from '../const';
 import {addPxLine} from './pxLine/main';
 import {AddPxLineOptionsFromInitEvent} from './pxLine/type';
 
@@ -11,7 +12,7 @@ export const addVwap = (opts: AddPxLineOptionsFromInitEvent): ISeriesApi<'Line'>
     keyOfConfig: 'vwap',
     keyForLineData: 'vwap',
     title: 'VWAP',
-    color: '#5fa9ff',
+    color: pxLineColors.vwap,
     lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
   });
