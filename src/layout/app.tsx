@@ -6,7 +6,7 @@ import {io} from 'socket.io-client';
 import {SocketContext} from '../types/socket/socket';
 import {DataSocket} from '../types/socket/type';
 import {PopupAlert} from './alert/main';
-import {PriceDataMain} from './pxData/main';
+import {PxDataMain} from './pxData/main';
 
 
 export const App = () => {
@@ -31,7 +31,7 @@ export const App = () => {
       <Provider template={PopupAlert} timeout={3000} position="bottom center">
         {
           socket ?
-            <PriceDataMain/> :
+            <PxDataMain/> :
             <>Not Connected</>
         }
       </Provider>

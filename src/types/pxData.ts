@@ -67,6 +67,7 @@ export type PxData = {
   extrema: PxDataExtrema,
   supportResistance: PxDataSupportResistance[],
   lastDayClose: number | null,
+  isMajor: boolean,
 };
 
 export type PxDataCollection = {

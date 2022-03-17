@@ -11,18 +11,17 @@ import {PxLastDayDiff} from './lastDayDiff/main';
 import {TradeLog} from './tradeLog/main';
 
 
-type Props = {
+export type PxDataIndividualProps = {
   pxData: PxData,
   payload: PxChartPayload,
+  title: string
 };
 
-export const PriceDataIndividual = ({pxData, payload}: Props) => {
+export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps) => {
   const {execution} = payload;
 
-  const title = `${pxData.contract.symbol} - ${(pxData.periodSec / 60).toFixed(0)}`;
-
   return (
-    <div>
+    <>
       <Row className="g-0 mb-2">
         <Col xs="auto">
           <h4 className="mb-0">
@@ -49,10 +48,10 @@ export const PriceDataIndividual = ({pxData, payload}: Props) => {
             title={title}
             chartData={pxData}
             payload={payload}
-            height={370}
+            height={600}
           />
         </Col>
       </Row>
-    </div>
+    </>
   );
 };

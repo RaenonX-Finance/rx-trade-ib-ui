@@ -17,11 +17,7 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  background: linear-gradient(
-    150deg,
-    color.change(#8930b3, $lightness: 13%),
-    color.change(#f3d87e, $lightness: 13%),
-  );
+  background: #212626;
   color: #fafafa;
   font-size: 14px;
   height: 100vh;
