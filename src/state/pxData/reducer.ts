@@ -4,6 +4,7 @@ import {PxData} from '../../types/pxData';
 import {PxDataMarket} from '../../types/pxDataMarket';
 import {updatePxDataBar} from '../../utils/calc';
 import {updateEpochSecToLocal} from '../../utils/time';
+import {updateCurrentPxDataTitle} from '../../utils/title';
 import {pxDataDispatchers} from './dispatchers';
 import {PX_DATA_STATE_NAME, PxDataDispatcherName, PxDataState} from './types';
 
@@ -28,12 +29,14 @@ const slice = createSlice({
       pxDataDispatchers[PxDataDispatcherName.INIT],
       (state: PxDataState, {payload}: {payload: PxData[]}) => {
         payload.forEach((pxData) => state[pxData.uniqueIdentifier] = fixPxDataEpochSec(pxData));
+        updateCurrentPxDataTitle(state);
       },
     );
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
       (state: PxDataState, {payload}: {payload: PxData}) => {
         state[payload.uniqueIdentifier] = fixPxDataEpochSec(payload);
+        updateCurrentPxDataTitle(state);
       },
     );
     builder.addCase(
@@ -58,6 +61,8 @@ const slice = createSlice({
 
           pxData.data[pxData.data.length - 1] = updatePxDataBar(lastBar, px);
         });
+
+        updateCurrentPxDataTitle(state);
       },
     );
   },
