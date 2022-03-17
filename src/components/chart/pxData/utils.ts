@@ -13,6 +13,8 @@ type LineData = Omit<LineDataApi, 'value'> & {
   value?: number
 };
 
+export type ValidKeyForLineData = KeysOfType<PxDataBar, number | null> | PxDataBarSmaKey;
+
 export const toLineData = <K extends KeysOfType<PxDataBar, number | null>>(key: K) => (bar: PxDataBar): LineData => {
   const value = bar[key];
 
