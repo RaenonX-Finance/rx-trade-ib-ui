@@ -23,12 +23,13 @@ export const addSma = ({
       }
 
       const smaLine = chartRef.current.addLineSeries({
-        color: smaScale(idx / (periodCount - 1)).hex('rgb'),
+        color: smaScale(idx / (periodCount - 1)).hex('rgba'),
         title: '',
         lineWidth: 1,
         lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
         priceLineVisible: false, // Disable vertical Px line
         lastValueVisible: false, // Disable label
+        crosshairMarkerVisible: false,
       });
       smaLine.setData(chartDataRef.current.data.map(toLineData(`sma${period}`)));
 
