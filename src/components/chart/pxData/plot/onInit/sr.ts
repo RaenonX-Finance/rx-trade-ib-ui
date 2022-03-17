@@ -14,13 +14,18 @@ export const handleSR = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>
     return {};
   }
 
-  chartDataRef.current.supportResistance.forEach(({level, strength, strengthCount}) => {
+  chartDataRef.current.supportResistance.forEach(({
+    level,
+    strength,
+    strengthCount,
+    strong,
+  }) => {
     srLevelLines[level] = price.createPriceLine({
       price: level,
-      axisLabelVisible: strength > 0.5,
+      axisLabelVisible: strong,
       title: strengthCount.toString(),
       color: getSrLevelColor(strength),
-      lineWidth: strength > 0.5 ? srLevelLineWidthStrong : srLevelLineWidth,
+      lineWidth: strong ? srLevelLineWidthStrong : srLevelLineWidth,
       lineStyle: srLevelLineStyle,
       lineVisible: true,
     });

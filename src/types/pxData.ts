@@ -58,6 +58,7 @@ export type PxDataSupportResistance = {
   level: number,
   strength: number,
   strengthCount: number,
+  strong: boolean,
 };
 
 export type PxData = {
