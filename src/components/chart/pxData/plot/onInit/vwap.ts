@@ -14,5 +14,6 @@ export const handleVwap = (e: OnPxChartInitEvent): PxChartSeries['vwap'] => {
     color: pxLineColors.vwap,
     lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
+    priceLineVisible: false,
   });
 };

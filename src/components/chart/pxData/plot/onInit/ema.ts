@@ -15,5 +15,6 @@ export const handleEma120 = (e: OnPxChartInitEvent): PxChartSeries['ema120'] => 
     lineWidth: 2,
     lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
     lastValueVisible: false, // Disable label
+    priceLineVisible: false,
   });
 };
