@@ -29,4 +29,9 @@ div {
   &.realized-pnl-pct {
     text-align: end;
   }
+
+  &.pnl-trend-modal {
+    // If this is not set, the offcanvas of the trade log will overlap the trend modal
+    z-index: 1080;
+  }
 }

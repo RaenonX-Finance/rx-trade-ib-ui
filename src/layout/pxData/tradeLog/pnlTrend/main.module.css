@@ -23,5 +23,8 @@ div.realized-pnl {
 div.realized-pnl-pct {
   text-align: end;
 }
+div.pnl-trend-modal {
+  z-index: 1080;
+}
 
 /*# sourceMappingURL=main.module.css.map */
