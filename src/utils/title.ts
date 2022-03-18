@@ -6,6 +6,10 @@ export const updateCurrentPxDataTitle = (pxDataCollection: PxDataCollection) => 
   const currentPx: {[symbol: string]: string} = {};
 
   Object.entries(pxDataCollection).forEach(([_, pxData]) => {
+    if (!pxData.isMajor) {
+      return;
+    }
+
     const lastBar = pxData.data.at(-1);
 
     if (!lastBar) {
