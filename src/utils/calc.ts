@@ -15,12 +15,12 @@ export const getDecimalPlaces = (val: number): number => {
   return parseInt(str.split('-')[1]) || 0;
 };
 
-export const updatePxDataBar = (bar: PxDataBar, nexPx: number): PxDataBar => {
+export const updatePxDataBar = (bar: PxDataBar, nextPx: number): PxDataBar => {
   return {
     ...bar,
-    high: Math.max(bar.high, nexPx),
-    low: Math.min(bar.low, nexPx),
-    close: nexPx,
+    high: Math.max(bar.high, nextPx),
+    low: Math.min(bar.low, nextPx),
+    close: nextPx,
   };
 };
 
