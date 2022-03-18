@@ -15,7 +15,11 @@ export const LegendSmaPositions = ({data, legend}: PxChartLegendProps) => {
         const sma = legend[`sma${period}`];
 
         if (!sma) {
-          return signToDirectionIcon[NaN];
+          return (
+            <React.Fragment key={period}>
+              {signToDirectionIcon[NaN]}
+            </React.Fragment>
+          );
         }
 
         const diff = close - sma;
