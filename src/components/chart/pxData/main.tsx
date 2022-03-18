@@ -103,6 +103,10 @@ export const PxDataChart = (props: Props) => {
           title: 'S/R Levels',
           enable: true,
         },
+        srLevelWeak: {
+          title: 'S/R Levels (weak)',
+          enable: false,
+        },
         extrema: {
           title: 'Local Extrema',
           enable: false,

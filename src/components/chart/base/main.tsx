@@ -69,14 +69,16 @@ export const TradingViewChart = <T, P, R, L, A>({
     order: setOrder,
   };
 
-  const onDataUpdatedInternal = () => {
+  const onDataUpdatedInternal = (forceUpdate: boolean) => () => {
     chartDataRef.current = chartData;
     const dataLastUpdated = getDataLastUpdate(chartData);
 
-    if (dataLastUpdated > lastUpdated.current) {
-      onDataUpdated({chartRef, chartDataRef, chartObjectRef, setObject, payload, order, layoutConfig});
-      lastUpdated.current = dataLastUpdated;
+    if (!forceUpdate && dataLastUpdated <= lastUpdated.current) {
+      return;
     }
+
+    onDataUpdated({chartRef, chartDataRef, chartObjectRef, setObject, payload, order, layoutConfig});
+    lastUpdated.current = dataLastUpdated;
   };
 
   const onLoad = () => {
@@ -100,13 +102,17 @@ export const TradingViewChart = <T, P, R, L, A>({
 
   const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
     initChart,
-    onDataUpdated: onDataUpdatedInternal,
+    onDataUpdated: onDataUpdatedInternal(true),
   });
 
   React.useEffect(onLoad, []);
   React.useEffect(
-    onDataUpdatedInternal,
-    [chartObjectRef.current?.initData, getDataLastUpdate(chartData), payload, order, layoutConfig],
+    onDataUpdatedInternal(true),
+    [chartObjectRef.current?.initData, payload, order, layoutConfig],
+  );
+  React.useEffect(
+    onDataUpdatedInternal(false),
+    [getDataLastUpdate(chartData)],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
 

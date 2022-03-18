@@ -9,7 +9,9 @@ export const handleSR = (e: OnPxChartUpdatedEvent) => {
     e,
     {
       objectKey: 'srLevelLines',
-      getData: (e) => e.chartDataRef.current.supportResistance,
+      getData: ({chartDataRef, layoutConfig}) => (
+        chartDataRef.current.supportResistance.filter(({strong}) => layoutConfig.srLevelWeak.enable ? true : strong)
+      ),
       getPx: ({level}) => level,
       getPxLineColor: ({strength}) => getSrLevelColor(strength),
       getPxLineStyle: () => srLevelLineStyle,
