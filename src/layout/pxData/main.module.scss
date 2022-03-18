@@ -6,6 +6,10 @@ button {
       margin-right: 0.5rem;
     }
 
+    &:hover {
+      color: white;
+    }
+
     @keyframes update-light {
       from {
         background-color: colors.$color-bw-80;

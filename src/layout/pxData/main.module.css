@@ -4,6 +4,9 @@ button.collapsible-button {
 button.collapsible-button:not(:last-child) {
   margin-right: 0.5rem;
 }
+button.collapsible-button:hover {
+  color: white;
+}
 @keyframes update-light {
   from {
     background-color: #505050;
