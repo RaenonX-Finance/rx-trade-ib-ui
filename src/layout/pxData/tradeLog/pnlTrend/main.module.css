@@ -1,0 +1,27 @@
+div.plot-tooltip-up {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(9, 93, 25, 0.7);
+}
+div.plot-tooltip-none {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(97, 84, 5, 0.7);
+}
+div.plot-tooltip-down {
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: rgba(102, 2, 0, 0.7);
+}
+div.plot line {
+  shape-rendering: crispEdges;
+}
+div.realized-pnl {
+  font-size: 1.5rem;
+  text-align: end;
+}
+div.realized-pnl-pct {
+  text-align: end;
+}
+
+/*# sourceMappingURL=main.module.css.map */

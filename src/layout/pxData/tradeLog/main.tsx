@@ -8,16 +8,16 @@ import {SignFilterButtons} from '../../../components/common/signFilter/main';
 import {DisplayEntryType} from '../../../components/common/signFilter/type';
 import {ExecutionGroup} from '../../../types/execution';
 import {TradeLogOffcanvas} from './body';
+import {PnLTrend} from './pnlTrend/main';
+import {TradeLogProps} from './type';
 
 
-type Props = {
-  executions: ExecutionGroup[],
-  symbol: string,
-};
+export const TradeLog = (props: TradeLogProps) => {
+  const {executions, symbol} = props;
 
-export const TradeLog = ({executions, symbol}: Props) => {
   const [show, setShow] = React.useState(false);
   const [showNoPnL, setShowNoPnL] = React.useState(false);
+  const [showPnLTrend, setShowPnLTrend] = React.useState(false);
   const [display, setDisplay] = React.useState<DisplayEntryType>('all');
 
   const executionsToShow: {[key in DisplayEntryType]: ExecutionGroup[]} = {
@@ -28,6 +28,7 @@ export const TradeLog = ({executions, symbol}: Props) => {
 
   return (
     <>
+      <PnLTrend show={showPnLTrend} setShow={setShowPnLTrend} {...props}/>
       <Button size="sm" variant="info" onClick={() => setShow(true)}>
         {`Trade Log (${symbol})`}
       </Button>
@@ -51,6 +52,13 @@ export const TradeLog = ({executions, symbol}: Props) => {
               disabled={display !== 'all'}
             >
               {`${showNoPnL ? 'Hide' : 'Show'} no PnL`}
+            </Button>
+            <Button
+              className="float-end me-2"
+              variant="primary"
+              onClick={() => setShowPnLTrend(true)}
+            >
+              PnL Trend
             </Button>
             <SignFilterButtons
               className="float-end me-2"
