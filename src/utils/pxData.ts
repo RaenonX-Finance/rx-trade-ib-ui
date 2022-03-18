@@ -1,5 +1,6 @@
 import {PxData} from '../types/pxData';
 import {getDecimalPlaces} from './calc';
+import {formatSignedNumber} from './string';
 
 
 export const getPxDataTitle = ({contract, periodSec, data}: PxData, includeCurrentPx = false) => {
@@ -12,5 +13,7 @@ export const getPxDataTitle = ({contract, periodSec, data}: PxData, includeCurre
   const lastBar = data.at(-1);
   const decimals = getDecimalPlaces(contract.minTick);
 
-  return `${base} - ${lastBar?.close.toFixed(decimals) || '(Unavailable)'}`;
+  const diff = lastBar ? formatSignedNumber((lastBar.close || 0) - (lastBar.open || 0), decimals) : '-';
+
+  return `${base} - ${lastBar?.close.toFixed(decimals) || '(Unavailable)'} (${diff})`;
 };
