@@ -41,7 +41,7 @@ export const PxChartLayoutConfigPanel = ({title, config, setConfig}: Props) => {
           <Form>
             {Object.entries(configGroups)
               .map(([groupName, entryObj]) => (
-                <>
+                <React.Fragment key={groupName}>
                   <h5>{groupName}</h5>
                   {Object.entries(entryObj).map(([key, entry]) => {
                     const configKey = key as PxChartLayoutConfigKeys;
@@ -62,7 +62,7 @@ export const PxChartLayoutConfigPanel = ({title, config, setConfig}: Props) => {
                       </Button>
                     );
                   })}
-                </>
+                </React.Fragment>
               ))
             }
           </Form>
