@@ -90,30 +90,37 @@ export const PxDataChart = (props: Props) => {
         vwap: {
           title: 'VWAP',
           enable: false,
+          group: 'Indicator',
         },
         ema120: {
           title: 'EMA 120',
           enable: true,
+          group: 'Indicator',
         },
         sma: {
           title: 'SMAs',
           enable: true,
+          group: 'Indicator',
         },
         srLevel: {
-          title: 'S/R Levels',
+          title: 'Show All',
           enable: true,
+          group: 'S/R Levels',
         },
         srLevelWeak: {
-          title: 'S/R Levels (weak)',
+          title: 'Show Weak',
           enable: false,
+          group: 'S/R Levels',
         },
         extrema: {
           title: 'Local Extrema',
           enable: false,
+          group: 'Markers',
         },
         marker: {
           title: 'Trade Markers',
           enable: periodSec <= 60,
+          group: 'Markers',
         },
       })}
       getDataLastUpdate={({lastUpdated}) => lastUpdated}

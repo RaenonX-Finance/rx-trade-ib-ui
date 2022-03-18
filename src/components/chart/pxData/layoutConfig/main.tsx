@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-import {PxChartLayoutConfig, PxChartLayoutConfigKeys} from '../type';
+import {PxChartLayoutConfig, PxChartLayoutConfigEntry, PxChartLayoutConfigKeys} from '../type';
 
 
 type Props = {
@@ -15,6 +15,14 @@ type Props = {
 
 export const PxChartLayoutConfigPanel = ({title, config, setConfig}: Props) => {
   const [show, setShow] = React.useState(false);
+
+  const configGroups: {[group in string]: {[key in PxChartLayoutConfigKeys]: PxChartLayoutConfigEntry}} = {};
+  Object.entries(config).forEach(([key, entry]) => {
+    configGroups[entry.group] = {
+      ...(configGroups[entry.group] || {}),
+      [key]: entry,
+    };
+  });
 
   return (
     <>
@@ -31,25 +39,32 @@ export const PxChartLayoutConfigPanel = ({title, config, setConfig}: Props) => {
         <hr className="my-0"/>
         <Offcanvas.Body>
           <Form>
-            {Object.entries(config).map(([key, entry]) => {
-              const configKey = key as PxChartLayoutConfigKeys;
-              const {title, enable} = entry;
+            {Object.entries(configGroups)
+              .map(([groupName, entryObj]) => (
+                <>
+                  <h5>{groupName}</h5>
+                  {Object.entries(entryObj).map(([key, entry]) => {
+                    const configKey = key as PxChartLayoutConfigKeys;
+                    const {title, enable} = entry;
 
-              return (
-                <Button
-                  size="lg"
-                  className="w-100 mb-3 bg-gradient"
-                  key={key}
-                  variant={enable ? 'outline-success' : 'outline-danger'}
-                  onClick={() => setConfig({
-                    ...config,
-                    [configKey]: {title, enable: !enable},
+                    return (
+                      <Button
+                        size="lg"
+                        className="w-100 mb-3 bg-gradient"
+                        key={key}
+                        variant={enable ? 'outline-success' : 'outline-danger'}
+                        onClick={() => setConfig({
+                          ...config,
+                          [configKey]: {...entry, enable: !enable},
+                        })}
+                      >
+                        {title}
+                      </Button>
+                    );
                   })}
-                >
-                  {title}
-                </Button>
-              );
-            })}
+                </>
+              ))
+            }
           </Form>
         </Offcanvas.Body>
       </Offcanvas>

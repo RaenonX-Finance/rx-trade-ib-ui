@@ -43,6 +43,7 @@ export type PxChartLayoutConfigKeys =
 export type PxChartLayoutConfigEntry = {
   title: string,
   enable: boolean,
+  group: string,
 };
 
 export type PxChartLayoutConfig = {[key in PxChartLayoutConfigKeys]: PxChartLayoutConfigEntry};
