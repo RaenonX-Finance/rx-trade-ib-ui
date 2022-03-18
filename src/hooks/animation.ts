@@ -6,10 +6,13 @@ type UseAnimationOpts = {
   onTrigger?: () => void,
 };
 
-type UseAnimationReturn = React.RefObject<HTMLElement>;
+type UseAnimationReturn<T> = React.RefObject<T>;
 
-export const useAnimation = ({deps, onTrigger}: UseAnimationOpts): UseAnimationReturn => {
-  const ref = React.useRef<HTMLSpanElement>(null);
+export const useAnimation = <T extends HTMLElement | HTMLButtonElement = HTMLElement>({
+  deps,
+  onTrigger,
+}: UseAnimationOpts): UseAnimationReturn<T> => {
+  const ref = React.useRef<T>(null);
 
   React.useEffect(() => {
     if (onTrigger) {
@@ -19,6 +22,8 @@ export const useAnimation = ({deps, onTrigger}: UseAnimationOpts): UseAnimationR
     if (ref.current) {
       // Trigger animation
       ref.current.style.animation = 'none';
+      // Call the getter to trigger
+      // noinspection BadExpressionStatementJS
       ref.current.offsetHeight;
       ref.current.style.animation = '';
     }

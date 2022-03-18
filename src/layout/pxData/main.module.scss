@@ -1,7 +1,29 @@
+@use "../../styles/colors";
+
 button {
   &.collapsible-button {
-    font-size: 2rem;
-    width: 100%;
-    height: 8rem;
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    @keyframes update-light {
+      from {
+        background-color: colors.$color-bw-80;
+      }
+
+      to {
+        background: unset;
+      }
+    }
+
+    animation: 1s update-light;
+  }
+}
+
+div {
+  &.sub-px-data-bar {
+    padding: 0.5rem;
+    background-color: colors.$color-bw-20;
+    border-radius: 0.5rem;
   }
 }

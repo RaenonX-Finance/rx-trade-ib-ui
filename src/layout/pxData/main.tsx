@@ -8,11 +8,13 @@ import {useExecutionSelector} from '../../state/execution/selector';
 import {useOpenOrderSelector} from '../../state/openOrder/selector';
 import {usePositionSelector} from '../../state/position/selector';
 import {usePxDataSelector} from '../../state/pxData/selector';
+import {PxData} from '../../types/pxData';
 import {getPxDataTitle} from '../../utils/pxData';
 import {PxDataAlwaysShow} from './alwaysShow';
 import {PxDataCollapsible} from './collapsible';
 import {ErrorPopup} from './error/main';
 import {PxDataIndividualProps} from './individual';
+import styles from './main.module.scss';
 
 
 export const PxDataMain = () => {
@@ -25,40 +27,43 @@ export const PxDataMain = () => {
 
   const {openOrders} = openOrderState;
 
+  const getIndividualProps = (data: PxData): PxDataIndividualProps => ({
+    pxData: data,
+    title: getPxDataTitle(data, !data.isMajor),
+    payload: {
+      position: position[data.contract.identifier],
+      openOrder: openOrders[data.contract.identifier],
+      execution: execution[data.contract.identifier],
+    },
+  });
+
+  const sortedPxData = Object.values(pxData)
+    .sort((a, b) => (
+      a.contract.identifier - b.contract.identifier ||
+      a.periodSec - b.periodSec
+    ));
+
+  const majorPxData = sortedPxData.filter(({isMajor}) => isMajor);
+  const minorPxData = sortedPxData.filter(({isMajor}) => !isMajor);
+
   return (
     <>
       <ErrorPopup/>
       <Row className="g-3">
-        {Object.values(pxData)
-          .sort((a, b) => (
-            a.contract.identifier - b.contract.identifier ||
-            a.periodSec - b.periodSec
-          ))
-          .map((data) => {
-            const props: PxDataIndividualProps = {
-              pxData: data,
-              title: getPxDataTitle(data, !data.isMajor),
-              payload: {
-                position: position[data.contract.identifier],
-                openOrder: openOrders[data.contract.identifier],
-                execution: execution[data.contract.identifier],
-              },
-            };
-
-            if (!data.isMajor) {
-              return (
-                <Col key={data.uniqueIdentifier} xs={6}>
-                  <PxDataCollapsible {...props}/>
-                </Col>
-              );
-            }
-
-            return (
-              <Col key={data.uniqueIdentifier} xs={6}>
-                <PxDataAlwaysShow {...props}/>
-              </Col>
-            );
-          })}
+        {majorPxData.map((data) => (
+          <Col key={data.uniqueIdentifier} xs={6}>
+            <PxDataAlwaysShow {...getIndividualProps(data)}/>
+          </Col>
+        ))}
+      </Row>
+      <Row>
+        <Col>
+          <div className={styles['sub-px-data-bar']}>
+            {minorPxData.map((data) => (
+              <PxDataCollapsible key={data.uniqueIdentifier} {...getIndividualProps(data)}/>
+            ))}
+          </div>
+        </Col>
       </Row>
     </>
   );

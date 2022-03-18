@@ -1,7 +1,22 @@
 button.collapsible-button {
-  font-size: 2rem;
-  width: 100%;
-  height: 8rem;
+  animation: 1s update-light;
+}
+button.collapsible-button:not(:last-child) {
+  margin-right: 0.5rem;
+}
+@keyframes update-light {
+  from {
+    background-color: #505050;
+  }
+  to {
+    background: unset;
+  }
+}
+
+div.sub-px-data-bar {
+  padding: 0.5rem;
+  background-color: #141414;
+  border-radius: 0.5rem;
 }
 
 /*# sourceMappingURL=main.module.css.map */
