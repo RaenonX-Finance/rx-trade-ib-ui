@@ -37,7 +37,7 @@ export const PxDataMain = () => {
           .map((data) => {
             const props: PxDataIndividualProps = {
               pxData: data,
-              title: getPxDataTitle(data),
+              title: getPxDataTitle(data, !data.isMajor),
               payload: {
                 position: position[data.contract.identifier],
                 openOrder: openOrders[data.contract.identifier],
