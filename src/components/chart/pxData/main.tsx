@@ -26,7 +26,8 @@ type Props = Omit<
   'getIdentifier' |
   'getPnLMultiplier' |
   'getPeriodSec' |
-  'getInitialLayoutConfig'
+  'getInitialLayoutConfig' |
+  'getDataLastUpdate'
 > & {
   title: string,
 };
@@ -111,6 +112,7 @@ export const PxDataChart = (props: Props) => {
           enable: periodSec <= 60,
         },
       })}
+      getDataLastUpdate={({lastUpdated}) => lastUpdated}
       {...props}
     />
   );

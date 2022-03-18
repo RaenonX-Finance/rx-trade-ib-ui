@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {PxData} from '../../types/pxData';
+import {PxData, PxDataSocket} from '../../types/pxData';
 import {PxDataMarket} from '../../types/pxDataMarket';
 import {updatePxDataBar} from '../../utils/calc';
 import {updateEpochSecToLocal} from '../../utils/time';
@@ -11,10 +11,11 @@ import {PX_DATA_STATE_NAME, PxDataDispatcherName, PxDataState} from './types';
 
 const initialState: PxDataState = {};
 
-const fixPxDataEpochSec = (pxData: PxData): PxData => {
+const fixPxData = (pxData: PxData): PxData => {
   pxData.data = pxData.data.map((item) => ({
     ...item,
     epochSec: updateEpochSecToLocal(item.epochSec),
+    lastUpdated: Date.now(),
   }));
 
   return pxData;
@@ -27,15 +28,21 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.INIT],
-      (state: PxDataState, {payload}: {payload: PxData[]}) => {
-        payload.forEach((pxData) => state[pxData.uniqueIdentifier] = fixPxDataEpochSec(pxData));
+      (state: PxDataState, {payload}: {payload: PxDataSocket[]}) => {
+        payload.forEach((pxData) => state[pxData.uniqueIdentifier] = fixPxData({
+          ...pxData,
+          lastUpdated: Date.now(),
+        }));
         updateCurrentPxDataTitle(state);
       },
     );
     builder.addCase(
       pxDataDispatchers[PxDataDispatcherName.UPDATE],
-      (state: PxDataState, {payload}: {payload: PxData}) => {
-        state[payload.uniqueIdentifier] = fixPxDataEpochSec(payload);
+      (state: PxDataState, {payload}: {payload: PxDataSocket}) => {
+        state[payload.uniqueIdentifier] = fixPxData({
+          ...payload,
+          lastUpdated: Date.now(),
+        });
         updateCurrentPxDataTitle(state);
       },
     );
@@ -60,6 +67,7 @@ const slice = createSlice({
           }
 
           pxData.data[pxData.data.length - 1] = updatePxDataBar(lastBar, px);
+          pxData.lastUpdated = Date.now();
         });
 
         updateCurrentPxDataTitle(state);

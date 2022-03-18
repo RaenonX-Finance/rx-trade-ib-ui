@@ -32,6 +32,7 @@ export type TradingViewChartProps<T, P, R, L, A> = {
   getPnLMultiplier: (data: T) => number,
   getPeriodSec: (data: T) => number,
   getInitialLayoutConfig: (data: T) => A,
+  getDataLastUpdate: (data: T) => number,
 };
 
 export const TradingViewChart = <T, P, R, L, A>({
@@ -47,14 +48,14 @@ export const TradingViewChart = <T, P, R, L, A>({
   getPnLMultiplier,
   getPeriodSec,
   getInitialLayoutConfig,
+  getDataLastUpdate,
 }: TradingViewChartProps<T, P, R, L, A>) => {
   const chartContainerRef = React.useRef<HTMLDivElement>(null);
   const chartDataRef = React.useRef<T>(chartData);
   const updateIndicatorRef = useAnimation({
-    deps: [chartData],
-    onTrigger: () => setLastUpdated(Date.now()),
+    deps: [getDataLastUpdate(chartData)],
   });
-  const [lastUpdated, setLastUpdated] = React.useState(Date.now());
+  const lastUpdated = React.useRef(getDataLastUpdate(chartData));
   const [legend, setLegend] = React.useState<L>(calcObjects.legend(chartData));
   const [order, setOrder] = React.useState<OrderPanelState>(calcObjects.order(chartData));
   const [layoutConfig, setLayoutConfig] = React.useState<A>(getInitialLayoutConfig(chartData));
@@ -70,7 +71,12 @@ export const TradingViewChart = <T, P, R, L, A>({
 
   const onDataUpdatedInternal = () => {
     chartDataRef.current = chartData;
-    onDataUpdated({chartRef, chartDataRef, chartObjectRef, setObject, payload, order, layoutConfig});
+    const dataLastUpdated = getDataLastUpdate(chartData);
+
+    if (dataLastUpdated > lastUpdated.current) {
+      onDataUpdated({chartRef, chartDataRef, chartObjectRef, setObject, payload, order, layoutConfig});
+      lastUpdated.current = dataLastUpdated;
+    }
   };
 
   const onLoad = () => {
@@ -100,7 +106,7 @@ export const TradingViewChart = <T, P, R, L, A>({
   React.useEffect(onLoad, []);
   React.useEffect(
     onDataUpdatedInternal,
-    [chartObjectRef.current?.initData, chartData, payload, order, layoutConfig],
+    [chartObjectRef.current?.initData, getDataLastUpdate(chartData), payload, order, layoutConfig],
   );
   React.useEffect(onOrderPanelShowChanged, [order.show]);
 
@@ -142,7 +148,7 @@ export const TradingViewChart = <T, P, R, L, A>({
         <Col xs="auto" className="text-end">
           <TimeAgo
             ref={updateIndicatorRef}
-            epochSec={lastUpdated}
+            epochSec={lastUpdated.current}
             format={(secDiffMs) => `Last updated ${secDiffMs.toFixed(0)} secs ago`}
             updateMs={100}
             className={styles['update-animation']}

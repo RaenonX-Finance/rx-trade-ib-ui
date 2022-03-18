@@ -65,7 +65,7 @@ export type PxDataSupportResistance = {
   strong: boolean,
 };
 
-export type PxData = {
+export type PxDataSocket = {
   uniqueIdentifier: string,
   periodSec: number,
   contract: PxDataContract,
@@ -75,6 +75,10 @@ export type PxData = {
   lastDayClose: number | null,
   isMajor: boolean,
   smaPeriods: number[],
+};
+
+export type PxData = PxDataSocket & {
+  lastUpdated: number,
 };
 
 export type PxDataCollection = {
