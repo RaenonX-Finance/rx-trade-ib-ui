@@ -11,17 +11,23 @@ import styles from './main.module.scss';
 type Props = PxDataIndividualProps;
 
 export const PxDataCollapsible = (props: Props) => {
-  const {title} = props;
+  const {title, pxData} = props;
   const [show, setShow] = React.useState(false);
   const buttonRef = useAnimation<HTMLButtonElement>({
     deps: [title],
   });
 
+  const lastBar = pxData.data.at(-1);
+
   return (
     <>
       <Button
         className={styles['collapsible-button']}
-        variant="outline-light"
+        variant={
+          lastBar ?
+            ((lastBar.close - lastBar.open) > 0 ? 'outline-success' : 'outline-danger') :
+            'outline-light'
+        }
         onClick={() => setShow(!show)}
         ref={buttonRef}
       >

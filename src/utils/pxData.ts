@@ -12,5 +12,5 @@ export const getPxDataTitle = ({contract, periodSec, data}: PxData, includeCurre
   const lastBar = data.at(-1);
   const decimals = getDecimalPlaces(contract.minTick);
 
-  return `${base} (${lastBar?.close.toFixed(decimals) || '(Unavailable)'})`;
+  return `${base} - ${lastBar?.close.toFixed(decimals) || '(Unavailable)'}`;
 };

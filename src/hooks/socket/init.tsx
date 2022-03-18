@@ -18,7 +18,7 @@ import {useDispatch} from '../../state/store';
 import {OrderFilledResult} from '../../types/orderFilled';
 import {SocketContext} from '../../types/socket/socket';
 import {DataSocket} from '../../types/socket/type';
-import {usePresetAudio} from '../audio/preset/main';
+import {useAudio} from '../audio/main';
 import {useSocketEventHandler} from './utils';
 
 
@@ -26,7 +26,7 @@ export const useSocketInit = (): DataSocket => {
   const socket = React.useContext(SocketContext);
   const openOrderState = useOpenOrderSelector();
   const lastUpdate = React.useRef(0);
-  const {playBuy, playSell} = usePresetAudio();
+  const {playBuy, playSell} = useAudio();
 
   const {poll} = openOrderState;
 
