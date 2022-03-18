@@ -1,6 +1,7 @@
 div.data-cell, span.data-cell {
   display: inline;
   padding: 0.1rem 0.75rem 0.1rem 0;
+  white-space: nowrap;
 }
 div.legend, span.legend {
   font-size: 0.9rem;
