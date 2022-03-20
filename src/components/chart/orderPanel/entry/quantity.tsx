@@ -39,7 +39,6 @@ export const OrderPanelQuantity = ({order, setOrder, position}: Props) => {
             className="bg-gradient"
             style={{width: '20%'}}
             size="lg"
-            disabled={posQuantity > 0 ? quantity > posQuantity : false}
           >
             <span className={styles['button-text']}>
               {quantity}

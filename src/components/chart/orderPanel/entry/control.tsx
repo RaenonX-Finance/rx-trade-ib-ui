@@ -19,6 +19,11 @@ const signToSideForClose: {[sign in number]: OrderSide} = {
 
 export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
   const socket = useSocket();
+  const orderQty = state.order.quantity;
+  const signedPosition = position ? position.position : 0;
+
+  const disableBuy = signedPosition < 0 ? orderQty > -signedPosition : false;
+  const disableSell = signedPosition > 0 ? orderQty > signedPosition : false;
 
   const onClick = (side: OrderSide, isMarket: boolean) => () => {
     const order: OrderSocketMessage = {
@@ -45,13 +50,23 @@ export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
     <>
       <Row className="g-3">
         <Col>
-          <Button variant="info" className={styles['control']} onClick={onClick('BUY', false)}>
-            Buy
+          <Button
+            variant="info"
+            className={styles['control']}
+            onClick={onClick('BUY', false)}
+            disabled={disableBuy}
+          >
+            {disableBuy ? '-' : 'BUY'}
           </Button>
         </Col>
         <Col>
-          <Button variant="danger" className={styles['control']} onClick={onClick('SELL', false)}>
-            Sell
+          <Button
+            variant="danger"
+            className={styles['control']}
+            onClick={onClick('SELL', false)}
+            disabled={disableSell}
+          >
+            {disableSell ? '-' : 'SELL'}
           </Button>
         </Col>
       </Row>
