@@ -1,11 +1,11 @@
-button.collapsible-button {
-  animation: 1s update-light;
-}
 button.collapsible-button:not(:last-child) {
   margin-right: 0.5rem;
 }
 button.collapsible-button:hover {
   color: white;
+}
+button.collapsible-button:not(:hover) {
+  animation: 1s update-light;
 }
 @keyframes update-light {
   from {

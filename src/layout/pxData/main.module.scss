@@ -10,6 +10,10 @@ button {
       color: white;
     }
 
+    &:not(:hover) {
+      animation: 1s update-light;
+    }
+
     @keyframes update-light {
       from {
         background-color: colors.$color-bw-80;
@@ -19,8 +23,6 @@ button {
         background: unset;
       }
     }
-
-    animation: 1s update-light;
   }
 }
 
