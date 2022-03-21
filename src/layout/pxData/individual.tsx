@@ -34,7 +34,8 @@ export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps
               <PxExtrema data={pxData}/>
             </Col>
             <Col xs="auto">
-              <PxLastDayDiff data={pxData}/>
+              <PxLastDayDiff data={pxData} dataKey="lastDayClose" prefix="LC"/>
+              <PxLastDayDiff data={pxData} dataKey="todayOpen" prefix="CO"/>
             </Col>
             <Col xs="auto">
               {execution && <TradeLog executions={execution} symbol={pxData.contract.symbol}/>}

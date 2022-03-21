@@ -11,6 +11,7 @@ span.last-day-diff-up {
   border-radius: 0.5rem;
   color: white;
   padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
   animation: 1s last-day-diff-up-animation;
 }
 @keyframes last-day-diff-down-animation {
@@ -26,6 +27,7 @@ span.last-day-diff-down {
   border-radius: 0.5rem;
   color: white;
   padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
   animation: 1s last-day-diff-down-animation;
 }
 

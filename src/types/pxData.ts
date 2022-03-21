@@ -73,6 +73,7 @@ export type PxDataSocket = {
   extrema: PxDataExtrema,
   supportResistance: PxDataSupportResistance[],
   lastDayClose: number | null,
+  todayOpen: number | null,
   isMajor: boolean,
   smaPeriods: number[],
 };
