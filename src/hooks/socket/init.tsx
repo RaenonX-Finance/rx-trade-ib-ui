@@ -65,7 +65,11 @@ export const useSocketInit = (): DataSocket => {
   const onPosition = useSocketEventHandler(dispatch, positionDispatchers[PositionDispatcherName.UPDATE]);
   const onOpenOrder = useSocketEventHandler(dispatch, openOrderDispatchers[OpenOrderDispatcherName.UPDATE]);
   const onExecution = useSocketEventHandler(dispatch, executionDispatchers[ExecutionDispatcherName.UPDATE]);
-  const onError = useSocketEventHandler(dispatch, errorDispatchers[ErrorDispatcherName.UPDATE]);
+  const onError = useSocketEventHandler(
+    dispatch,
+    errorDispatchers[ErrorDispatcherName.UPDATE],
+    () => refreshStatus(true),
+  );
 
   const onOrderFilled = React.useCallback((message: string) => {
     const data: OrderFilledResult = JSON.parse(message);
