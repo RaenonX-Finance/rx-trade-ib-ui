@@ -1,6 +1,16 @@
 import React from 'react';
 
-import {CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ReferenceArea,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import {epochSecToFormattedString} from '../../../../utils/chart';
 import styles from '../../extrema/cdf/main.module.scss';
@@ -15,9 +25,9 @@ type Props = {
 export const PnLTrendPlot = ({realizedExecutions}: Props) => {
   const decimals = 2;
 
-  const realizedSumArray = realizedExecutions.map(({realizedPnLSum}) => realizedPnLSum);
-  const maxRealizedSum = Math.max(...realizedSumArray);
-  const minRealizedSum = Math.min(...realizedSumArray);
+  const realizedSumArray = [0, ...realizedExecutions.map(({realizedPnLSum}) => realizedPnLSum)];
+  const maxRealizedSum = Math.max(...realizedSumArray) * 2;
+  const minRealizedSum = Math.min(...realizedSumArray) * 2;
 
   return (
     <ResponsiveContainer height={300} className={styles['plot']}>
@@ -42,8 +52,10 @@ export const PnLTrendPlot = ({realizedExecutions}: Props) => {
           />
         )}/>
         <ReferenceLine y={0} stroke="#ffffff" opacity={0.8}/>
+        <ReferenceArea y1={0} fill="#33ec57" fillOpacity={0.07}/>
+        <ReferenceArea y2={0} fill="#ff3d3a" fillOpacity={0.07}/>
         <Line
-          type="monotone"
+          type="linear"
           dataKey={({realizedPnLSum}: RealizedExecutionGroup) => realizedPnLSum}
           stroke="#15FEFB"
           dot={false}
