@@ -1,6 +1,6 @@
 // Switch the z-index of `offcanvas` and `modal`
 // so that layout config (popover) can be used when sub px data (modal) is shown;
 $zindex-modal-backdrop:             1040;
-$zindex-modal:                      1045;
-$zindex-offcanvas-backdrop:         1050;
+$zindex-offcanvas-backdrop:         1045;
+$zindex-modal:                      1050;
 $zindex-offcanvas:                  1055;
