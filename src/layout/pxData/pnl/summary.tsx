@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useAnimation} from '../../../hooks/animation';
+import {usePnLSelector} from '../../../state/pnl/selector';
 import {formatSignedNumber} from '../../../utils/string';
 import styles from './main.module.scss';
 import {PnLSummary} from './type';
@@ -31,6 +32,7 @@ type Props = {
 export const PnLSummarySection = ({summary, icon}: Props) => {
   const {realized, unrealized} = summary;
 
+  const {totalPnL, unrealizedPnL} = usePnLSelector().config;
   const ref = useAnimation<HTMLDivElement>({
     deps: [summary],
   });
@@ -41,8 +43,14 @@ export const PnLSummarySection = ({summary, icon}: Props) => {
   const unrealizedSign = Math.sign(unrealized || 0);
   const totalSign = Math.sign(total || 0);
 
+  let className = signToSummarySectionClass[totalSign];
+
+  if ((total && total < -totalPnL) || (unrealized && unrealized < -unrealizedPnL)) {
+    className += ` ${styles['section-warning']}`;
+  }
+
   return (
-    <div ref={ref} className={signToSummarySectionClass[totalSign]}>
+    <div ref={ref} className={className}>
       <Row>
         <Col className={styles['total-section']}>
           <span>

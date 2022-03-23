@@ -1,4 +1,4 @@
-import {PnLDict} from '../../types/pnl';
+import {PnLDict, PnLWarningConfig} from '../../types/pnl';
 import {StateBase} from '../types';
 
 
@@ -8,6 +8,8 @@ export enum PnLDispatcherName {
   UPDATE = 'updatePnL',
 }
 
-export type PnLState = StateBase & PnLDict;
+export type PnLState = StateBase & PnLDict & {
+  config: PnLWarningConfig,
+};
 
 export type PnLSelectorReturn = PnLState;

@@ -4,6 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useAnimation} from '../../../hooks/animation';
+import {usePnLSelector} from '../../../state/pnl/selector';
+import {formatSignedNumber} from '../../../utils/string';
 import styles from './main.module.scss';
 import {PnLStats} from './type';
 
@@ -22,14 +24,22 @@ type Props = {
 
 export const PnLPx = ({stats, decimals}: Props) => {
   const {avgPx, pxDiff} = stats;
+
+  const {pxDiffVal, pxDiffSmaRatio} = usePnLSelector().config;
   const ref = useAnimation<HTMLDivElement>({
     deps: [pxDiff],
   });
 
   const pxDiffSign = Math.sign(pxDiff.val || 0);
 
+  let className = signToAvgPxClass[pxDiffSign];
+
+  if ((pxDiff?.val && pxDiff.val < -pxDiffVal) || (pxDiff?.swingRatio && pxDiff.swingRatio < -pxDiffSmaRatio)) {
+    className += ` ${styles['section-warning']}`;
+  }
+
   return (
-    <div ref={ref} className={signToAvgPxClass[pxDiffSign]}>
+    <div ref={ref} className={className}>
       <Row>
         <Col className={styles['px-avg']}>
           {avgPx ? avgPx.toFixed(decimals) : '-'}
@@ -40,7 +50,7 @@ export const PnLPx = ({stats, decimals}: Props) => {
               <i className="bi bi-plus-slash-minus"/>
             </Col>
             <Col className={styles['px-diff-val']}>
-              {pxDiff.val ? pxDiff.val.toFixed(2) : '-'}
+              {pxDiff.val ? formatSignedNumber(pxDiff.val, 2) : '-'}
             </Col>
           </Row>
           <Row>
@@ -48,7 +58,7 @@ export const PnLPx = ({stats, decimals}: Props) => {
               <i className="bi bi-activity"/>
             </Col>
             <Col className={styles['px-diff-val']}>
-              {pxDiff.swingRatio ? pxDiff.swingRatio.toFixed(3) : '-'}
+              {pxDiff.swingRatio ? formatSignedNumber(pxDiff.swingRatio, 3) : '-'}
             </Col>
           </Row>
         </Col>

@@ -26,14 +26,16 @@ export const PnL = (props: Props) => {
   const avgPx = position?.avgPx || null;
   const lastBar = data.at(-1);
   const currentPx = lastBar?.close;
-  const pxDiff = (avgPx && currentPx) ? avgPx - currentPx : null;
+  const pxDiff = (avgPx && currentPx && position?.position) ?
+    (currentPx - avgPx) * Math.sign(position.position) :
+    null;
 
   // Use `useMemo()` to prevent re-render on PnL unchanged but re-creating PnLStats
   const stats: PnLStats = React.useMemo(() => ({
     avgPx,
     pxDiff: {
       val: pxDiff,
-      swingRatio: (lastBar?.diffSma && pxDiff) ? Math.abs(pxDiff / lastBar.diffSma) : null,
+      swingRatio: (lastBar?.diffSma && pxDiff) ? pxDiff / lastBar.diffSma : null,
     },
     calculated: {
       unrealized: (pxDiff && position) ? pxDiff * Math.abs(position.position) * contract.multiplier : null,

@@ -5,7 +5,14 @@ import {pnlDispatchers} from './dispatchers';
 import {PNL_STATE_NAME, PnLDispatcherName, PnLState} from './types';
 
 
-const initialState: PnLState = {};
+const initialState: PnLState = {
+  config: {
+    pxDiffVal: 50,
+    pxDiffSmaRatio: 2,
+    totalPnL: 2000,
+    unrealizedPnL: 350,
+  },
+};
 
 const slice = createSlice({
   name: PNL_STATE_NAME,

@@ -14,6 +14,19 @@ div.px-section-up {
     box-shadow: unset;
   }
 }
+@keyframes update-animation-warning-up {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.px-section-up.section-warning {
+  animation: 1s update-animation-warning-up;
+  background-color: #ef5350;
+  color: white;
+}
 div.px-section-up * {
   flex-wrap: nowrap;
 }
@@ -39,6 +52,19 @@ div.px-section-down {
   to {
     box-shadow: unset;
   }
+}
+@keyframes update-animation-warning-down {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.px-section-down.section-warning {
+  animation: 1s update-animation-warning-down;
+  background-color: #ef5350;
+  color: white;
 }
 div.px-section-down * {
   flex-wrap: nowrap;
@@ -66,6 +92,19 @@ div.px-section-neutral {
     box-shadow: unset;
   }
 }
+@keyframes update-animation-warning-neutral {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.px-section-neutral.section-warning {
+  animation: 1s update-animation-warning-neutral;
+  background-color: #ef5350;
+  color: white;
+}
 div.px-section-neutral * {
   flex-wrap: nowrap;
 }
@@ -92,6 +131,19 @@ div.summary-section-up {
     box-shadow: unset;
   }
 }
+@keyframes update-animation-warning-up {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.summary-section-up.section-warning {
+  animation: 1s update-animation-warning-up;
+  background-color: #ef5350;
+  color: white;
+}
 div.summary-section-up * {
   flex-wrap: nowrap;
 }
@@ -100,17 +152,23 @@ div.summary-section-up .total-section {
   align-self: center;
   font-size: 1.5rem;
 }
-div.summary-section-up *.realization-up {
+div.summary-section-up .realization-up {
+  text-align: end;
+}
+div.summary-section-up:not(.section-warning) .realization-up {
   color: #26a69a;
+}
+div.summary-section-up .realization-down {
   text-align: end;
 }
-div.summary-section-up *.realization-down {
+div.summary-section-up:not(.section-warning) .realization-down {
   color: #ef5350;
+}
+div.summary-section-up .realization-neutral {
   text-align: end;
 }
-div.summary-section-up *.realization-neutral {
+div.summary-section-up:not(.section-warning) .realization-neutral {
   color: #fafafa;
-  text-align: end;
 }
 div.summary-section-down {
   animation: 1s update-animation-down;
@@ -128,6 +186,19 @@ div.summary-section-down {
     box-shadow: unset;
   }
 }
+@keyframes update-animation-warning-down {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.summary-section-down.section-warning {
+  animation: 1s update-animation-warning-down;
+  background-color: #ef5350;
+  color: white;
+}
 div.summary-section-down * {
   flex-wrap: nowrap;
 }
@@ -136,17 +207,23 @@ div.summary-section-down .total-section {
   align-self: center;
   font-size: 1.5rem;
 }
-div.summary-section-down *.realization-up {
+div.summary-section-down .realization-up {
+  text-align: end;
+}
+div.summary-section-down:not(.section-warning) .realization-up {
   color: #26a69a;
+}
+div.summary-section-down .realization-down {
   text-align: end;
 }
-div.summary-section-down *.realization-down {
+div.summary-section-down:not(.section-warning) .realization-down {
   color: #ef5350;
+}
+div.summary-section-down .realization-neutral {
   text-align: end;
 }
-div.summary-section-down *.realization-neutral {
+div.summary-section-down:not(.section-warning) .realization-neutral {
   color: #fafafa;
-  text-align: end;
 }
 div.summary-section-neutral {
   animation: 1s update-animation-neutral;
@@ -164,6 +241,19 @@ div.summary-section-neutral {
     box-shadow: unset;
   }
 }
+@keyframes update-animation-warning-neutral {
+  from {
+    box-shadow: inset 0 0 1rem white;
+  }
+  to {
+    box-shadow: unset;
+  }
+}
+div.summary-section-neutral.section-warning {
+  animation: 1s update-animation-warning-neutral;
+  background-color: #ef5350;
+  color: white;
+}
 div.summary-section-neutral * {
   flex-wrap: nowrap;
 }
@@ -172,17 +262,23 @@ div.summary-section-neutral .total-section {
   align-self: center;
   font-size: 1.5rem;
 }
-div.summary-section-neutral *.realization-up {
+div.summary-section-neutral .realization-up {
+  text-align: end;
+}
+div.summary-section-neutral:not(.section-warning) .realization-up {
   color: #26a69a;
+}
+div.summary-section-neutral .realization-down {
   text-align: end;
 }
-div.summary-section-neutral *.realization-down {
+div.summary-section-neutral:not(.section-warning) .realization-down {
   color: #ef5350;
+}
+div.summary-section-neutral .realization-neutral {
   text-align: end;
 }
-div.summary-section-neutral *.realization-neutral {
+div.summary-section-neutral:not(.section-warning) .realization-neutral {
   color: #fafafa;
-  text-align: end;
 }
 
 /*# sourceMappingURL=main.module.css.map */
