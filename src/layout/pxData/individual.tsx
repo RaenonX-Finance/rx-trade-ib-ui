@@ -6,8 +6,10 @@ import Row from 'react-bootstrap/Row';
 import {PxDataChart} from '../../components/chart/pxData/main';
 import {PxChartPayload} from '../../components/chart/pxData/type';
 import {PxData} from '../../types/pxData';
+import {getDecimalPlaces} from '../../utils/calc';
 import {PxExtrema} from './extrema/main';
 import {PxLastDayDiff} from './lastDayDiff/main';
+import {PnL} from './pnl/main';
 import {TradeLog} from './tradeLog/main';
 
 
@@ -19,6 +21,7 @@ export type PxDataIndividualProps = {
 
 export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps) => {
   const {execution} = payload;
+  const decimals = getDecimalPlaces(pxData.contract.minTick);
 
   return (
     <>
@@ -43,6 +46,8 @@ export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps
           </Row>
         </Col>
       </Row>
+      <hr className="my-2"/>
+      <PnL decimals={decimals}/>
       <Row className="g-0 mb-2">
         <Col>
           <PxDataChart

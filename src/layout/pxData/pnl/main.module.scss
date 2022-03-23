@@ -1,0 +1,63 @@
+@use "../../../styles/colors";
+
+div {
+  @mixin section-base($color) {
+    border: 1px solid $color;
+    border-radius: 0.5rem;
+    color: $color;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+
+    & * {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @mixin px-section($side, $color) {
+    &.px-section-#{$side} {
+      @include section-base($color);
+
+      & .px-avg {
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      & .px-diff-val {
+        text-align: end;
+      }
+    }
+  }
+
+  @include px-section(up, colors.$color-up);
+  @include px-section(down, colors.$color-down);
+  @include px-section(neutral, colors.$color-neutral);
+
+  @mixin realization($side, $color) {
+    &.realization-#{$side} {
+      color: $color;
+      text-align: end;
+    }
+  }
+
+  @mixin summary-section($side, $color) {
+    &.summary-section-#{$side} {
+      @include section-base($color);
+
+      & .total-section {
+        text-align: center;
+        align-self: center;
+        font-size: 1.5rem;
+      }
+
+      & * {
+        @include realization(up, colors.$color-up);
+        @include realization(down, colors.$color-down);
+        @include realization(neutral, colors.$color-neutral);
+      }
+    }
+  }
+
+  @include summary-section(up, colors.$color-up);
+  @include summary-section(down, colors.$color-down);
+  @include summary-section(neutral, colors.$color-neutral);
+}
