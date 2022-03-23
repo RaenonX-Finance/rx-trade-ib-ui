@@ -1,7 +1,6 @@
 import {LineStyle} from 'lightweight-charts';
 
-import {forceMinTick, getDecimalPlaces} from '../../../../../utils/calc';
-import {formatSignedNumber} from '../../../../../utils/string';
+import {forceMinTick} from '../../../../../utils/calc';
 import {OnPxChartUpdatedEvent} from '../../type';
 
 
@@ -23,13 +22,11 @@ export const handleOrderEntry = ({chartDataRef, chartObjectRef, order}: OnPxChar
   }
 
   const minTick = chartDataRef.current.contract.minTick;
-  const decimalPlaces = getDecimalPlaces(minTick);
 
   const {px, quantity} = order.order;
 
   const orderPx = forceMinTick(px, minTick);
-  const diff = formatSignedNumber(px - currentPx.close, decimalPlaces);
-  const title = `${orderPx} x ${quantity} (${diff})`;
+  const title = `${orderPx} x ${quantity}`;
 
   const commonOptions = {
     price: orderPx,

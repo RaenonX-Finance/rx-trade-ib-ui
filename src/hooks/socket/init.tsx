@@ -10,6 +10,8 @@ import {ExecutionDispatcherName} from '../../state/execution/types';
 import {openOrderDispatchers} from '../../state/openOrder/dispatchers';
 import {useOpenOrderSelector} from '../../state/openOrder/selector';
 import {OpenOrderDispatcherName} from '../../state/openOrder/types';
+import {pnlDispatchers} from '../../state/pnl/dispatchers';
+import {PnLDispatcherName} from '../../state/pnl/types';
 import {positionDispatchers} from '../../state/position/dispatchers';
 import {PositionDispatcherName} from '../../state/position/types';
 import {pxDataDispatchers} from '../../state/pxData/dispatchers';
@@ -65,6 +67,7 @@ export const useSocketInit = (): DataSocket => {
   const onPosition = useSocketEventHandler(dispatch, positionDispatchers[PositionDispatcherName.UPDATE]);
   const onOpenOrder = useSocketEventHandler(dispatch, openOrderDispatchers[OpenOrderDispatcherName.UPDATE]);
   const onExecution = useSocketEventHandler(dispatch, executionDispatchers[ExecutionDispatcherName.UPDATE]);
+  const onPnLUpdated = useSocketEventHandler(dispatch, pnlDispatchers[PnLDispatcherName.UPDATE]);
   const onError = useSocketEventHandler(
     dispatch,
     errorDispatchers[ErrorDispatcherName.UPDATE],
@@ -92,6 +95,7 @@ export const useSocketInit = (): DataSocket => {
     socket.on('position', onPosition);
     socket.on('openOrder', onOpenOrder);
     socket.on('execution', onExecution);
+    socket.on('pnlUpdated', onPnLUpdated);
     socket.on('error', onError);
     socket.on('orderFilled', onOrderFilled);
 
@@ -104,6 +108,7 @@ export const useSocketInit = (): DataSocket => {
       socket.off('position', onPosition);
       socket.off('openOrder', onOpenOrder);
       socket.off('execution', onExecution);
+      socket.off('pnlUpdated', onPnLUpdated);
       socket.off('error', onError);
       socket.off('orderFilled', onOrderFilled);
     };

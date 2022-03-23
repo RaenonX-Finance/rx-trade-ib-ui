@@ -1,7 +1,5 @@
 import {LineStyle} from 'lightweight-charts';
 
-import {getDecimalPlaces} from '../../../../../utils/calc';
-import {formatSignedNumber} from '../../../../../utils/string';
 import {OnPxChartUpdatedEvent} from '../../type';
 import {avgCostColor} from '../const';
 
@@ -35,8 +33,7 @@ export const handleAvgCost = ({chartDataRef, chartObjectRef, payload}: OnPxChart
     return;
   }
 
-  const decimalPlaces = getDecimalPlaces(chartDataRef.current.contract.minTick);
-  const title = `Avg Px / ${position} (${formatSignedNumber(avgPx - lastPrice.close, decimalPlaces)})`;
+  const title = `Avg Px / ${position}`;
 
   if (avgCost) {
     avgCost.applyOptions({

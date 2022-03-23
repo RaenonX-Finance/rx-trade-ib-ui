@@ -1,9 +1,18 @@
 div.px-section-up {
+  animation: 1s update-animation-up;
   border: 1px solid #26a69a;
   border-radius: 0.5rem;
   color: #26a69a;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-up {
+  from {
+    box-shadow: inset 0 0 1rem #26a69a;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.px-section-up * {
   flex-wrap: nowrap;
@@ -16,11 +25,20 @@ div.px-section-up .px-diff-val {
   text-align: end;
 }
 div.px-section-down {
+  animation: 1s update-animation-down;
   border: 1px solid #ef5350;
   border-radius: 0.5rem;
   color: #ef5350;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-down {
+  from {
+    box-shadow: inset 0 0 1rem #ef5350;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.px-section-down * {
   flex-wrap: nowrap;
@@ -33,11 +51,20 @@ div.px-section-down .px-diff-val {
   text-align: end;
 }
 div.px-section-neutral {
+  animation: 1s update-animation-neutral;
   border: 1px solid #fafafa;
   border-radius: 0.5rem;
   color: #fafafa;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-neutral {
+  from {
+    box-shadow: inset 0 0 1rem #fafafa;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.px-section-neutral * {
   flex-wrap: nowrap;
@@ -50,11 +77,20 @@ div.px-section-neutral .px-diff-val {
   text-align: end;
 }
 div.summary-section-up {
+  animation: 1s update-animation-up;
   border: 1px solid #26a69a;
   border-radius: 0.5rem;
   color: #26a69a;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-up {
+  from {
+    box-shadow: inset 0 0 1rem #26a69a;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.summary-section-up * {
   flex-wrap: nowrap;
@@ -77,11 +113,20 @@ div.summary-section-up *.realization-neutral {
   text-align: end;
 }
 div.summary-section-down {
+  animation: 1s update-animation-down;
   border: 1px solid #ef5350;
   border-radius: 0.5rem;
   color: #ef5350;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-down {
+  from {
+    box-shadow: inset 0 0 1rem #ef5350;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.summary-section-down * {
   flex-wrap: nowrap;
@@ -104,11 +149,20 @@ div.summary-section-down *.realization-neutral {
   text-align: end;
 }
 div.summary-section-neutral {
+  animation: 1s update-animation-neutral;
   border: 1px solid #fafafa;
   border-radius: 0.5rem;
   color: #fafafa;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
+}
+@keyframes update-animation-neutral {
+  from {
+    box-shadow: inset 0 0 1rem #fafafa;
+  }
+  to {
+    box-shadow: unset;
+  }
 }
 div.summary-section-neutral * {
   flex-wrap: nowrap;

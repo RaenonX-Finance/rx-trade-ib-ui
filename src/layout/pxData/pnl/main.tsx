@@ -3,32 +3,48 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {PxChartPayload} from '../../../components/chart/pxData/type';
+import {PnLData} from '../../../types/pnl';
+import {PxData} from '../../../types/pxData';
 import {PnLPx} from './px';
 import {PnLSummarySection} from './summary';
 import {PnLStats} from './type';
 
 
-const stats: PnLStats = {
-  avgPx: 14659,
-  pxDiff: {
-    val: -20,
-    swingRatio: 2,
-  },
-  calculated: {
-    unrealized: -50,
-    realized: 500,
-  },
-  tws: {
-    unrealized: -58,
-    realized: 580,
-  },
-};
-
 type Props = {
   decimals: number,
+  payload: PxChartPayload,
+  pxData: PxData,
+  twsPnL: PnLData | undefined,
 };
 
 export const PnL = (props: Props) => {
+  const {payload, pxData, twsPnL} = props;
+  const {execution, position} = payload;
+  const {data, contract} = pxData;
+
+  const avgPx = position?.avgPx || null;
+  const lastBar = data.at(-1);
+  const currentPx = lastBar?.close;
+  const pxDiff = (avgPx && currentPx) ? avgPx - currentPx : null;
+
+  // Use `useMemo()` to prevent re-render on PnL unchanged but re-creating PnLStats
+  const stats: PnLStats = React.useMemo(() => ({
+    avgPx,
+    pxDiff: {
+      val: pxDiff,
+      swingRatio: (lastBar?.diffSma && pxDiff) ? Math.abs(pxDiff / lastBar.diffSma) : null,
+    },
+    calculated: {
+      unrealized: (pxDiff && position) ? pxDiff * Math.abs(position.position) * contract.multiplier : null,
+      realized: execution?.find(({realizedPnLSum}) => !!realizedPnLSum)?.realizedPnLSum || null,
+    },
+    tws: twsPnL ? twsPnL : {
+      realized: null,
+      unrealized: null,
+    },
+  }), [avgPx, pxDiff, twsPnL]);
+
   const {calculated, tws} = stats;
 
   return (

@@ -8,7 +8,7 @@ type UseAnimationOpts = {
 
 type UseAnimationReturn<T> = React.RefObject<T>;
 
-export const useAnimation = <T extends HTMLElement | HTMLButtonElement = HTMLElement>({
+export const useAnimation = <T extends HTMLElement = HTMLElement>({
   deps,
   onTrigger,
 }: UseAnimationOpts): UseAnimationReturn<T> => {

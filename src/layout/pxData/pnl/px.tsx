@@ -3,6 +3,7 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {useAnimation} from '../../../hooks/animation';
 import styles from './main.module.scss';
 import {PnLStats} from './type';
 
@@ -21,11 +22,14 @@ type Props = {
 
 export const PnLPx = ({stats, decimals}: Props) => {
   const {avgPx, pxDiff} = stats;
+  const ref = useAnimation<HTMLDivElement>({
+    deps: [pxDiff],
+  });
 
   const pxDiffSign = Math.sign(pxDiff.val || 0);
 
   return (
-    <div className={signToAvgPxClass[pxDiffSign]}>
+    <div ref={ref} className={signToAvgPxClass[pxDiffSign]}>
       <Row>
         <Col className={styles['px-avg']}>
           {avgPx ? avgPx.toFixed(decimals) : '-'}

@@ -3,6 +3,7 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import {useAnimation} from '../../../hooks/animation';
 import {formatSignedNumber} from '../../../utils/string';
 import styles from './main.module.scss';
 import {PnLSummary} from './type';
@@ -30,6 +31,10 @@ type Props = {
 export const PnLSummarySection = ({summary, icon}: Props) => {
   const {realized, unrealized} = summary;
 
+  const ref = useAnimation<HTMLDivElement>({
+    deps: [summary],
+  });
+
   const total = (!!realized || !!unrealized) ? (realized || 0) + (unrealized || 0) : null;
 
   const realizedSign = Math.sign(realized || 0);
@@ -37,7 +42,7 @@ export const PnLSummarySection = ({summary, icon}: Props) => {
   const totalSign = Math.sign(total || 0);
 
   return (
-    <div className={signToSummarySectionClass[totalSign]}>
+    <div ref={ref} className={signToSummarySectionClass[totalSign]}>
       <Row>
         <Col className={styles['total-section']}>
           <span>
