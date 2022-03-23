@@ -24,6 +24,7 @@ export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
 
   const avgPx = position?.avgPx || null;
   const lastBar = data.at(-1);
+  const lastRealizedExecution = execution?.find(({realizedPnLSum}) => !!realizedPnLSum);
   const currentPx = lastBar?.close;
   const pxDiff = (avgPx && currentPx && position?.position) ?
     (currentPx - avgPx) * Math.sign(position.position) :
@@ -38,13 +39,13 @@ export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
     },
     calculated: {
       unrealized: (pxDiff && position) ? pxDiff * Math.abs(position.position) * contract.multiplier : null,
-      realized: execution?.find(({realizedPnLSum}) => !!realizedPnLSum)?.realizedPnLSum || null,
+      realized: lastRealizedExecution?.realizedPnLSum || null,
     },
     tws: twsPnL ? twsPnL : {
       realized: null,
       unrealized: null,
     },
-  }), [avgPx, pxDiff, execution, twsPnL]);
+  }), [avgPx, pxDiff, lastRealizedExecution, twsPnL]);
 
   const {calculated, tws} = stats;
 
