@@ -4,10 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useAnimation} from '../../../hooks/animation';
-import {usePnLSelector} from '../../../state/pnl/selector';
 import {formatSignedNumber} from '../../../utils/string';
 import styles from './main.module.scss';
-import {PnLStats} from './type';
+import {PnLCommonProps, PnLStats} from './type';
 
 
 const signToAvgPxClass: {[sign in number]: string} = {
@@ -17,15 +16,15 @@ const signToAvgPxClass: {[sign in number]: string} = {
   [-1]: styles['px-section-down'],
 };
 
-type Props = {
+type Props = PnLCommonProps & {
   stats: PnLStats,
   decimals: number,
 };
 
-export const PnLPx = ({stats, decimals}: Props) => {
+export const PnLPx = ({stats, decimals, config}: Props) => {
   const {avgPx, pxDiff} = stats;
+  const {pxDiffVal, pxDiffSmaRatio} = config;
 
-  const {pxDiffVal, pxDiffSmaRatio} = usePnLSelector().config;
   const ref = useAnimation<HTMLDivElement>({
     deps: [pxDiff],
   });

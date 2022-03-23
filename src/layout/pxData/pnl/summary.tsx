@@ -4,10 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useAnimation} from '../../../hooks/animation';
-import {usePnLSelector} from '../../../state/pnl/selector';
 import {formatSignedNumber} from '../../../utils/string';
 import styles from './main.module.scss';
-import {PnLSummary} from './type';
+import {PnLCommonProps, PnLSummary} from './type';
 
 
 const signToSummarySectionClass: {[sign in number]: string} = {
@@ -24,15 +23,15 @@ const signToRealizationClass: {[sign in number]: string} = {
   [-1]: styles['realization-down'],
 };
 
-type Props = {
+type Props = PnLCommonProps & {
   summary: PnLSummary,
   icon: React.ReactNode,
 };
 
-export const PnLSummarySection = ({summary, icon}: Props) => {
+export const PnLSummarySection = ({summary, icon, config}: Props) => {
   const {realized, unrealized} = summary;
+  const {totalPnL, unrealizedPnL} = config;
 
-  const {totalPnL, unrealizedPnL} = usePnLSelector().config;
   const ref = useAnimation<HTMLDivElement>({
     deps: [summary],
   });

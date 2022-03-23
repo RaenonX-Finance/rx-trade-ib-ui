@@ -1,17 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+import {PnLWarningConfig} from '../../types/pnl';
 import {wholeStateUpdateReducer} from '../common';
 import {pnlDispatchers} from './dispatchers';
 import {PNL_STATE_NAME, PnLDispatcherName, PnLState} from './types';
 
 
 const initialState: PnLState = {
-  config: {
-    pxDiffVal: 50,
-    pxDiffSmaRatio: 2,
-    totalPnL: 2000,
-    unrealizedPnL: 350,
-  },
+  config: null,
 };
 
 const slice = createSlice({
@@ -20,6 +16,12 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(pnlDispatchers[PnLDispatcherName.UPDATE], wholeStateUpdateReducer());
+    builder.addCase(
+      pnlDispatchers[PnLDispatcherName.UPDATE_CONFIG],
+      (state: PnLState, {payload}: {payload: PnLWarningConfig}) => {
+        state.config = payload;
+      },
+    );
   },
 });
 

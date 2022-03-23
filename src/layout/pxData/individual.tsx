@@ -50,12 +50,16 @@ export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps
         </Col>
       </Row>
       <hr className="my-2"/>
-      <PnL
-        decimals={decimals}
-        twsPnL={pnlDict[pxData.contract.identifier]}
-        pxData={pxData}
-        payload={payload}
-      />
+      {
+        pnlDict.config &&
+        <PnL
+          decimals={decimals}
+          twsPnL={pnlDict[pxData.contract.identifier]}
+          pxData={pxData}
+          payload={payload}
+          config={pnlDict.config}
+        />
+      }
       <Row className="g-0 mb-2">
         <Col>
           <PxDataChart

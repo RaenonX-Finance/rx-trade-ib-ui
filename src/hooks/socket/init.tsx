@@ -17,6 +17,7 @@ import {PositionDispatcherName} from '../../state/position/types';
 import {pxDataDispatchers} from '../../state/pxData/dispatchers';
 import {PxDataDispatcherName} from '../../state/pxData/types';
 import {useDispatch} from '../../state/store';
+import {InitData} from '../../types/init';
 import {OrderFilledResult} from '../../types/orderFilled';
 import {SocketContext} from '../../types/socket/socket';
 import {DataSocket} from '../../types/socket/type';
@@ -57,6 +58,13 @@ export const useSocketInit = (): DataSocket => {
   }, [poll]);
 
   // Events
+  const onInit = React.useCallback((message: string) => {
+    const data: InitData = JSON.parse(message);
+    const {pnlWarningConfig} = data;
+
+    dispatch(pnlDispatchers[PnLDispatcherName.UPDATE_CONFIG](pnlWarningConfig));
+  }, []);
+
   const onPxInit = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.INIT], refreshStatus);
   const onPxUpdated = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.UPDATE]);
   const onPxUpdatedMarket = useSocketEventHandler(
@@ -89,6 +97,7 @@ export const useSocketInit = (): DataSocket => {
   }, []);
 
   React.useEffect(() => {
+    socket.on('init', onInit);
     socket.on('pxUpdated', onPxUpdated);
     socket.on('pxUpdatedMarket', onPxUpdatedMarket);
     socket.on('pxInit', onPxInit);
@@ -99,9 +108,11 @@ export const useSocketInit = (): DataSocket => {
     socket.on('error', onError);
     socket.on('orderFilled', onOrderFilled);
 
+    socket.emit('init', '');
     socket.emit('pxInit', '');
 
     return () => {
+      socket.off('init', onInit);
       socket.off('pxUpdated', onPxUpdated);
       socket.off('pxUpdatedMarket', onPxUpdatedMarket);
       socket.off('pxInit', onPxInit);

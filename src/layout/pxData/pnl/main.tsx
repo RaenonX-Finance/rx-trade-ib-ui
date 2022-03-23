@@ -8,18 +8,17 @@ import {PnLData} from '../../../types/pnl';
 import {PxData} from '../../../types/pxData';
 import {PnLPx} from './px';
 import {PnLSummarySection} from './summary';
-import {PnLStats} from './type';
+import {PnLCommonProps, PnLStats} from './type';
 
 
-type Props = {
+type Props = PnLCommonProps & {
   decimals: number,
   payload: PxChartPayload,
   pxData: PxData,
   twsPnL: PnLData | undefined,
 };
 
-export const PnL = (props: Props) => {
-  const {payload, pxData, twsPnL} = props;
+export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
   const {execution, position} = payload;
   const {data, contract} = pxData;
 
@@ -45,20 +44,20 @@ export const PnL = (props: Props) => {
       realized: null,
       unrealized: null,
     },
-  }), [avgPx, pxDiff, twsPnL]);
+  }), [avgPx, pxDiff, execution, twsPnL]);
 
   const {calculated, tws} = stats;
 
   return (
     <Row className="g-2 mb-2">
       <Col>
-        <PnLPx stats={stats} {...props}/>
+        <PnLPx stats={stats} decimals={decimals} {...props}/>
       </Col>
       <Col>
-        <PnLSummarySection summary={calculated} icon={<i className="bi bi-calculator"/>}/>
+        <PnLSummarySection summary={calculated} icon={<i className="bi bi-calculator"/>} {...props}/>
       </Col>
       <Col>
-        <PnLSummarySection summary={tws} icon={<i className="bi bi-laptop"/>}/>
+        <PnLSummarySection summary={tws} icon={<i className="bi bi-laptop"/>} {...props}/>
       </Col>
     </Row>
   );

@@ -1,3 +1,6 @@
+import {PnLWarningConfig} from '../../../types/pnl';
+
+
 export type PnLSummary = {
   unrealized: number | null,
   realized: number | null,
@@ -11,4 +14,8 @@ export type PnLStats = {
   },
   calculated: PnLSummary,
   tws: PnLSummary,
+};
+
+export type PnLCommonProps = {
+  config: PnLWarningConfig,
 };
