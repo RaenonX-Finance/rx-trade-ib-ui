@@ -20,3 +20,9 @@ td {
     background-color: rgba(179, 53, 25, 0.7) !important;
   }
 }
+
+button {
+  &.order-px-button {
+    width: 2.4rem;
+  }
+}

@@ -30,7 +30,7 @@ export const OrderPanel = (props: Omit<OrderPanelProps, 'position'>) => {
   return (
     <Offcanvas show={show} onHide={handleClose} placement="bottom">
       <Offcanvas.Body>
-        <Row>
+        <Row className="g-3">
           <Col>
             <OrderList position={position} {...props}/>
           </Col>

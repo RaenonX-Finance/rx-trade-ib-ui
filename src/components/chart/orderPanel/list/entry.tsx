@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 import {useSocket} from '../../../../hooks/socket/main';
 import {openOrderDispatchers} from '../../../../state/openOrder/dispatchers';
@@ -59,6 +60,14 @@ export const OrderListEntry = ({
     onSubmittedModification();
   };
 
+  const onOrderButtonClicked = (diff: number) => () => {
+    dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE]({
+      ...order,
+      px: forceMinTick(order.px + diff, pxTick),
+    }));
+    onEdited();
+  };
+
   return (
     <tr className={styles['order-entry-row']}>
       <td>
@@ -68,27 +77,45 @@ export const OrderListEntry = ({
         {order.side}
       </td>
       <td>
-        <Form.Control
-          type="number"
-          value={forceMinTick(order.px, pxTick)}
-          className="text-end"
-          onChange={(e) => {
-            dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE]({
-              ...order,
-              px: forceMinTick(parseFloat(e.currentTarget.value), pxTick),
-            }));
-            onEdited();
-          }}
-          onMouseOver={(e) => e.currentTarget.focus()}
-          onKeyDown={(e) => {
-            if (e.key !== 'Enter') {
-              return;
-            }
+        <InputGroup>
+          <Button
+            variant="outline-danger"
+            size="sm"
+            className={styles['order-px-button']}
+            onClick={onOrderButtonClicked(-pxTick)}
+          >
+            <i className="bi bi-dash-lg"/>
+          </Button>
+          <Form.Control
+            type="number"
+            value={forceMinTick(order.px, pxTick)}
+            className="text-end"
+            onChange={(e) => {
+              dispatch(openOrderDispatchers[OpenOrderDispatcherName.UPDATE_SINGLE]({
+                ...order,
+                px: forceMinTick(parseFloat(e.currentTarget.value), pxTick),
+              }));
+              onEdited();
+            }}
+            onMouseOver={(e) => e.currentTarget.focus()}
+            onKeyDown={(e) => {
+              if (e.key !== 'Enter') {
+                return;
+              }
 
-            onOrderUpdate();
-          }}
-          step={pxTick}
-        />
+              onOrderUpdate();
+            }}
+            step={pxTick * 4}
+          />
+          <Button
+            variant="outline-success"
+            size="sm"
+            className={styles['order-px-button']}
+            onClick={onOrderButtonClicked(pxTick)}
+          >
+            <i className="bi bi-plus-lg"/>
+          </Button>
+        </InputGroup>
       </td>
       <td className="text-end">
         {
