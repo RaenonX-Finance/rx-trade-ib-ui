@@ -24,7 +24,7 @@ export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
 
   const avgPx = position?.avgPx || null;
   const lastBar = data.at(-1);
-  const lastRealizedExecution = execution?.find(({realizedPnLSum}) => !!realizedPnLSum);
+  const lastRealizedExecution = execution?.slice().reverse().find(({realizedPnLSum}) => !!realizedPnLSum);
   const currentPx = lastBar?.close;
   const pxDiff = (avgPx && currentPx && position?.position) ?
     (currentPx - avgPx) * Math.sign(position.position) :
