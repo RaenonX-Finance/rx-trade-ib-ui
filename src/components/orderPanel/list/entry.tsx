@@ -78,6 +78,9 @@ export const OrderListEntry = ({
         {order.side}
       </td>
       <td>
+        {order.type}
+      </td>
+      <td>
         <InputGroup>
           <Button
             variant="outline-danger"

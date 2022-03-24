@@ -50,6 +50,7 @@ export const OrderList = (props: OrderPanelProps) => {
           <tr>
             <th>#</th>
             <th>Side</th>
+            <th>Type</th>
             <th>Px</th>
             <th>Px Side</th>
             <th>Quantity</th>

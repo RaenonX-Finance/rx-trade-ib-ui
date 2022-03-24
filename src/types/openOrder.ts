@@ -8,6 +8,7 @@ export type OpenOrderData = {
   side: OrderSide,
   quantity: number,
   px: number,
+  type: string,
 };
 
 export type OpenOrder = Record<SecurityIdentifier, Record<number, OpenOrderData>>;
