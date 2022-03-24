@@ -55,6 +55,7 @@ export const OrderListEntry = ({
     const orderMessageBody: OrderSocketMessage = {
       ...order,
       periodSec,
+      forceBracket: null,
     };
     socket.emit('orderPlace', JSON.stringify(orderMessageBody));
     onSubmittedModification();

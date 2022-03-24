@@ -68,7 +68,7 @@ export const PxDataChart = (props: Props) => {
         order: ({contract, periodSec}) => ({
           show: false,
           order: {
-            side: 'BUY',
+            orderId: null,
             quantity: 1,
             px: NaN,
             identifier: NaN,

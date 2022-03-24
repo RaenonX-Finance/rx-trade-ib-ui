@@ -12,11 +12,6 @@ import {OrderPanelProps} from '../type';
 import styles from './main.module.scss';
 
 
-const signToSideForClose: {[sign in number]: OrderSide} = {
-  [-1]: 'BUY',
-  [1]: 'SELL',
-};
-
 export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
   const socket = useSocket();
   const orderQty = state.order.quantity;
@@ -25,22 +20,12 @@ export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
   const disableBuy = signedPosition < 0 ? orderQty > -signedPosition : false;
   const disableSell = signedPosition > 0 ? orderQty > signedPosition : false;
 
-  const onClick = (side: OrderSide, isMarket: boolean) => () => {
+  const onClick = (side: OrderSide, isMarket: boolean, isForcedBracket = false) => () => {
     const order: OrderSocketMessage = {
       ...state.order,
       px: isMarket ? null : forceMinTick(state.order.px, state.pxTick),
       side,
-    };
-
-    socket.emit('orderPlace', JSON.stringify(order));
-  };
-
-  const onClickToClose = () => {
-    const order: OrderSocketMessage = {
-      ...state.order,
-      px: null,
-      quantity: Math.abs(position.position),
-      side: signToSideForClose[Math.sign(position.position)],
+      forceBracket: isForcedBracket,
     };
 
     socket.emit('orderPlace', JSON.stringify(order));
@@ -72,6 +57,26 @@ export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
       </Row>
       <Row className="g-3">
         <Col>
+          <Button
+            variant="outline-info"
+            className={styles['control']}
+            onClick={onClick('BUY', false, true)}
+          >
+            Buy BK
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            variant="outline-danger"
+            className={styles['control']}
+            onClick={onClick('SELL', false, true)}
+          >
+            Sell BK
+          </Button>
+        </Col>
+      </Row>
+      <Row className="g-3">
+        <Col>
           <Button variant="outline-info" className={styles['control']} onClick={onClick('BUY', true)}>
             Buy MKT
           </Button>
@@ -79,18 +84,6 @@ export const OrderPanelControl = ({state, position}: OrderPanelProps) => {
         <Col>
           <Button variant="outline-danger" className={styles['control']} onClick={onClick('SELL', true)}>
             Sell MKT
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button
-            variant="outline-primary"
-            className={styles['control']}
-            onClick={onClickToClose}
-            disabled={position.position === 0}
-          >
-            Close MKT
           </Button>
         </Col>
       </Row>
