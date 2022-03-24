@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 
+import customSrReducer from './customSr/reducer';
 import errorReducer from './error/reducer';
 import executionReducer from './execution/reducer';
 import openOrderReducer from './openOrder/reducer';
@@ -14,6 +15,7 @@ const reducers = {
   openOrder: openOrderReducer,
   execution: executionReducer,
   pnl: pnlReducer,
+  customSr: customSrReducer,
   error: errorReducer,
 };
 

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import {useSocketInit} from '../../hooks/socket/init';
+import {useCustomSrSelector} from '../../state/customSr/selector';
 import {useExecutionSelector} from '../../state/execution/selector';
 import {useOpenOrderSelector} from '../../state/openOrder/selector';
 import {usePositionSelector} from '../../state/position/selector';
@@ -22,6 +23,7 @@ export const PxDataMain = () => {
   const position = usePositionSelector();
   const openOrderState = useOpenOrderSelector();
   const execution = useExecutionSelector();
+  const customSrLevels = useCustomSrSelector();
 
   useSocketInit();
 
@@ -34,6 +36,7 @@ export const PxDataMain = () => {
       position: position[data.contract.identifier],
       openOrder: openOrders[data.contract.identifier],
       execution: execution[data.contract.identifier],
+      customSrLevels: customSrLevels[data.contract.identifier],
     },
   });
 

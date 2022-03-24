@@ -1,6 +1,7 @@
 import {IPriceLine, ISeriesApi} from 'lightweight-charts';
 
 import {ExecutionGroup} from '../../../types/execution';
+import {CustomSrLevel} from '../../../types/init';
 import {OpenOrderData} from '../../../types/openOrder';
 import {PositionData} from '../../../types/position';
 import {PxData, PxDataBar} from '../../../types/pxData';
@@ -58,20 +59,23 @@ export type PxChartPayload = {
   position: PositionData | undefined,
   openOrder: Record<number, OpenOrderData> | undefined,
   execution: ExecutionGroup[] | undefined,
+  customSrLevels: CustomSrLevel[] | undefined,
 };
 
 export type OnPxChartInitEvent = OnChartInitEvent<
   PxData,
   PxChartInitData,
   PxChartLegendData,
-  PxChartLayoutConfig
+  PxChartLayoutConfig,
+  PxChartPayload
 >;
 
 export type PxChartInitEventHandler = ChartInitEventHandler<
   PxData,
   PxChartInitData,
   PxChartLegendData,
-  PxChartLayoutConfig
+  PxChartLayoutConfig,
+  PxChartPayload
 >;
 
 export type OnPxChartUpdatedEvent = OnChartDataUpdatedEvent<

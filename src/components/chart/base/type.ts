@@ -39,13 +39,13 @@ export type InitChartPayload<T, L, A> = {
   layoutConfig: A,
 };
 
-export type UseChartPayload<T, R, L, A> = {
-  initChart: ChartInitEventHandler<T, R, L, A>,
+export type UseChartPayload<T, R, L, A, P> = {
+  initChart: ChartInitEventHandler<T, R, L, A, P>,
   onDataUpdated: () => void,
 };
 
-export type UseChartReturn<T, R, L, A> = {
-  makeChart: (payload: InitChartPayload<T, L, A>) => void,
+export type UseChartReturn<T, R, L, A, P> = {
+  makeChart: (payload: InitChartPayload<T, L, A> & P) => void,
   chartRef: React.MutableRefObject<IChartApi | undefined>,
   chartObjectRef: React.MutableRefObject<ChartObjectRef<R> | undefined>,
 };
@@ -58,9 +58,12 @@ export type OnChartChangedEventCommon<T, R, L, A> = {
   layoutConfig: A,
 };
 
-export type OnChartInitEvent<T, R, L, A> = InitChartPayload<T, L, A> & OnChartChangedEventCommon<T, R, L, A>;
+export type OnChartInitEvent<T, R, L, A, P = {}> =
+  InitChartPayload<T, L, A> &
+  OnChartChangedEventCommon<T, R, L, A> &
+  P;
 
-export type ChartInitEventHandler<T, R, L, A> = (e: OnChartInitEvent<T, R, L, A>) => R;
+export type ChartInitEventHandler<T, R, L, A, P = {}> = (e: OnChartInitEvent<T, R, L, A, P>) => R;
 
 export type OnChartDataUpdatedEvent<T, P, R, L, A> = OnChartChangedEventCommon<T, R, L, A> & {
   payload: P,

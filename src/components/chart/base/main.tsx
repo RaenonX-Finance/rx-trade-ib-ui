@@ -21,7 +21,7 @@ import {ChartCalcObjects, ChartDataUpdatedEventHandler, ChartInitEventHandler, C
 
 export type TradingViewChartProps<T, P, R, L, A> = {
   height: number,
-  initChart: ChartInitEventHandler<T, R, L, A>,
+  initChart: ChartInitEventHandler<T, R, L, A, P>,
   chartData: T,
   payload: P,
   onDataUpdated: ChartDataUpdatedEventHandler<T, P, R, L, A>,
@@ -92,6 +92,7 @@ export const TradingViewChart = <T, P, R, L, A>({
       setObject,
       layoutConfig,
       chartContainer: chartContainerRef.current,
+      ...payload,
     });
   };
 
@@ -100,7 +101,7 @@ export const TradingViewChart = <T, P, R, L, A>({
     socket.emit('openOrder', ''); // Ensure the open order data is up-to-date
   };
 
-  const {makeChart, chartRef, chartObjectRef} = useTradingViewChart({
+  const {makeChart, chartRef, chartObjectRef} = useTradingViewChart<T, R, L, A, P>({
     initChart,
     onDataUpdated: onDataUpdatedInternal(true),
   });

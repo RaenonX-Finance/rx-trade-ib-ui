@@ -3,6 +3,8 @@ import React from 'react';
 import {useAlert} from 'react-alert';
 
 import {OrderFilledAlert} from '../../layout/alert/orderFilled';
+import {customSrDispatchers} from '../../state/customSr/dispatchers';
+import {SrCustomDispatcherName} from '../../state/customSr/types';
 import {errorDispatchers} from '../../state/error/dispatchers';
 import {ErrorDispatcherName} from '../../state/error/types';
 import {executionDispatchers} from '../../state/execution/dispatchers';
@@ -60,9 +62,10 @@ export const useSocketInit = (): DataSocket => {
   // Events
   const onInit = React.useCallback((message: string) => {
     const data: InitData = JSON.parse(message);
-    const {pnlWarningConfig} = data;
+    const {pnlWarningConfig, customSrLevelDict} = data;
 
     dispatch(pnlDispatchers[PnLDispatcherName.UPDATE_CONFIG](pnlWarningConfig));
+    dispatch(customSrDispatchers[SrCustomDispatcherName.UPDATE](customSrLevelDict));
   }, []);
 
   const onPxInit = useSocketEventHandler(dispatch, pxDataDispatchers[PxDataDispatcherName.INIT], refreshStatus);

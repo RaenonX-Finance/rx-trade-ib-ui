@@ -37,6 +37,8 @@ const srLevelColorWeak = 'rgba(255, 0, 221, 0.8)';
 
 const srLevelColorStrong = 'rgba(255, 255, 0, 0.6)';
 
+export const srLevelCustom = 'rgba(255, 109, 14, 0.6)';
+
 const srLevelColorScale = chroma.scale([srLevelColorWeak, srLevelColorStrong]);
 
 export const getSrLevelColor = (ratio: number): string => {
