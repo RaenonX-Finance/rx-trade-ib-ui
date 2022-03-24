@@ -2,7 +2,7 @@ import React from 'react';
 
 import {IChartApi} from 'lightweight-charts';
 
-import {OrderPanelState} from '../orderPanel/type';
+import {OrderPanelState} from '../../orderPanel/type';
 
 
 export type ChartSetState<T> = (updateFunc: (prevLegend: T) => T) => void;

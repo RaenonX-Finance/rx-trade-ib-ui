@@ -1,0 +1,27 @@
+@use "../../styles/colors";
+
+span {
+  @mixin last-day-diff-theme($suffix, $color) {
+    @keyframes last-day-diff-#{$suffix}-animation {
+      from {
+        box-shadow: inset 0 0 1rem $color;
+      }
+
+      to {
+        box-shadow: unset;
+      }
+    }
+
+    &.last-day-diff-#{$suffix} {
+      border: 1px solid $color;
+      border-radius: 0.5rem;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      margin: 0 0.25rem;
+      animation: 1s last-day-diff-#{$suffix}-animation;
+    }
+  }
+
+  @include last-day-diff-theme(up, colors.$color-up);
+  @include last-day-diff-theme(down, colors.$color-down);
+}

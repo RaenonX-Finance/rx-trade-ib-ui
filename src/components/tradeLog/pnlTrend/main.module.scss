@@ -1,0 +1,37 @@
+@use "sass:color";
+@use "../../../styles/colors";
+
+
+div {
+  @mixin plot-tooltip-specific-style($suffix, $color) {
+    &.plot-tooltip-#{$suffix} {
+      border-radius: 5px;
+      padding: 0.5rem;
+      background-color: color.change($color, $lightness: 20%, $alpha: 0.7);
+    }
+  }
+
+  @include plot-tooltip-specific-style(up, colors.$color-safe);
+  @include plot-tooltip-specific-style(none, colors.$color-warning);
+  @include plot-tooltip-specific-style(down, colors.$color-danger-custom);
+
+  &.plot {
+    & line {
+      shape-rendering: crispEdges;
+    }
+  }
+
+  &.realized-pnl {
+    font-size: 1.5rem;
+    text-align: end;
+  }
+
+  &.realized-pnl-pct {
+    text-align: end;
+  }
+
+  &.pnl-trend-modal {
+    // If this is not set, the offcanvas of the trade log will overlap the trend modal
+    z-index: 1080;
+  }
+}

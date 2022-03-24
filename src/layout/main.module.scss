@@ -1,0 +1,35 @@
+@use "../styles/colors";
+
+button {
+  &.collapsible-button {
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      color: white;
+    }
+
+    &:not(:hover) {
+      animation: 1s update-light;
+    }
+
+    @keyframes update-light {
+      from {
+        background-color: colors.$color-bw-80;
+      }
+
+      to {
+        background: unset;
+      }
+    }
+  }
+}
+
+div {
+  &.sub-px-data-bar {
+    padding: 0.5rem;
+    background-color: colors.$color-bw-20;
+    border-radius: 0.5rem;
+  }
+}

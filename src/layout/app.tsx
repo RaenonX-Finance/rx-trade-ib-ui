@@ -3,10 +3,10 @@ import React from 'react';
 import {Provider} from 'react-alert';
 import {io} from 'socket.io-client';
 
+import {PopupAlert} from '../components/alert/main';
 import {SocketContext} from '../types/socket/socket';
 import {DataSocket} from '../types/socket/type';
-import {PopupAlert} from './alert/main';
-import {PxDataMain} from './pxData/main';
+import {PxDataMain} from './main';
 
 
 export const App = () => {

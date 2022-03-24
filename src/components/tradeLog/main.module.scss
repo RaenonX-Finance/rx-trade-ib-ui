@@ -1,0 +1,46 @@
+@use "../../styles/colors";
+
+table {
+  &.trade-log {
+    & th {
+      &:not(.column-separator) {
+        padding: 0.4rem 0.4rem;
+      }
+
+      &:first-child,
+      &:last-child {
+        padding: 0.4rem 0.7rem;
+      }
+    }
+
+    & td {
+      &:not(.column-separator) {
+        padding: 0.4rem 0.3rem;
+      }
+
+      &:first-child,
+      &:last-child {
+        padding: 0.4rem 0.7rem;
+      }
+    }
+  }
+}
+
+th,
+td {
+  &.column-separator {
+    border-left: 0.2rem solid #555;
+    // !important to override default bootstrap styling
+    padding: 0 0 0 0.4rem !important;
+  }
+}
+
+td {
+  &.up {
+    color: colors.$color-up;
+  }
+
+  &.down {
+    color: colors.$color-down;
+  }
+}

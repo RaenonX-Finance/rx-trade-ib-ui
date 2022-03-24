@@ -1,0 +1,18 @@
+@use "../../styles/colors";
+
+span {
+  @mixin extrema-theme($suffix, $color) {
+    &.extrema-#{$suffix} {
+      border: 1px solid $color;
+      border-radius: 0.5rem;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      margin: 0.25rem;
+      box-shadow: inset 0 0 0.5rem $color;
+    }
+  }
+
+  @include extrema-theme(safe, colors.$color-safe);
+  @include extrema-theme(warning, colors.$color-warning);
+  @include extrema-theme(danger, colors.$color-danger-custom);
+}

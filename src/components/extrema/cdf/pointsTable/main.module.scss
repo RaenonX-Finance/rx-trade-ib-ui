@@ -1,0 +1,38 @@
+@use "../../../../styles/colors";
+
+div {
+  &.swing-points {
+    height: 40vh;
+    overflow-x: auto;
+
+    & > table {
+      & th {
+        padding: 0.4rem 0.4rem;
+
+        &:first-child,
+        &:last-child {
+          padding: 0.4rem 0.7rem;
+        }
+      }
+
+      & td {
+        padding: 0.4rem 0.3rem;
+
+        &:first-child,
+        &:last-child {
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    }
+  }
+}
+
+td {
+  &.up {
+    color: colors.$color-up;
+  }
+
+  &.down {
+    color: colors.$color-down;
+  }
+}

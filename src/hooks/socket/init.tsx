@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useAlert} from 'react-alert';
 
-import {OrderFilledAlert} from '../../layout/alert/orderFilled';
+import {OrderFilledAlert} from '../../components/alert/orderFilled';
 import {customSrDispatchers} from '../../state/customSr/dispatchers';
 import {SrCustomDispatcherName} from '../../state/customSr/types';
 import {errorDispatchers} from '../../state/error/dispatchers';
