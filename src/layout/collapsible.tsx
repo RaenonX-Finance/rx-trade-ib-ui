@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import {ButtonVariant} from 'react-bootstrap/types';
 
 import {useAnimation} from '../hooks/animation';
 import {PxDataIndividual, PxDataIndividualProps} from './individual';
@@ -18,16 +19,23 @@ export const PxDataCollapsible = (props: Props) => {
   });
 
   const lastBar = pxData.data.at(-1);
+  let variant: ButtonVariant = 'outline-light';
+
+  if (lastBar) {
+    const diff = lastBar.close - lastBar.open;
+
+    if (diff > 0) {
+      variant = 'outline-success';
+    } else if (diff < 0) {
+      variant = 'outline-danger';
+    }
+  }
 
   return (
     <>
       <Button
         className={styles['collapsible-button']}
-        variant={
-          lastBar ?
-            ((lastBar.close - lastBar.open) > 0 ? 'outline-success' : 'outline-danger') :
-            'outline-light'
-        }
+        variant={variant}
         onClick={() => setShow(!show)}
         ref={buttonRef}
       >
