@@ -25,7 +25,7 @@ type Props = {
 export const PnLTrendPlot = ({realizedExecutions}: Props) => {
   const decimals = 2;
 
-  const realizedSumArray = [0, ...realizedExecutions.map(({realizedPnLSum}) => realizedPnLSum)];
+  const realizedSumArray = realizedExecutions.map(({realizedPnLSum}) => realizedPnLSum);
   const maxRealizedSum = Math.max(...realizedSumArray) * 2;
   const minRealizedSum = Math.min(...realizedSumArray) * 2;
 
