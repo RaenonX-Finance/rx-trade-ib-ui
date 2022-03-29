@@ -47,7 +47,7 @@ export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
     },
   }), [avgPx, pxDiff, lastRealizedExecution, twsPnL]);
 
-  const {calculated, tws} = stats;
+  const {calculated} = stats;
 
   return (
     <Row className="g-2 mb-2">
@@ -56,9 +56,6 @@ export const PnL = ({decimals, payload, pxData, twsPnL, ...props}: Props) => {
       </Col>
       <Col>
         <PnLSummarySection summary={calculated} icon={<i className="bi bi-calculator"/>} {...props}/>
-      </Col>
-      <Col>
-        <PnLSummarySection summary={tws} icon={<i className="bi bi-laptop"/>} {...props}/>
       </Col>
     </Row>
   );

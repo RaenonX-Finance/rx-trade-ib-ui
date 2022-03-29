@@ -54,7 +54,7 @@ export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps
         pnlDict.config &&
         <PnL
           decimals={decimals}
-          twsPnL={pnlDict[pxData.contract.identifier]}
+          twsPnL={undefined}
           pxData={pxData}
           payload={payload}
           config={pnlDict.config}
