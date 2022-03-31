@@ -28,6 +28,8 @@ export type ExecutionGroup = {
   avgPxLoss: number | null,
   avgPxRrRatio: number | null,
   avgPxEwr: number | null,
+  totalProfit: number | null,
+  totalLoss: number | null,
 };
 
 export type Execution = Record<SecurityIdentifier, ExecutionGroup[]>;

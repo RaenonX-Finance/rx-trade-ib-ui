@@ -36,11 +36,11 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>Date</th>
           <th>Avg Px</th>
           <th>P&L</th>
-          <th>P&L Sum</th>
+          <th>∑ P&L</th>
           <th>Side</th>
           <th>Qty</th>
           <th>Px D</th>
-          <th>Px D Sum</th>
+          <th>∑ Px D</th>
           <th>Px D D/R</th>
           <th className={styles['column-separator']}/>
           <th>Profit</th>
@@ -60,6 +60,8 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
           <th>Avg Px-</th>
           <th>R/R</th>
           <th>EWR</th>
+          <th>∑ Profit</th>
+          <th>∑ Loss</th>
         </tr>
       </thead>
       <tbody>
@@ -118,11 +120,15 @@ export const TradeLogOffcanvas = ({executions, showNoPnL}: Props) => {
                 </td>
                 <td>{execution.realizedPnL && execution.avgPxRrRatio?.toFixed(3)}</td>
                 <td>{execution.realizedPnL && execution.avgPxEwr?.toFixed(3)}</td>
+                <td className={styles['up']}>
+                  {execution.realizedPnL && execution.totalProfit?.toFixed(2)}
+                </td>
+                <td className={styles['down']}>
+                  {execution.realizedPnL && execution.totalLoss?.toFixed(2)}
+                </td>
               </tr>
             );
-          },
-
-          )}
+          })}
       </tbody>
     </Table>
   );
