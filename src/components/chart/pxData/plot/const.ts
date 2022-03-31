@@ -51,6 +51,8 @@ export const srLevelLineWidth: LineWidth = 1;
 
 export const srLevelLineWidthStrong: LineWidth = 2;
 
+export const srLevelLineWidthSuperStrong: LineWidth = 3;
+
 export const smaScale = chroma.scale([
   'rgba(255,82,82,0.75)',
   'rgba(255,153,0,0.75)',

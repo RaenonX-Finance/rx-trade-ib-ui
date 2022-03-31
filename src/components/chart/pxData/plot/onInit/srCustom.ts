@@ -1,7 +1,7 @@
 import {ISeriesApi} from 'lightweight-charts';
 
 import {OnPxChartInitEvent} from '../../type';
-import {srLevelCustom, srLevelLineStyle, srLevelLineWidthStrong} from '../const';
+import {srLevelCustom, srLevelLineStyle, srLevelLineWidthStrong, srLevelLineWidthSuperStrong} from '../const';
 
 
 export const handleSrCustom = (e: OnPxChartInitEvent, price: ISeriesApi<'Candlestick'>) => {
@@ -20,7 +20,7 @@ export const handleSrCustom = (e: OnPxChartInitEvent, price: ISeriesApi<'Candles
       axisLabelVisible: true,
       title: strong ? '!' : '',
       color: srLevelCustom,
-      lineWidth: srLevelLineWidthStrong,
+      lineWidth: strong ? srLevelLineWidthSuperStrong : srLevelLineWidthStrong,
       lineStyle: srLevelLineStyle,
       lineVisible: true,
     });
