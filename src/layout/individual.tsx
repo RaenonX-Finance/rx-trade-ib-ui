@@ -66,7 +66,7 @@ export const PxDataIndividual = ({pxData, payload, title}: PxDataIndividualProps
             title={title}
             chartData={pxData}
             payload={payload}
-            height={400}
+            height={600}
           />
         </Col>
       </Row>
