@@ -52,14 +52,7 @@ export const PxDataMain = () => {
   return (
     <>
       <ErrorPopup/>
-      <Row className="g-3">
-        {majorPxData.map((data) => (
-          <Col key={data.uniqueIdentifier} xs={6}>
-            <PxDataAlwaysShow {...getIndividualProps(data)}/>
-          </Col>
-        ))}
-      </Row>
-      <Row>
+      <Row className="fixed-top">
         <Col>
           <div className={styles['sub-px-data-bar']}>
             {minorPxData.map((data) => (
@@ -67,6 +60,13 @@ export const PxDataMain = () => {
             ))}
           </div>
         </Col>
+      </Row>
+      <Row className="mt-5 g-3">
+        {majorPxData.map((data) => (
+          <Col key={data.uniqueIdentifier} xs={6}>
+            <PxDataAlwaysShow {...getIndividualProps(data)}/>
+          </Col>
+        ))}
       </Row>
     </>
   );
